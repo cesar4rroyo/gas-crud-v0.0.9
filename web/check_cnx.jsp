@@ -12,7 +12,7 @@
     try {
 
         Class.forName("com.mysql.jdbc.Driver");
-        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/gas1", "root", "alianza");
+        con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/gas1", "root", "ampuero");
         sql = con.createStatement();
         out.print("CONEXION ESTABLECIDA");
 

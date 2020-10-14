@@ -314,7 +314,7 @@
                                 int idPdto = Integer.parseInt((String) request.getAttribute("idPdto"));
                                 beanProducto bPdto = (beanProducto) dPdto.list(idPdto);
                             %>
-                            <h1>Editar Productor</h1>
+                            <h1>Editar Producto</h1>
                             <hr>
                         </div>
                         <form action="controladorPdto">
@@ -324,11 +324,12 @@
                             <input class="form-control" type="text" name="txtDescripcion" value="<%=bPdto.getDescripcion()%>"><br>
                             Tipo: <br>
                             <input class="form-control" type="text" name="txtTipo" value="<%=bPdto.getTipo_producto()%>"><br>
-                            Image: <br>
-                            <input class="form-control" type="text" name="txtImagen" value="<%=bPdto.getImage_ref()%>"><br>
+                            Imagen: <br>
+                            <input type="hidden" value="<%=bPdto.getImage_ref()%>" name="txtImagen" id="img-preview">
+                            <input class="form-control-file" name="file" type="file" id="file-upload" value="Seleccionar imagen">   
+                            <br>
                             <input type="hidden" name="txtIdPdto" value="<%=bPdto.getId_Producto()%>">
-
-                            <input class="btn btn-success" type="submit" name="accion" value="Actualizar">
+                            <input class="btn btn-success" type="submit"  id="btnAgregar" name="accion" value="Actualizar">
                             <a class="btn btn-secondary" href="controladorPdto?accion=listar">Regresar</a>                            
                         </form>
                     </div>
@@ -357,4 +358,6 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/upload.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
 </html>

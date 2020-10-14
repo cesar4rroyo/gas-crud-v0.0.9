@@ -316,7 +316,8 @@
                                 <div class="form-group">
                                     <label for="txtDesc">Descripción </label>
                                     <input class="form-control" type="text" name="txtDesc" value="<%=bT.getDescripcion()%>" id="txtDesc" required="" autocomplete="off">
-                                </div>                           
+                                </div>
+                                <input class="form-control" type="hidden" name="txtIdT" value="<%= bT.getId_Transporte()%>">
                                 <input type="submit" name="accion" class="btn btn-primary" value="Actualizar" >
                                 <a class="btn btn-secondary" href="controladorTrp?accion=listarTrp">Regresar</a>
                             </form> 

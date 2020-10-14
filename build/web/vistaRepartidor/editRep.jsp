@@ -4,6 +4,10 @@
     Author     : ROG STRIX
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.List"%>
+<%@page import="beans.beanTransporte"%>
+<%@page import="ModeloDAO.daoTransporte"%>
 <%@page import="beans.beanRepartidor"%>
 <%@page import="ModeloDAO.daoRepartidor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -314,7 +318,7 @@
                                 int idRep = Integer.parseInt((String) request.getAttribute("idRep"));
                                 beanRepartidor bR = (beanRepartidor) dRep.listRep(idRep);
                             %>
-                            <h1>Editar Proveedor</h1>
+                            <h1>Editar Repartidor</h1>
                             <hr>
                         </div>
                         <form action="controladorRep">
@@ -326,6 +330,23 @@
                             <input class="form-control" type="text" name="txtTelRep" value="<%= bR.getTelefono()%>"><br>
                             Dni <br>
                             <input class="form-control" type="text" name="txtDniRep" value="<%= bR.getDni()%>"><br>
+                            <div class="form-group">
+                                <label for="transporte">Transporte:  </label>
+                                <%
+                                    daoTransporte dTrp = new daoTransporte();
+                                    List<beanTransporte> lstTrp = dTrp.listarTrp();
+                                    Iterator<beanTransporte> iter1 = lstTrp.iterator();
+                                    beanTransporte bTrp = null;
+                                %>
+                                <select id="transporte" name="txtIdTrp" class="form-control" required>
+                                    <option value="<%=bR.getId_Transporte()%>">Seleccione una opcion</option>
+                                    <% for (beanTransporte i : lstTrp) {%>                                                    
+                                    <option value="<%=i.getId_Transporte()%>">
+                                        <%=i.getDescripcion()%>
+                                    </option>
+                                    <% }%>
+                                </select>
+                            </div>
                             <input class="form-control" type="hidden" name="txtIdRep" value="<%= bR.getId_Repartidor()%>">
                             <input class="btn btn-success" type="submit" name="accion" value="Actualizar">
                             <a class="btn btn-secondary" href="controladorRep?accion=listar">Regresar</a>

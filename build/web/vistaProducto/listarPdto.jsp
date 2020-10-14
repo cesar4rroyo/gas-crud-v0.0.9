@@ -352,17 +352,17 @@
                                                 <div class="form-group col-md">
                                                     <label for="producto">Tipo: </label>
                                                     <input class="form-control" type="text" placeholder="Tipo de Producto"  name="txtTipo" id="producto" required autocomplete="off" >
-                                                </div> 
-                                                <div class="form-group col-md">
-                                                    <label for="image">Image:  </label>
-                                                    <input class="form-control" type="text" name="txtImagen" placeholder="Imagen"  required id="txtTelefono" autocomplete="off">
-                                                    <!--<input type="file" class="form-control" name="txtImagen" required id="image" >-->
-                                                </div>
+                                                </div>                                                 
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="image">Imagen:  </label>
+                                                <input type="hidden" value="" name="txtImagen" id="img-preview">
+                                                <input class="form-control-file" name="file" type="file" id="file-upload" value="Seleccionar imagen">
                                             </div>                                            
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <input type="submit" name="accion" class="btn btn-primary" value="Agregar" >
+                                            <input type="submit" name="accion" class="btn btn-primary" id="btnAgregar" value="Agregar" >
                                         </div>
                                     </form>
                                 </div>
@@ -374,7 +374,6 @@
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">ID</th>
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Descripción</th>
                                             <th scope="col">Tipo</th>
@@ -391,12 +390,15 @@
                                             bPdto = iter.next();
                                     %>
                                     <tbody>
-                                        <tr>                                            
-                                            <td><%= bPdto.getId_Producto()%></td>
+                                        <tr>
                                             <td><%= bPdto.getNombre_producto()%></td>
                                             <td><%= bPdto.getDescripcion()%></td>
                                             <td><%= bPdto.getTipo_producto()%></td>
-                                            <td><%= bPdto.getImage_ref()%></td>
+                                            <td>
+                                                <a href="<%= bPdto.getImage_ref()%>" target="_blank">
+                                                    <i class="fa fa-eye"></i>
+                                                </a>
+                                            </td>
                                             <td>
                                                 <div class="btn-group" >
                                                     <a class="btn btn-primary" href="controladorPdto?accion=editar&idP=<%= bPdto.getId_Producto()%>">
@@ -448,4 +450,6 @@
         });
 
     </script>
+    <script src="assets/js/upload.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
 </html>

@@ -375,12 +375,10 @@
                                                     <option value="1">Seleccione una opcion</option>
                                                     <% for(beanTransporte i: lstTrp){ %>                                                    
                                                     <option value="<%=i.getId_Transporte()%>">
-                                                        <%=i.getId_Transporte()%> = <%=i.getDescripcion()%>
+                                                        <%=i.getDescripcion()%>
                                                     </option>
                                                     <% } %>
                                                 </select>
-                                                
-                                                
                                             </div>
                                         </div>
                                         <div class="modal-footer">
