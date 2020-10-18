@@ -33,7 +33,6 @@
         <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
         <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
 
@@ -64,13 +63,13 @@
         <header id="header" class="fixed-top">
             <div class="container d-flex align-items-center">
 
-                <h1 class="logo mr-auto"><a href="index.html">SoftGas</a></h1>
+                <h1 class="logo mr-auto"><a href="index.jsp">SoftGas</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
                 <nav class="nav-menu d-none d-lg-block">
                     <ul>
-                        <li class="active"><a href="index.html">Inicio</a></li>
+                        <li class="active"><a href="index.jsp">Inicio</a></li>
                         <li><a href="#about">Nosotros</a></li>
                         <li><a href="#services">Productos</a></li>          
                         <li><a href="#clientes">Clientes</a></li>          

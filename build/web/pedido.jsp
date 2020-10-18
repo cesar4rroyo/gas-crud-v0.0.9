@@ -4,11 +4,13 @@
     Author     : cesar4rroyo
 --%>
 
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="beans.beanProducto"%>
 <%@page import="java.util.List"%>
 <%@page import="ModeloDAO.daoProducto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -27,30 +29,98 @@
         <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="carrito.css" />
+
+
     </head>
-    <body>
-        <!-- ======= Top Bar ======= -->
-        <div id="topbar" class="d-none d-lg-flex align-items-center fixed-top">
-            <div class="container d-flex">
-                <div class="contact-info mr-auto">
-                    <i class="icofont-envelope"></i> <a href="mailto:contact@example.com">contact@softgas.com</a>
-                    <i class="icofont-phone"></i> +51 923 543 210
-                    <i class="icofont-google-map"></i> Chiclayo, Lambayeque
-                </div>
-                <div class="social-links">
-                    <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
-                    <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
-                    <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
-                    <a href="#" class="skype"><i class="icofont-skype"></i></a>
-                    <a href="#" class="linkedin"><i class="icofont-linkedin"></i></a>
+    <body>        
+        <div class="overlay_container d-none" id="cart">
+            <div class="slide_container">
+                <div class="cart_general">
+
+                    <%
+                        HttpSession sesion;
+                        sesion = request.getSession(false);
+                        //ArrayList<beanProducto> lista = (ArrayList<beanProducto>) sesion.getAttribute("carroCompras");
+
+                        if (sesion.getAttribute("carroCompras") != null) {
+                            daoProducto dPdto1 = new daoProducto();
+                            List<beanProducto> lista = (ArrayList<beanProducto>) sesion.getAttribute("carroCompras");
+                            Iterator<beanProducto> iter1 = lista.iterator();
+                            beanProducto bPdto1 = null;
+
+                    %>
+                    <div class="cart cart-header">
+                        Tienes <%=lista.size()%> seleccionados
+                    </div>
+                    <div class="cart">                        
+                        <ul class="cart-items">
+                            <%
+                                int i = 0;
+                                while (iter1.hasNext()) {
+                                    bPdto1 = iter1.next();
+                            %>
+                            <li>
+                                <div class="cart_item_container">
+                                    <img src="<%= bPdto1.getImage_ref()%>">
+                                    <div class="item_container_only">
+                                        <div class="title_container"> <%= bPdto1.getNombre_producto()%>, <%= bPdto1.getTipo_producto()%>  </div>
+                                        <div class="price_and_count">
+                                            <div class="price_div"><%= bPdto1.getDescripcion()%></div>
+                                            <div class="btn-group">
+                                                <input id="btnMenos" onclick="disminuir()" class="btn btn-outline-info" type="submit" value="-">
+                                                <input id="txtCantidad" class="btn btn-outline-info" type="submit" value="<%= bPdto1.getCantidad()%>">
+                                                <input onclick="aumentar()" id="btnMas" class="btn btn-outline-info" type="button" value="+">
+                                                <a class="btn btn-outline-danger" href="eliminar.html?codigoEliminar=<%=i%>">
+                                                    <i
+                                                        class="icofont-trash"
+                                                        ></i>  
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>                                                    
+                            </li>
+                            <%
+                                    i++;
+                                }%>
+                        </ul>
+                    </div>                    
+                    <div>
+                        <div class="total_container mb-2">
+                            <div class="total">
+                                <div class="value_container">
+                                    Total:
+                                    <span class="total_value"> 2329 </span>
+                                </div>
+                                <div class="total_btn_actions">
+                                    <button class="close_btn" id="btnCerrar" onclick="cerrar()"> 
+                                        Cerrar
+                                    </button>
+                                    <button                                   
+                                        class="proceed_btn">                                    
+                                        Proceder compra
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%} else {%>
+                    <div class="cart cart-header mt-1">
+                        No tienes ningun producto
+                        <div class="close_btn_no_products">
+                            <button id="btnCerrar" onclick="cerrar()" class="close_btn width_total">Cerrar</button>
+                        </div>
+                    </div>                    
+                    <%}%>
+
                 </div>
             </div>
         </div>
         <!-- ======= Header ======= -->
-        <header id="header" class="fixed-top">
+        <header id="header" >
             <div class="container d-flex align-items-center">
-
-                <h1 class="logo mr-auto"><a href="index.html">SoftGas</a></h1>
+                <h1 class="logo mr-auto"><a href="index.jsp">SoftGas</a></h1>
                 <!-- Uncomment below if you prefer to use an image logo -->
                 <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
 
@@ -62,15 +132,16 @@
 
                     </ul>
                 </nav><!-- .nav-menu -->
-                <a href="login.jsp" class="appointment-btn scrollto">Login</a>
+                <a onclick="toggle()" class="appointment-btn" id="shop-cart" >
+                    <i style="color:white; font-size:18px" class="icofont-shopping-cart"></i>                    
+                </a>                
             </div>
         </header><!-- End Header -->
         <!--========= Pedidos Sectio ============-->
         <section id="inicio">
-            <div class="container mt-5 pt-4">
+            <div class="container">
                 <div class="section-title">
-                    <h2>Seleccionar producto</h2>                    
-
+                    <h2>Seleccionar producto</h2>
                     <div class="row">
                         <%
                             daoProducto dPdto = new daoProducto();
@@ -81,97 +152,30 @@
                                 bPdto = iter.next();
                         %>
                         <div class="col-lg d-flex align-items-stretch justify-content-center">
-                            <div class="icon-box mt-4 mt-xl-0">
-                                <img class="img-balon" src="<%= bPdto.getImage_ref()%>" alt="Img ref">
-                                <hr>
-                                <h4><%= bPdto.getNombre_producto()%></h4>
-                                <p><%= bPdto.getDescripcion()%></p>
-                                <a href="#" class="btn btn-outline-primary mt-2">Agregar</a>                                    
-                            </div>
+                            <form method="post" action="agregarProducto.html">
+                                <div class="icon-box mt-4 mt-xl-0">
+                                    <img class="img-balon" src="<%= bPdto.getImage_ref()%>" alt="Img ref">
+                                    <hr>
+                                    <h4><%= bPdto.getNombre_producto()%></h4>
+                                    <p><%= bPdto.getDescripcion()%></p>
+                                    <input type="hidden" name="id" value="<%=bPdto.getId_Producto()%>" >
+                                    <input type="hidden" name="foto" value="<%=bPdto.getImage_ref()%>" >
+                                    <input type="hidden" name="descripcion" value="<%=bPdto.getDescripcion()%>" >
+                                    <input type="hidden" name="nombre" value="<%=bPdto.getNombre_producto()%>" >
+                                    <input type="hidden" name="tipo" value="<%=bPdto.getTipo_producto()%>" >
+                                    <input type="hidden" name="cantidad" value="1" >
+                                    <button class="btn btn-outline-primary mt-2">Agregar</button>
+                                </div>
+                            </form>    
+
                         </div>
                         <%}%>
                     </div>
-
-
                 </div>
             </div>
         </section>
         <!--============End Pedidos ==============-->
-        <!-- ======= Contact Section ======= -->
-        <section id="contact" class="contact">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Contacto</h2>
-                    <p> Nuestro local principal se encuentra ubicado aqui: </p>
-                </div>
-            </div>
 
-            <div>
-                <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3961.839898901976!2d-79.84915648563353!3d-6.789327995092671!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x904cef3ed10535b1%3A0x78d437cc8576c717!2sGrifo%20Pecsa!5e0!3m2!1ses-419!2spe!4v1601333878125!5m2!1ses-419!2spe" frameborder="0" allowfullscreen></iframe>
-            </div>
-
-            <div class="container">
-                <div class="row mt-5">
-
-                    <div class="col-lg-4">
-                        <div class="info">
-                            <div class="address">
-                                <i class="icofont-google-map"></i>
-                                <h4>Ubicación:</h4>
-                                <p>Av. Grau 2032, Chiclayo - Lambayeque</p>
-                            </div>
-
-                            <div class="email">
-                                <i class="icofont-envelope"></i>
-                                <h4>Email:</h4>
-                                <p>contact@softgas.com</p>
-                            </div>
-
-                            <div class="phone">
-                                <i class="icofont-phone"></i>
-                                <h4>Teléfono:</h4>
-                                <p>+51 923 543 210</p>
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-8 mt-5 mt-lg-0">
-
-                        <form role="form" class="php-email-form">
-                            <div class="form-row">
-                                <div class="col-md-6 form-group">
-                                    <input type="text" name="name" class="form-control" id="name" placeholder="Nombre" data-rule="minlen:4" data-msg="Por favor escriba al menos 4 caracteres " />
-                                    <div class="validate"></div>
-                                </div>
-                                <div class="col-md-6 form-group">
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Email" data-rule="email" data-msg="Este email no es válido" />
-                                    <div class="validate"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="subject" id="subject" placeholder="Asunto" data-rule="minlen:4" data-msg="Por favor escriba al menos 8 caracteres" />
-                                <div class="validate"></div>
-                            </div>
-                            <div class="form-group">
-                                <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Por favor escriba algo para nosotros" placeholder="Mensaje"></textarea>
-                                <div class="validate"></div>
-                            </div>
-                            <div class="mb-3">
-                                <div class="loading">Loading</div>
-                                <div class="error-message"></div>
-                                <div class="sent-message">Your message has been sent. Thank you!</div>
-                            </div>
-                            <div class="text-center"><button type="submit">Enviar Mensaje</button></div>
-                        </form>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </section><!-- End Contact Section -->
 
     </main><!-- End #main -->
 
@@ -259,7 +263,33 @@
 <script src="assets/vendor/counterup/counterup.min.js"></script>
 <script src="assets/vendor/owl.carousel/owl.carousel.min.js"></script>
 <script src="assets/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
+<script>
+                    var carrito = document.getElementById("shop-cart")
+                    var listaProductos = document.getElementById("cart");
+                    var cerrarBtn = document.getElementById("btnCerrar");
+                    const toggle = () => {
+                        if (listaProductos.classList.contains("d-none")) {
+                            listaProductos.classList.remove("d-none");
+                        } else {
+                            listaProductos.classList.add("d-none");
+                        }
+                    }
+                    const cerrar = () => {
+                        listaProductos.classList.add("d-none");
+                    }
+                    
+                    var txtCantidad = document.getElementById("txtCantidad");
+                    var btnMas = document.getElementById("btnMas");
+                    var btnMenos = document.getElementById("btnMenos");
+                    
+                    const aumentar=()=>{
+                        txtCantidad.value=parseInt(txtCantidad.value)+1;
+                    }
+                    const disminuir=()=>{
+                        txtCantidad.value=parseInt(txtCantidad.value)-1;
+                    }
+                    
+</script>
 </html>

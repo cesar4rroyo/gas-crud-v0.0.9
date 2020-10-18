@@ -9,6 +9,26 @@
 <%@page import="beans.beanProducto"%>
 <%@page import="ModeloDAO.daoProducto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+<%
+
+    HttpSession sc = request.getSession();
+    String username = "";
+    String tipo = "";
+    if (sc.getAttribute("username") != null && sc!=null) {
+        username= sc.getAttribute("username").toString();
+        tipo=sc.getAttribute("tipo").toString();
+        sc.setAttribute("username", username);
+        sc.setAttribute("tipo", tipo);
+   
+        if (tipo.equalsIgnoreCase("repartidor")) {
+            response.sendRedirect("login.jsp");
+        }
+    } else {
+        response.sendRedirect("login.jsp");
+    }
+
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -41,7 +61,7 @@
                     <hr class="sidebar-divider my-0" />
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="index.html"
+                            <a class="nav-link active" href="index.jsp"
                                ><i class="fas fa-tachometer-alt"></i><span>INICIO</span>
                             </a>
                             <a class="nav-link active" href="controladorCliente?accion=listar"
@@ -207,46 +227,7 @@
                                             role="menu"
                                             >
                                             <h6 class="dropdown-header bg-gradient-dark">Mensajes</h6>
-                                            <a
-                                                class="d-flex align-items-center dropdown-item"
-                                                href="#"
-                                                >
-                                                <div class="dropdown-list-image mr-3">
-                                                    <img
-                                                        class="rounded-circle"
-                                                        src="https://cesar4rroyo.github.io/tarea-menu/assets/img/logo.png"
-                                                        />
-                                                    <div class="bg-success status-indicator"></div>
-                                                </div>
-                                                <div class="font-weight-bold">
-                                                    <div class="text-truncate">
-                                                        <span>Sin Licenciamiento</span>
-                                                    </div>
-                                                    <p class="small text-gray-500 mb-0">
-                                                        SUNEDU
-                                                    </p>
-                                                </div>
-                                            </a>
-                                            <a
-                                                class="d-flex align-items-center dropdown-item"
-                                                href="#"
-                                                >
-                                                <div class="dropdown-list-image mr-3">
-                                                    <img
-                                                        class="rounded-circle"
-                                                        src="https://cesar4rroyo.github.io/tarea-menu/assets/img/Logo_USAT.png"
-                                                        />
-                                                    <div class="bg-success status-indicator"></div>
-                                                </div>
-                                                <div class="font-weight-bold">
-                                                    <div class="text-truncate">
-                                                        <span>Cambiate ya!</span>
-                                                    </div>
-                                                    <p class="small text-gray-500 mb-0">
-                                                        USAT
-                                                    </p>
-                                                </div>
-                                            </a>
+                                            
                                             <a
                                                 class="text-center dropdown-item small text-gray-500"
                                                 href="#"
@@ -268,7 +249,7 @@
                                             aria-expanded="false"
                                             href="#"
                                             ><span class="d-none d-lg-inline mr-2 text-gray-600 small"
-                                               >Admin</span
+                                               ><%=username%></span
                                             ><img
                                                 class="border rounded-circle img-profile"
                                                 src="assets/img/logo2.png"
@@ -295,7 +276,7 @@
                                                 >&nbsp;Reportes</a
                                             >
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" role="presentation" href="#"
+                                            <a class="dropdown-item" role="presentation" href="login.jsp?cerrar=true"
                                                ><i
                                                     class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
                                                     ></i
@@ -381,8 +362,7 @@
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
-                                    <%
-                                        daoProducto dPdto = new daoProducto();
+                                    <%                                        daoProducto dPdto = new daoProducto();
                                         List<beanProducto> lstPdto = dPdto.listar();
                                         Iterator<beanProducto> iter = lstPdto.iterator();
                                         beanProducto bPdto = null;
@@ -437,13 +417,13 @@
             </div>
     </body>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script>
         $('#modal_insertar').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')

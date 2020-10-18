@@ -9,6 +9,7 @@ public class beanProducto
     String descripcion;
     String tipo_producto;
     String image_ref;
+    private int cantidad;
 
     public beanProducto(int id_Producto, String nombre_producto, String descripcion, String tipo_producto, String image_ref) {
         this.id_Producto = id_Producto;
@@ -59,6 +60,14 @@ public class beanProducto
 
     public void setImage_ref(String image_ref) {
         this.image_ref = image_ref;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
     
     

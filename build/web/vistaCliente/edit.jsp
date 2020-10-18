@@ -2,6 +2,26 @@
 <%@page import="beans.beanCliente"%>
 <%@page import="ModeloDAO.daoCliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+<%
+
+    HttpSession sc = request.getSession();
+    String username = "";
+    String tipo = "";
+    if (sc.getAttribute("username") != null && sc != null) {
+        username = sc.getAttribute("username").toString();
+        tipo = sc.getAttribute("tipo").toString();
+        sc.setAttribute("username", username);
+        sc.setAttribute("tipo", tipo);
+
+        if (tipo.equalsIgnoreCase("repartidor")) {
+            response.sendRedirect("login.jsp");
+        }
+    } else {
+        response.sendRedirect("login.jsp");
+    }
+
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,7 +54,7 @@
                     <hr class="sidebar-divider my-0" />
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="index.html"
+                            <a class="nav-link active" href="index.jsp"
                                ><i class="fas fa-tachometer-alt"></i><span>INICIO</span>
                             </a>
                             <a class="nav-link active" href="controladorCliente?accion=listar"
@@ -200,46 +220,7 @@
                                             role="menu"
                                             >
                                             <h6 class="dropdown-header bg-gradient-dark">Mensajes</h6>
-                                            <a
-                                                class="d-flex align-items-center dropdown-item"
-                                                href="#"
-                                                >
-                                                <div class="dropdown-list-image mr-3">
-                                                    <img
-                                                        class="rounded-circle"
-                                                        src="https://cesar4rroyo.github.io/tarea-menu/assets/img/logo.png"
-                                                        />
-                                                    <div class="bg-success status-indicator"></div>
-                                                </div>
-                                                <div class="font-weight-bold">
-                                                    <div class="text-truncate">
-                                                        <span>Sin Licenciamiento</span>
-                                                    </div>
-                                                    <p class="small text-gray-500 mb-0">
-                                                        SUNEDU
-                                                    </p>
-                                                </div>
-                                            </a>
-                                            <a
-                                                class="d-flex align-items-center dropdown-item"
-                                                href="#"
-                                                >
-                                                <div class="dropdown-list-image mr-3">
-                                                    <img
-                                                        class="rounded-circle"
-                                                        src="https://cesar4rroyo.github.io/tarea-menu/assets/img/Logo_USAT.png"
-                                                        />
-                                                    <div class="bg-success status-indicator"></div>
-                                                </div>
-                                                <div class="font-weight-bold">
-                                                    <div class="text-truncate">
-                                                        <span>Cambiate ya!</span>
-                                                    </div>
-                                                    <p class="small text-gray-500 mb-0">
-                                                        USAT
-                                                    </p>
-                                                </div>
-                                            </a>
+
                                             <a
                                                 class="text-center dropdown-item small text-gray-500"
                                                 href="#"
@@ -261,7 +242,7 @@
                                             aria-expanded="false"
                                             href="#"
                                             ><span class="d-none d-lg-inline mr-2 text-gray-600 small"
-                                               >Admin</span
+                                               ><%=username%></span
                                             ><img
                                                 class="border rounded-circle img-profile"
                                                 src="assets/img/logo2.png"
@@ -288,7 +269,7 @@
                                                 >&nbsp;Reportes</a
                                             >
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" role="presentation" href="#"
+                                            <a class="dropdown-item" role="presentation" href="login.jsp?cerrar=true"
                                                ><i
                                                     class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
                                                     ></i
@@ -300,7 +281,6 @@
                             </ul>
                         </div>
                     </nav>
-
                     <!--desde aqui empieza el verdadero codigo :v-->
                     <div class="container col-md-6 mt-5" >
                         <div class="text-center">
@@ -354,4 +334,6 @@
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
+    <script src="assets/js/upload.js"></script>
+    
 </html>

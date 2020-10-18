@@ -24,6 +24,14 @@
         <servlet-name>controladorEstadoP</servlet-name>
         <servlet-class>Controlador.controladorEstadoP</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorLogin</servlet-name>
+        <servlet-class>Controlador.controladorLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controladorCarrito</servlet-name>
+        <servlet-class>Controlador.controladorCarrito</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -47,6 +55,15 @@
     <servlet-mapping>
         <servlet-name>controladorEstadoP</servlet-name>
         <url-pattern>/controladorEstadoP</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorLogin</servlet-name>
+        <url-pattern>/controladorLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorCarrito</servlet-name>
+        <url-pattern>/agregarProducto.html</url-pattern>
+        <url-pattern>/eliminar.html</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

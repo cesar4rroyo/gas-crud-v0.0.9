@@ -4,6 +4,26 @@
 <%@page import="java.util.List"%>
 <%@page import="ModeloDAO.daoCliente"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page session="true" %>
+<%
+
+    HttpSession sc = request.getSession();
+    String username = "";
+    String tipo = "";
+    if (sc.getAttribute("username") != null && sc != null) {
+        username = sc.getAttribute("username").toString();
+        tipo = sc.getAttribute("tipo").toString();
+        sc.setAttribute("username", username);
+        sc.setAttribute("tipo", tipo);
+
+        if (tipo.equalsIgnoreCase("repartidor")) {
+            response.sendRedirect("login.jsp");
+        }
+    } else {
+        response.sendRedirect("login.jsp");
+    }
+
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -37,7 +57,7 @@
                     <hr class="sidebar-divider my-0" />
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="index.html"
+                            <a class="nav-link active" href="index.jsp"
                                ><i class="fas fa-tachometer-alt"></i><span>INICIO</span>
                             </a>
                             <a class="nav-link active" href="controladorCliente?accion=listar"
@@ -72,6 +92,7 @@
             </nav>
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
+                    <!--navbar es el menu de la parte superior-->
                     <nav
                         class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top"
                         >
@@ -203,46 +224,7 @@
                                             role="menu"
                                             >
                                             <h6 class="dropdown-header bg-gradient-dark">Mensajes</h6>
-                                            <a
-                                                class="d-flex align-items-center dropdown-item"
-                                                href="#"
-                                                >
-                                                <div class="dropdown-list-image mr-3">
-                                                    <img
-                                                        class="rounded-circle"
-                                                        src="https://cesar4rroyo.github.io/tarea-menu/assets/img/logo.png"
-                                                        />
-                                                    <div class="bg-success status-indicator"></div>
-                                                </div>
-                                                <div class="font-weight-bold">
-                                                    <div class="text-truncate">
-                                                        <span>Sin Licenciamiento</span>
-                                                    </div>
-                                                    <p class="small text-gray-500 mb-0">
-                                                        SUNEDU
-                                                    </p>
-                                                </div>
-                                            </a>
-                                            <a
-                                                class="d-flex align-items-center dropdown-item"
-                                                href="#"
-                                                >
-                                                <div class="dropdown-list-image mr-3">
-                                                    <img
-                                                        class="rounded-circle"
-                                                        src="https://cesar4rroyo.github.io/tarea-menu/assets/img/Logo_USAT.png"
-                                                        />
-                                                    <div class="bg-success status-indicator"></div>
-                                                </div>
-                                                <div class="font-weight-bold">
-                                                    <div class="text-truncate">
-                                                        <span>Cambiate ya!</span>
-                                                    </div>
-                                                    <p class="small text-gray-500 mb-0">
-                                                        USAT
-                                                    </p>
-                                                </div>
-                                            </a>
+
                                             <a
                                                 class="text-center dropdown-item small text-gray-500"
                                                 href="#"
@@ -264,7 +246,7 @@
                                             aria-expanded="false"
                                             href="#"
                                             ><span class="d-none d-lg-inline mr-2 text-gray-600 small"
-                                               >Admin</span
+                                               ><%=username%></span
                                             ><img
                                                 class="border rounded-circle img-profile"
                                                 src="assets/img/logo2.png"
@@ -291,7 +273,7 @@
                                                 >&nbsp;Reportes</a
                                             >
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" role="presentation" href="#"
+                                            <a class="dropdown-item" role="presentation" href="login.jsp?cerrar=true"
                                                ><i
                                                     class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
                                                     ></i
@@ -304,7 +286,7 @@
                         </div>
                     </nav>
                     <div class="container" >
-                        <div class="text-center pt-5" >
+                        <div class="text-center pt-5">
                             <h1>Clientes</h1>
                         </div>
                         <form action="buscar.jsp">
@@ -321,52 +303,51 @@
                             </div>
                         </form>
                         <div class="container">
-                            <button type="button" class="btn btn-dark"  data-toggle="modal" data-target="#modal_insertar"><i class="fa fa-plus"> </i>  Añadir nuevo </button>
+                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal_insertar"><i class="fa fa-plus"> </i>  Añadir nuevo </button>
                         </div>            
                         <div class="modal fade" id="modal_insertar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <form action="controladorCliente" >
+                                    <form action="controladorCliente">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Nuevo Cliente</h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
+                                                <span aria-hidden="true">×</span>
                                             </button>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="row" >
+                                            <div class="row">
                                                 <div class="form-group col-md">
                                                     <label for="txtNombre">Nombre: </label>
-                                                    <input class="form-control" placeholder="Nombre" type="text" name="txtNom" id="txtNombre" required="" autocomplete="off">
+                                                    <input class="form-control" placeholder="Nombre" type="text" name="txtNom" id="txtNombre" required autoComplete="off" />
                                                 </div>
                                                 <div class="form-group col-md">
                                                     <label for="txtDireccion">Apellido </label>
-                                                    <input class="form-control" type="text" name="txtApe" placeholder="Apellido"  id="txtDireccion" required autocomplete="off">
+                                                    <input class="form-control" type="text" name="txtApe" placeholder="Apellido" id="txtDireccion" required autoComplete="off" />
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="producto">Ubicacion: </label>
-                                                <input class="form-control" type="text" placeholder="Ubicación"  name="txtUbi" id="producto" required autocomplete="off" >
+                                                <input class="form-control" type="text" placeholder="Ubicación" name="txtUbi" id="producto" required autoComplete="off" />
                                             </div> 
-                                            <div class="row" >
+                                            <div class="row">
                                                 <div class="form-group col-md">
                                                     <label for="producto">DNI: </label>
-                                                    <input class="form-control" type="number" placeholder="Nro de DNI"  name="txtDni" id="producto" required autocomplete="off" >
+                                                    <input class="form-control" type="number" placeholder="Nro de DNI" name="txtDni" id="producto" required autoComplete="off" />
                                                 </div> 
                                                 <div class="form-group col-md">
-                                                    <label for="image">Teléfono:  </label>
-                                                    <input class="form-control" type="number" name="txtTel" placeholder="Nro. de Teléfono"  required id="txtTelefono" autocomplete="off">
-                                                    <!--<input type="file" class="form-control" name="txtImagen" required id="image" >-->
+                                                    <label for="image">Teléfono:</label>
+                                                    <input class="form-control" type="number" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTelefono" autoComplete="off" />                                                    
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <label for="producto">Foto de la casa: </label>
-                                                <input class="form-control" type="text" placeholder="Foto"  name="txtFot" id="producto" required autocomplete="off" >
+                                                <input class="form-control" type="text" placeholder="Foto" name="txtFot" id="producto" required autoComplete="off" />
                                             </div>                                             
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <input type="submit" name="accion" class="btn btn-primary" value="Agregar" >
+                                            <input type="submit" name="accion" class="btn btn-primary" defaultValue="Agregar" />
                                         </div>
                                     </form>
                                 </div>
@@ -420,9 +401,7 @@
                                 </table>
                             </div>
                         </div>
-
                         <!-- aqui acaba el codigo :v-->
-
                     </div>
                     <footer class="bg-white sticky-footer">
                         <div class="container my-auto">
@@ -440,15 +419,16 @@
                    ><i class="fas fa-angle-up"></i
                     ></a>
             </div>
+        </div>
     </body>
     <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script>
         $('#modal_insertar').on('shown.bs.modal', function () {
             $('#myInput').trigger('focus')
