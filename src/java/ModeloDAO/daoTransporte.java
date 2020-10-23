@@ -82,14 +82,14 @@ public class daoTransporte implements tCRUD{
 
     @Override
     public boolean eliminarTrp(int idTrp) {
-         String sql = "DELETE from transporte where id_Transporte="+idTrp;
-        try{
-          con = cnx.getConnection();
-          ps = con.prepareStatement(sql);
-          ps.executeUpdate();
-      }catch (Exception e){
-          out.print("Error"+e);
-      }
+        String sql = "DELETE from transporte where id_Transporte=" + idTrp;
+        try {
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            out.print("Error" + e);
+        }
         return false;
     }
     

@@ -4,6 +4,10 @@
     Author     : USER
 --%>
 
+<%@page import="java.util.Iterator"%>
+<%@page import="java.util.List"%>
+<%@page import="beans.beanTipoProducto"%>
+<%@page import="ModeloDAO.daoTipoProducto"%>
 <%@page import="beans.beanProducto"%>
 <%@page import="ModeloDAO.daoProducto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -13,12 +17,12 @@
     HttpSession sc = request.getSession();
     String username = "";
     String tipo = "";
-    if (sc.getAttribute("username") != null && sc!=null) {
-        username= sc.getAttribute("username").toString();
-        tipo=sc.getAttribute("tipo").toString();
+    if (sc.getAttribute("username") != null && sc != null) {
+        username = sc.getAttribute("username").toString();
+        tipo = sc.getAttribute("tipo").toString();
         sc.setAttribute("username", username);
         sc.setAttribute("tipo", tipo);
-   
+
         if (tipo.equalsIgnoreCase("repartidor")) {
             response.sendRedirect("login.jsp");
         }
@@ -225,7 +229,7 @@
                                             role="menu"
                                             >
                                             <h6 class="dropdown-header bg-gradient-dark">Mensajes</h6>
-                                            
+
                                             <a
                                                 class="text-center dropdown-item small text-gray-500"
                                                 href="#"
@@ -303,7 +307,22 @@
                             Descripcion: <br>
                             <input class="form-control" type="text" name="txtDescripcion" value="<%=bPdto.getDescripcion()%>"><br>
                             Tipo: <br>
-                            <input class="form-control" type="text" name="txtTipo" value="<%=bPdto.getTipo_producto()%>"><br>
+                            <%
+                                daoTipoProducto dao = new daoTipoProducto();
+                                List<beanTipoProducto> lstTrp = dao.listar();
+                                Iterator<beanTipoProducto> iter1 = lstTrp.iterator();
+                                beanTipoProducto bTrp = null;
+                            %>
+                            <select id="tipo_producto" name="idTipoPdto" class="form-control" required>
+                                <option value="1">Seleccione una opcion</option>
+                                <% for (beanTipoProducto i : lstTrp) {%>                                                    
+                                <option value="<%=i.getIdtipo_producto()%>">
+                                    <%=i.getTipo()%>
+                                </option>
+                                <% }%>
+                            </select>
+                            Precio: <br>
+                            <input class="form-control" value="<%=bPdto.getPrecio()%>" type="text" name="txtPrecio" placeholder="Precio" id="precio" required autocomplete="off">
                             Imagen: <br>
                             <input type="hidden" value="<%=bPdto.getImage_ref()%>" name="txtImagen" id="img-preview">
                             <input class="form-control-file" name="file" type="file" id="file-upload" value="Seleccionar imagen">   

@@ -26,6 +26,7 @@
         <link href="assets/vendor/venobox/venobox.css" rel="stylesheet">
         <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
         <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+        <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css" />
         <link href="assets/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
         <!-- Template Main CSS File -->
         <link href="assets/css/style.css" rel="stylesheet">
@@ -42,16 +43,22 @@
                         HttpSession sesion;
                         sesion = request.getSession(false);
                         //ArrayList<beanProducto> lista = (ArrayList<beanProducto>) sesion.getAttribute("carroCompras");
+                        int totalProductos = 0;
+                        int precioTotal=0;
 
                         if (sesion.getAttribute("carroCompras") != null) {
                             daoProducto dPdto1 = new daoProducto();
                             List<beanProducto> lista = (ArrayList<beanProducto>) sesion.getAttribute("carroCompras");
                             Iterator<beanProducto> iter1 = lista.iterator();
                             beanProducto bPdto1 = null;
+                            for (beanProducto b : lista) {
+                                totalProductos = totalProductos + b.getCantidad();
+                                precioTotal = precioTotal + b.getCantidad()*b.getPrecio() ;
+                            }
 
                     %>
                     <div class="cart cart-header">
-                        Tienes <%=lista.size()%> seleccionados
+                        Tienes <%=totalProductos%> seleccionados
                     </div>
                     <div class="cart">                        
                         <ul class="cart-items">
@@ -59,14 +66,17 @@
                                 int i = 0;
                                 while (iter1.hasNext()) {
                                     bPdto1 = iter1.next();
+                                    int precio =bPdto1.getPrecio();
+                                    int cantidad=bPdto1.getCantidad();
+                                    int subtotal = precio*cantidad;
                             %>
                             <li>
                                 <div class="cart_item_container">
                                     <img src="<%= bPdto1.getImage_ref()%>">
                                     <div class="item_container_only">
-                                        <div class="title_container"> <%= bPdto1.getNombre_producto()%>, <%= bPdto1.getTipo_producto()%>  </div>
+                                        <div class="title_container"> <%= bPdto1.getNombre_producto()%>, <%= bPdto1.getTipoProducto().getTipo()%>  </div>
                                         <div class="price_and_count">
-                                            <div class="price_div"><%= bPdto1.getDescripcion()%></div>
+                                            <div class="price_div">s/.<%=subtotal%>.00</div>
                                             <div class="btn-group">
                                                 <input id="btnMenos" onclick="disminuir()" class="btn btn-outline-info" type="submit" value="-">
                                                 <input id="txtCantidad" class="btn btn-outline-info" type="submit" value="<%= bPdto1.getCantidad()%>">
@@ -91,7 +101,7 @@
                             <div class="total">
                                 <div class="value_container">
                                     Total:
-                                    <span class="total_value"> 2329 </span>
+                                    <span class="total_value"> s/.<%=precioTotal%>.00</span>
                                 </div>
                                 <div class="total_btn_actions">
                                     <button class="close_btn" id="btnCerrar" onclick="cerrar()"> 
@@ -133,8 +143,11 @@
                     </ul>
                 </nav><!-- .nav-menu -->
                 <a onclick="toggle()" class="appointment-btn" id="shop-cart" >
-                    <i style="color:white; font-size:18px" class="icofont-shopping-cart"></i>                    
-                </a>                
+                    <i style="color:white; font-size:18px" class="icofont-shopping-cart"></i>
+                </a>
+                <span class="cart-count">
+                    <%=totalProductos%>
+                </span>
             </div>
         </header><!-- End Header -->
         <!--========= Pedidos Sectio ============-->
@@ -157,12 +170,14 @@
                                     <img class="img-balon" src="<%= bPdto.getImage_ref()%>" alt="Img ref">
                                     <hr>
                                     <h4><%= bPdto.getNombre_producto()%></h4>
+                                    <h5>S/. <%=bPdto.getPrecio()%>.00</h5>
                                     <p><%= bPdto.getDescripcion()%></p>
                                     <input type="hidden" name="id" value="<%=bPdto.getId_Producto()%>" >
                                     <input type="hidden" name="foto" value="<%=bPdto.getImage_ref()%>" >
                                     <input type="hidden" name="descripcion" value="<%=bPdto.getDescripcion()%>" >
+                                    <input type="hidden" name="txtPrecio" value="<%=bPdto.getPrecio()%>" >
                                     <input type="hidden" name="nombre" value="<%=bPdto.getNombre_producto()%>" >
-                                    <input type="hidden" name="tipo" value="<%=bPdto.getTipo_producto()%>" >
+                                    <input type="hidden" name="idTipoPdto" value="<%=bPdto.getTipoProducto().getIdtipo_producto()%>">
                                     <input type="hidden" name="cantidad" value="1" >
                                     <button class="btn btn-outline-primary mt-2">Agregar</button>
                                 </div>
@@ -279,17 +294,17 @@
                     const cerrar = () => {
                         listaProductos.classList.add("d-none");
                     }
-                    
+
                     var txtCantidad = document.getElementById("txtCantidad");
                     var btnMas = document.getElementById("btnMas");
                     var btnMenos = document.getElementById("btnMenos");
-                    
-                    const aumentar=()=>{
-                        txtCantidad.value=parseInt(txtCantidad.value)+1;
+
+                    const aumentar = () => {
+                        txtCantidad.value = parseInt(txtCantidad.value) + 1;
                     }
-                    const disminuir=()=>{
-                        txtCantidad.value=parseInt(txtCantidad.value)-1;
+                    const disminuir = () => {
+                        txtCantidad.value = parseInt(txtCantidad.value) - 1;
                     }
-                    
+
 </script>
 </html>

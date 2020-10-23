@@ -4,6 +4,9 @@
     Author     : USER
 --%>
 
+<%@page import="ModeloDAO.daoTipoProducto"%>
+<%@page import="beans.beanTipoProducto"%>
+<%@page import="beans.beanTipoProducto"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.List"%>
 <%@page import="beans.beanProducto"%>
@@ -15,12 +18,12 @@
     HttpSession sc = request.getSession();
     String username = "";
     String tipo = "";
-    if (sc.getAttribute("username") != null && sc!=null) {
-        username= sc.getAttribute("username").toString();
-        tipo=sc.getAttribute("tipo").toString();
+    if (sc.getAttribute("username") != null && sc != null) {
+        username = sc.getAttribute("username").toString();
+        tipo = sc.getAttribute("tipo").toString();
         sc.setAttribute("username", username);
         sc.setAttribute("tipo", tipo);
-   
+
         if (tipo.equalsIgnoreCase("repartidor")) {
             response.sendRedirect("login.jsp");
         }
@@ -227,7 +230,7 @@
                                             role="menu"
                                             >
                                             <h6 class="dropdown-header bg-gradient-dark">Mensajes</h6>
-                                            
+
                                             <a
                                                 class="text-center dropdown-item small text-gray-500"
                                                 href="#"
@@ -331,10 +334,29 @@
                                             </div>
                                             <div class="row" >
                                                 <div class="form-group col-md">
-                                                    <label for="producto">Tipo: </label>
-                                                    <input class="form-control" type="text" placeholder="Tipo de Producto"  name="txtTipo" id="producto" required autocomplete="off" >
-                                                </div>                                                 
+                                                <label for="tipo_producto">Tipo: </label>
+                                                <!--<input class="form-control" type="text" placeholder="Tipo de Producto"  name="txtTipo" id="producto" required autocomplete="off" >-->
+                                                <%
+                                                    daoTipoProducto dao = new daoTipoProducto();
+                                                    List<beanTipoProducto> lstTrp = dao.listar();
+                                                    Iterator<beanTipoProducto> iter1 = lstTrp.iterator();
+                                                    beanTipoProducto bTrp = null;
+                                                %>
+                                                <select id="tipo_producto" name="idTipoPdto" class="form-control" required>
+                                                    <option value="1">Seleccione una opcion</option>
+                                                    <% for (beanTipoProducto i : lstTrp) {%>                                                    
+                                                    <option value="<%=i.getIdtipo_producto()%>">
+                                                        <%=i.getTipo()%>
+                                                    </option>
+                                                    <% } %>
+                                                </select>
+                                                </div>
+                                                <div class="form-group col-sm" >
+                                                    <label for="precio" >Precio: </label>
+                                                    <input class="form-control" type="text" name="txtPrecio" placeholder="Precio" id="precio" required autocomplete="off">
+                                                </div>
                                             </div>
+                                                                                           
                                             <div class="form-group">
                                                 <label for="image">Imagen:  </label>
                                                 <input type="hidden" value="" name="txtImagen" id="img-preview">
@@ -358,11 +380,13 @@
                                             <th scope="col">Nombre</th>
                                             <th scope="col">Descripción</th>
                                             <th scope="col">Tipo</th>
+                                            <th scope="col">Precio</th>
                                             <th scope="col">Imagen</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
-                                    <%                                        daoProducto dPdto = new daoProducto();
+                                    <%
+                                        daoProducto dPdto = new daoProducto();
                                         List<beanProducto> lstPdto = dPdto.listar();
                                         Iterator<beanProducto> iter = lstPdto.iterator();
                                         beanProducto bPdto = null;
@@ -373,7 +397,8 @@
                                         <tr>
                                             <td><%= bPdto.getNombre_producto()%></td>
                                             <td><%= bPdto.getDescripcion()%></td>
-                                            <td><%= bPdto.getTipo_producto()%></td>
+                                            <td><%= bPdto.getTipoProducto().getTipo()%></td>
+                                            <td><%= bPdto.getPrecio()%></td>
                                             <td>
                                                 <a href="<%= bPdto.getImage_ref()%>" target="_blank">
                                                     <i class="fa fa-eye"></i>

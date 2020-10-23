@@ -1,22 +1,29 @@
-
 package beans;
 
+public class beanProducto {
 
-public class beanProducto 
-{
-    int id_Producto;
-    String nombre_producto;
-    String descripcion;
-    String tipo_producto;
-    String image_ref;
+    private int id_Producto;
+    private String nombre_producto;
+    private String descripcion;
+    private String image_ref;
     private int cantidad;
+    private beanTipoProducto tipoProducto;
+    private int precio;
 
-    public beanProducto(int id_Producto, String nombre_producto, String descripcion, String tipo_producto, String image_ref) {
-        this.id_Producto = id_Producto;
-        this.nombre_producto = nombre_producto;
-        this.descripcion = descripcion;
-        this.tipo_producto = tipo_producto;
-        this.image_ref = image_ref;
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    public beanTipoProducto getTipoProducto() {
+        return tipoProducto;
+    }
+
+    public void setTipoProducto(beanTipoProducto tipoProducto) {
+        this.tipoProducto = tipoProducto;
     }
 
     public beanProducto() {
@@ -46,14 +53,6 @@ public class beanProducto
         this.descripcion = descripcion;
     }
 
-    public String getTipo_producto() {
-        return tipo_producto;
-    }
-
-    public void setTipo_producto(String tipo_producto) {
-        this.tipo_producto = tipo_producto;
-    }
-
     public String getImage_ref() {
         return image_ref;
     }
@@ -69,6 +68,5 @@ public class beanProducto
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
-    
-    
+
 }

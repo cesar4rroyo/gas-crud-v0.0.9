@@ -6,7 +6,9 @@
 package Controlador;
 
 import ModeloDAO.daoProducto;
+import ModeloDAO.daoTipoProducto;
 import beans.beanProducto;
+import beans.beanTipoProducto;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -35,6 +37,8 @@ public class controladorPdto extends HttpServlet {
     String edit = "vistaProducto/editPdto.jsp";
     beanProducto bPdto = new beanProducto();
     daoProducto dPdto = new daoProducto();
+    beanTipoProducto bTPdto = new beanTipoProducto();
+    daoTipoProducto dTPdto = new daoTipoProducto();
     int id;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -74,30 +78,35 @@ public class controladorPdto extends HttpServlet {
             acceso = add;
         } else if (action.equalsIgnoreCase("Agregar")) {
             //id = Integer.parseInt(request.getParameter("txtIdPdto"));
+            bTPdto = dTPdto.list(Integer.parseInt(request.getParameter("idTipoPdto")));
             String nombre = request.getParameter("txtNom");
             String descripcion = request.getParameter("txtDescripcion");
-            String tipo = request.getParameter("txtTipo");
             String img = request.getParameter("txtImagen");
+            int precio = Integer.parseInt(request.getParameter("txtPrecio"));
             //bPdto.setId_Producto(id);
             bPdto.setNombre_producto(nombre);
             bPdto.setDescripcion(descripcion);
-            bPdto.setTipo_producto(tipo);
             bPdto.setImage_ref(img);
+            bPdto.setTipoProducto(bTPdto);
+            bPdto.setPrecio(precio);
             dPdto.add(bPdto);
             acceso = listar;
         } else if (action.equalsIgnoreCase("editar")) {
             request.setAttribute("idPdto", request.getParameter("idP"));
             acceso = edit;
         } else if (action.equalsIgnoreCase("Actualizar")) {
+            bTPdto = dTPdto.list(Integer.parseInt(request.getParameter("idTipoPdto")));
             int id = Integer.parseInt(request.getParameter("txtIdPdto"));
             String nombre = request.getParameter("txtNom");
             String descripcion = request.getParameter("txtDescripcion");
             String tipo = request.getParameter("txtTipo");
             String img = request.getParameter("txtImagen");
+            int precio = Integer.parseInt(request.getParameter("txtPrecio"));
             bPdto.setId_Producto(id);
             bPdto.setNombre_producto(nombre);
             bPdto.setDescripcion(descripcion);
-            bPdto.setTipo_producto(tipo);
+            bPdto.setTipoProducto(bTPdto);
+            bPdto.setPrecio(precio);
             bPdto.setImage_ref(img);
             dPdto.edit(bPdto);
             acceso = listar;

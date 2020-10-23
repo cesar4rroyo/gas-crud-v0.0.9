@@ -43,6 +43,21 @@
 
 /* cart */
 
+.cart-count{
+    background: #e75353;
+    color:white;
+    border-radius: 100%;
+    font-weight:bold;
+    padding: 2px;
+    height: 20px;
+    width: 20px;
+    line-height: 1;
+    text-align: center;
+    position:relative;    
+    top:8px;
+    right:10px;    
+}
+
 .cart {
     padding: 1rem;
     margin: 1rem;

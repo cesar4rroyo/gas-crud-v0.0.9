@@ -244,7 +244,7 @@
                                 <hr>
                                 <h4><%= bPdto.getNombre_producto()%></h4>
                                 <p><%= bPdto.getDescripcion()%></p> <br>
-                                <p><%= bPdto.getTipo_producto()%></p>                                
+                                <p><%= bPdto.getTipoProducto().getTipo()%></p>                                
                             </div>
                         </div>
                         <%}%>
