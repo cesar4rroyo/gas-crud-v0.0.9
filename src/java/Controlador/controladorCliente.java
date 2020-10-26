@@ -31,17 +31,23 @@ public class controladorCliente extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet controladorCliente</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet controladorCliente at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String rutaUrl = request.getServletPath();
+        if (rutaUrl.equals("/agregarCliente.jsp")) {
+            String nombre = request.getParameter("txtNom");
+            String apellido = request.getParameter("txtApe");
+            String ubicacion = request.getParameter("txtUbi");
+            String dni = request.getParameter("txtDni");
+            String telefono = request.getParameter("txtTel");
+            String foto = request.getParameter("txtFot");
+            b.setNombre(nombre);
+            b.setApellido(apellido);
+            b.setUbicacion(ubicacion);
+            b.setDni(dni);
+            b.setTelefono(telefono);
+            b.setFoto_casa(foto);
+            dao.add(b);
+            
+            response.sendRedirect("procederCompra.jsp");
         }
     }
 

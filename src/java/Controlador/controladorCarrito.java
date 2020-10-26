@@ -5,7 +5,9 @@
  */
 package Controlador;
 
+import ModeloDAO.daoCliente;
 import ModeloDAO.daoTipoProducto;
+import beans.beanCliente;
 import beans.beanProducto;
 import beans.beanTipoProducto;
 import java.io.IOException;
@@ -36,7 +38,6 @@ public class controladorCarrito extends HttpServlet {
         url = request.getServletPath();
         if (url.equals("/eliminar.html")) {
             eliminar(request, response);
-
         }
     }
 
@@ -45,7 +46,28 @@ public class controladorCarrito extends HttpServlet {
         url = request.getServletPath();
         if (url.equals("/agregarProducto.html")) {
             añadir(request, response);
+        } else if (url.equals("/buscarCliente.html")) {
+            buscarCliente(request, response);
         }
+    }
+
+    private void buscarCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        PrintWriter salida = response.getWriter();
+        int dni = Integer.parseInt(request.getParameter("txtDni"));
+
+        try {
+            daoCliente dC = new daoCliente();
+            beanCliente bC = new beanCliente();
+            bC = dC.buscarDni(dni);
+            salida.print(bC.getNombre()
+                    + "," + bC.getApellido() + ","
+                    + bC.getDni() + "," + bC.getUbicacion()
+                    + "," + bC.getTelefono() + "," + bC.getId_Cliente());
+
+        } catch (Exception ex) {
+            salida.print("Error: " + ex);
+        }
+
     }
 
     private void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {

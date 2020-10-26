@@ -44,7 +44,7 @@
                         sesion = request.getSession(false);
                         //ArrayList<beanProducto> lista = (ArrayList<beanProducto>) sesion.getAttribute("carroCompras");
                         int totalProductos = 0;
-                        int precioTotal=0;
+                        int precioTotal = 0;
 
                         if (sesion.getAttribute("carroCompras") != null) {
                             daoProducto dPdto1 = new daoProducto();
@@ -53,7 +53,7 @@
                             beanProducto bPdto1 = null;
                             for (beanProducto b : lista) {
                                 totalProductos = totalProductos + b.getCantidad();
-                                precioTotal = precioTotal + b.getCantidad()*b.getPrecio() ;
+                                precioTotal = precioTotal + b.getCantidad() * b.getPrecio();
                             }
 
                     %>
@@ -66,9 +66,9 @@
                                 int i = 0;
                                 while (iter1.hasNext()) {
                                     bPdto1 = iter1.next();
-                                    int precio =bPdto1.getPrecio();
-                                    int cantidad=bPdto1.getCantidad();
-                                    int subtotal = precio*cantidad;
+                                    int precio = bPdto1.getPrecio();
+                                    int cantidad = bPdto1.getCantidad();
+                                    int subtotal = precio * cantidad;
                             %>
                             <li>
                                 <div class="cart_item_container">
@@ -95,22 +95,25 @@
                                     i++;
                                 }%>
                         </ul>
-                    </div>                    
+                    </div> 
                     <div>
                         <div class="total_container mb-2">
                             <div class="total">
                                 <div class="value_container">
                                     Total:
+                                    <input type="hidden" name="txtImpTot" value="<%=precioTotal%>" >
                                     <span class="total_value"> s/.<%=precioTotal%>.00</span>
                                 </div>
                                 <div class="total_btn_actions">
                                     <button class="close_btn" id="btnCerrar" onclick="cerrar()"> 
                                         Cerrar
                                     </button>
-                                    <button                                   
+                                    <a      
+                                        type="submit"
+                                        href="procederCompra.jsp"
                                         class="proceed_btn">                                    
                                         Proceder compra
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

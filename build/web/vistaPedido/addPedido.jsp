@@ -1,10 +1,16 @@
 
-<%@page import="beans.beanCliente"%>
+<%@page import="beans.beanEstadoPed"%>
+<%@page import="ModeloDAO.daoEstadoPed"%>
+<%@page import="beans.beanRepartidor"%>
+<%@page import="ModeloDAO.daoRepartidor"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="beans.beanProducto"%>
 <%@page import="java.util.List"%>
-<%@page import="ModeloDAO.daoCliente"%>
+<%@page import="java.util.List"%>
+<%@page import="ModeloDAO.daoProducto"%>
+<%@page import="ModeloDAO.daoProducto"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page session="true" %>
+<!DOCTYPE html>
 <%
 
     HttpSession sc = request.getSession();
@@ -24,12 +30,10 @@
     }
 
 %>
-<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-        <title>Clientes</title>
+        <title>Agregar Pedido</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" >
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -95,7 +99,6 @@
             </nav>
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
-                    <!--navbar es el menu de la parte superior-->
                     <nav
                         class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top"
                         >
@@ -289,120 +292,143 @@
                         </div>
                     </nav>
                     <div class="container" >
-                        <div class="text-center pt-5">
-                            <h1>Clientes</h1>
+                        <div class="text-center pt-5" >
+                            <h3>Buscar Cliente</h3>
                         </div>
-                        <form action="buscar.jsp">
+                        <div id="formBuscarCliente">                            
                             <div class="d-flex justify-content-center mt-5 mb-4">            
                                 <div class="row">
                                     <div class="col-auto">
-                                        <input class="form-control" autocomplete="off" name="buscar" id="search" type="text">                         
+                                        <input class="form-control" id="txtDniBuscar" name="txtDniBuscar" placeholder="DNI" autocomplete="off" required>
                                     </div>                   
                                     <div class="col-auto">
-                                        <button type="button" class="btn btn-info">Buscar <i class="fa fa-search"></i>
-                                        </button>                                    
+                                        <button onclick="buscar()" id="btnBuscarCliente" class="btn btn-outline-info">Buscar <i class="fa fa-search"></i> </button>
                                     </div>                                     
                                 </div>
                             </div>
-                        </form>
+                        </div>
                         <div class="container">
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal_insertar"><i class="fa fa-plus"> </i>  Añadir nuevo </button>
-                        </div>            
-                        <div class="modal fade" id="modal_insertar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="controladorCliente">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Cliente</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="form-group col-md">
-                                                    <label for="txtNombre">Nombre: </label>
-                                                    <input class="form-control" placeholder="Nombre" type="text" name="txtNom" id="txtNombre" required autoComplete="off" />
-                                                </div>
-                                                <div class="form-group col-md">
-                                                    <label for="txtDireccion">Apellido </label>
-                                                    <input class="form-control" type="text" name="txtApe" placeholder="Apellido" id="txtDireccion" required autoComplete="off" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="producto">Ubicacion: </label>
-                                                <input class="form-control" type="text" placeholder="Ubicación" name="txtUbi" id="producto" required autoComplete="off" />
-                                            </div> 
-                                            <div class="row">
-                                                <div class="form-group col-md">
-                                                    <label for="producto">DNI: </label>
-                                                    <input class="form-control" type="number" placeholder="Nro de DNI" name="txtDni" id="producto" required autoComplete="off" />
-                                                </div> 
-                                                <div class="form-group col-md">
-                                                    <label for="image">Teléfono:</label>
-                                                    <input class="form-control" type="number" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTelefono" autoComplete="off" />                                                    
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="producto">Foto de la casa: </label>
-                                                <input class="form-control" type="text" placeholder="Foto" name="txtFot" id="producto" required autoComplete="off" />
-                                            </div>                                             
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <input type="submit" name="accion" class="btn btn-primary" defaultValue="Agregar" />
-                                        </div>
-                                    </form>
+                            <form action="agregarPedidoCompleto" method="POST" id="formPedido" class="d-none">
+                                <input type="hidden" name="txtIdCli" id="txtIdCli">
+                                <div class="row">
+                                    <div class="form-group col-md">
+                                        <label for="txtNombre">Nombre: </label>
+                                        <input id="txtNombre" class="form-control" placeholder="Nombre" type="text" name="txtNombre" id="txtNombre" required autoComplete="off" />
+                                    </div>
+                                    <div class="form-group col-md">
+                                        <label for="txtApellido">Apellido </label>
+                                        <input class="form-control" type="text" name="txtApellido" placeholder="Apellido" id="txtApellido" required autoComplete="off" />
+                                    </div>
                                 </div>
+                                <div class="form-group">
+                                    <label for="txtUbicacion">Ubicacion: </label>
+                                    <input class="form-control" type="text" placeholder="Ubicación" name="txtUbicacion" id="txtUbicacion" required autoComplete="off" />
+                                </div> 
+                                <div class="row">
+                                    <div class="form-group col-md">
+                                        <label for="txtDni">DNI: </label>
+                                        <input class="form-control" type="text" placeholder="Nro de DNI" name="txtDni" id="txtDni" required autoComplete="off" />
+                                    </div> 
+                                    <div class="form-group col-md">
+                                        <label for="txtTel">Teléfono:</label>
+                                        <input class="form-control" type="text" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTel" autoComplete="off" />                                                    
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="producto">Producto: </label>
+                                    <%
+                                        daoProducto dao = new daoProducto();
+                                        List<beanProducto> lstTrp = dao.listar();
+
+                                    %>
+                                    <select id="producto" name="txtIdCli" class="form-control" required>
+                                        <option value="1">Seleccione una opcion</option>
+                                        <% for (beanProducto i : lstTrp) {%>                                                    
+                                        <option value="<%=i.getId_Producto()%>">
+                                            <%=i.getNombre_producto()%>, Precio: s/.<%=i.getPrecio()%>.00, Tipo:<%=i.getTipoProducto().getTipo()%>
+                                        </option>
+                                        <% }%>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md">
+                                        <label for="repartidor">Repartidor: </label>
+                                        <%
+                                            daoRepartidor daoR = new daoRepartidor();
+                                            List<beanRepartidor> list = daoR.listarRep();
+
+                                        %>
+                                        <select id="producto" class="form-control" name="txtIdRep" id="repartidor" required>
+                                            <option value="1">Seleccione una opcion</option>
+                                            <% for (beanRepartidor i : list) {%>                                                    
+                                            <option value="<%=i.getId_Repartidor()%>">
+                                                <%=i.getNombre()%>
+                                            </option>
+                                            <% }%>
+                                        </select>
+                                    </div> 
+                                    <div class="form-group col-md">
+                                        <label for="estado">Estado Pedido: </label>
+                                        <%
+                                            daoEstadoPed daoE = new daoEstadoPed();
+                                            List<beanEstadoPed> listE = daoE.listar();
+
+                                        %>
+                                        <select id="producto" name="txtIdEP" class="form-control"  id="estado" required>
+                                            <option value="1">Seleccione una opcion</option>
+                                            <% for (beanEstadoPed i : listE) {%>                                                    
+                                            <option value="<%=i.getId_Estado_pedido()%>">
+                                                <%=i.getNombre_estado()%>
+                                            </option>
+                                            <% }%>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button id="btnFinalizar" class="btn btn-success btn-block">
+                                    Finalizar Pedido
+                                </button>
+                            </form>
+                        </div>
+                        <div class="container">
+                            <div class="d-none" id="mensajeRegistro">
+                                <p class="text-danger">El cliente no se encuentra registrado, registrelo para poder proceder la compra</p>
                             </div>
+                            <form action="agregarCliente.jsp" method="POST" id="formRegistroCliente" class="d-none">
+                                <div class="row">
+                                    <div class="form-group col-md">
+                                        <label for="txtNombre">Nombre: </label>
+                                        <input id="txtNombre" class="form-control" placeholder="Nombre" type="text" name="txtNom" id="txtNombre" required autoComplete="off" />
+                                    </div>
+                                    <div class="form-group col-md">
+                                        <label for="txtApellido">Apellido </label>
+                                        <input class="form-control" type="text" name="txtApe" placeholder="Apellido" id="txtApellido" required autoComplete="off" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="txtUbicacion">Ubicacion: </label>
+                                    <input class="form-control" type="text" placeholder="Ubicación" name="txtUbi" id="txtUbicacion" required autoComplete="off" />
+                                </div> 
+                                <div class="row">
+                                    <div class="form-group col-md">
+                                        <label for="txtDni">DNI: </label>
+                                        <input class="form-control" type="text" placeholder="Nro de DNI" name="txtDni" id="txtDni" required autoComplete="off" />
+                                    </div> 
+                                    <div class="form-group col-md">
+                                        <label for="txtTel">Teléfono:</label>
+                                        <input class="form-control" type="text" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTel" autoComplete="off" />                                                    
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input class="form-control" type="hidden" placeholder="Ubicación" name="txtFot" id="txtUbicacion" required autoComplete="off" />
+                                </div> 
+                                <button type="submit" id="btnRegistrarse" class="btn btn-outline-success btn-block">
+                                    Registrarse
+                                </button>
+                            </form>
                         </div>
                         <!--desde aqui empieza el verdadero codigo :v-->
                         <div class="container mt-5 text-center" >
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Apellido</th>
-                                            <th scope="col">Ubicación</th>
-                                            <th scope="col">DNI</th>
-                                            <th scope="col">Teléfono</th>
-                                            <th scope="col">Foto de la Casa</th>
-                                            <th scope="col">Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <%
-                                        daoCliente dao = new daoCliente();
-                                        List<beanCliente> list = dao.listar();
-                                        Iterator<beanCliente> iter = list.iterator();
-                                        beanCliente cli = null;
-                                        while (iter.hasNext()) {
-                                            cli = iter.next();
 
-                                    %>
-                                    <tbody>
-                                        <tr>                                                                                       
-                                            <td><%= cli.getNombre()%></td>
-                                            <td><%= cli.getApellido()%></td>
-                                            <td><%= cli.getUbicacion()%></td>
-                                            <td><%= cli.getDni()%></td>
-                                            <td><%= cli.getTelefono()%></td>
-                                            <td><%= cli.getFoto_casa()%></td>
-                                            <td>
-                                                <div class="btn-group" >
-                                                    <a class="btn btn-primary" href="controladorCliente?accion=editar&id=<%= cli.getId_Cliente()%>">
-                                                        <i class="fa fa-pencil-square-o"></i>Editar
-                                                    </a>
-                                                    <a class="btn btn-danger" href="controladorCliente?accion=eliminar&id=<%= cli.getId_Cliente()%>">
-                                                        <i class="fa fa-trash"></i> Eliminar
-                                                    </a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <%}%>
-                                    </tbody>
-                                </table>
-                            </div>
                         </div>
                         <!-- aqui acaba el codigo :v-->
                     </div>
@@ -431,12 +457,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script>
-        $('#modal_insertar').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        });
-
-    </script>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>    
 </html>
-

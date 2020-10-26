@@ -76,6 +76,9 @@
                             <a class="nav-link active" href="controladorTrp?accion=listarTrp"
                                ><i class="fas fa-car"></i><span>TRANSPORTE</span>
                             </a>
+                            <a class="nav-link active" href="listPedido"
+                               ><i class="fas fa-list"></i><span>PEDIDOS</span>
+                            </a>
                         </li>
                         <li class="nav-item" role="presentation"></li>
                     </ul>

@@ -13,13 +13,81 @@ import java.sql.Timestamp;
 public class beanPedido {
     
     private Timestamp fecha_inicio;
-    private int precio;
-    private beanEstadoPed id_Estado_pedido;
-    private beanProducto id_Producto;
-    private beanRepartidor id_Repartidor;
-    private beanCliente id_Cliente;
+    private beanEstadoPed estado_Pedido;
+    private beanProducto producto;
+    private beanRepartidor repartidor;
+    private beanCliente cliente;
+    private int importe_total;
+    private int id_estado_pedido;
+    private int id_repartido;
     private int id_Pedido;
     private Timestamp fecha_entrega;
+
+    public beanRepartidor getRepartidor() {
+        return repartidor;
+    }
+
+    public void setRepartidor(beanRepartidor repartidor) {
+        this.repartidor = repartidor;
+    }
+
+    public int getImporte_total() {
+        return importe_total;
+    }
+
+    public void setImporte_total(int importe_total) {
+        this.importe_total = importe_total;
+    }
+
+    public int getId_repartido() {
+        return id_repartido;
+    }
+
+    public void setId_repartido(int id_repartido) {
+        this.id_repartido = id_repartido;
+    }      
+
+    public beanEstadoPed getEstado_Pedido() {
+        return estado_Pedido;
+    }
+
+    public void setEstado_Pedido(beanEstadoPed estado_Pedido) {
+        this.estado_Pedido = estado_Pedido;
+    }
+
+    public beanProducto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(beanProducto producto) {
+        this.producto = producto;
+    }
+
+
+    public beanCliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(beanCliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public int getId_estado_pedido() {
+        return id_estado_pedido;
+    }
+
+    public void setId_estado_pedido(int id_estado_pedido) {
+        this.id_estado_pedido = id_estado_pedido;
+    }
+
+    public int getId_repartidor() {
+        return id_repartido;
+    }
+
+    public void setId_repartidor(int id_repartido) {
+        this.id_repartido = id_repartido;
+    }
+    
 
     public Timestamp getFecha_inicio() {
         return fecha_inicio;
@@ -28,46 +96,7 @@ public class beanPedido {
     public void setFecha_inicio(Timestamp fecha_inicio) {
         this.fecha_inicio = fecha_inicio;
     }
-
-    public int getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
-    }
-
-    public beanEstadoPed getId_Estado_pedido() {
-        return id_Estado_pedido;
-    }
-
-    public void setId_Estado_pedido(beanEstadoPed id_Estado_pedido) {
-        this.id_Estado_pedido = id_Estado_pedido;
-    }
-
-    public beanProducto getId_Producto() {
-        return id_Producto;
-    }
-
-    public void setId_Producto(beanProducto id_Producto) {
-        this.id_Producto = id_Producto;
-    }
-
-    public beanRepartidor getId_Repartidor() {
-        return id_Repartidor;
-    }
-
-    public void setId_Repartidor(beanRepartidor id_Repartidor) {
-        this.id_Repartidor = id_Repartidor;
-    }
-
-    public beanCliente getId_Cliente() {
-        return id_Cliente;
-    }
-
-    public void setId_Cliente(beanCliente id_Cliente) {
-        this.id_Cliente = id_Cliente;
-    }
+  
 
     public int getId_Pedido() {
         return id_Pedido;

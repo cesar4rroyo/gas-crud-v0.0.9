@@ -29,7 +29,6 @@
                     <th scope="col">Estado Pedido</th>
                     <th scope="col">Acciones</th>
 
-
                 </tr>
             </thead>
             <%
@@ -44,12 +43,12 @@
             <tbody>
                 <tr>                                                                                       
                     <td><%=bp.getId_Pedido()%></td>
-                    <td><%=bp.getId_Cliente().getNombre()%></td>
-                    <td><%=bp.getId_Producto().getNombre_producto()%></td>
+                    <td><%=bp.getCliente().getNombre()%></td>
+                    <td><%=bp.getProducto().getNombre_producto()%></td>
                     <td><%=bp.getFecha_inicio()%></td>
                     <td><%=bp.getFecha_entrega()%></td>
-                    <td><%=bp.getId_Repartidor().getNombre()%></td>
-                    <td><%=bp.getId_Estado_pedido().getNombre_estado()%></td>
+                    <td><%=bp.getRepartidor().getNombre()%></td>
+                    <td><%=bp.getEstado_Pedido().getNombre_estado()%></td>
                     <td>
                         <div class="btn-group" >
                             <a class="btn btn-primary" href="delete.jsp?&txtIdEsc=<%=bp.getId_Pedido()%>">

@@ -32,6 +32,10 @@
         <servlet-name>controladorCarrito</servlet-name>
         <servlet-class>Controlador.controladorCarrito</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorPedido</servlet-name>
+        <servlet-class>Controlador.controladorPedido</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -39,6 +43,8 @@
     <servlet-mapping>
         <servlet-name>controladorCliente</servlet-name>
         <url-pattern>/controladorCliente</url-pattern>
+        <url-pattern>/agregarCliente.jsp</url-pattern>
+
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>controladorPdto</servlet-name>
@@ -64,6 +70,19 @@
         <servlet-name>controladorCarrito</servlet-name>
         <url-pattern>/agregarProducto.html</url-pattern>
         <url-pattern>/eliminar.html</url-pattern>
+        <url-pattern>/buscarCliente.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorPedido</servlet-name>
+        <url-pattern>/addPedido</url-pattern>
+        <url-pattern>/delete.jsp</url-pattern>
+        <url-pattern>/editPedido</url-pattern>
+        <url-pattern>/add</url-pattern>
+        <url-pattern>/agregarPedidoCompleto</url-pattern>
+        <url-pattern>/edit</url-pattern>
+        <url-pattern>/listPedido</url-pattern>
+        <url-pattern>/procederCompra</url-pattern>
+        <url-pattern>/actualizarPedido</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
