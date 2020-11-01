@@ -88,6 +88,9 @@
                             <a class="nav-link active" href="listPedido"
                                ><i class="fas fa-list"></i><span>PEDIDOS</span>
                             </a>
+                            <a class="nav-link active" href="listCompra"
+                               ><i class="fas fa-shopping-basket"></i><span>COMPRAS</span>
+                            </a>
                         </li>
                         <li class="nav-item" role="presentation"></li>
                     </ul>
@@ -337,29 +340,29 @@
                                             </div>
                                             <div class="row" >
                                                 <div class="form-group col-md">
-                                                <label for="tipo_producto">Tipo: </label>
-                                                <!--<input class="form-control" type="text" placeholder="Tipo de Producto"  name="txtTipo" id="producto" required autocomplete="off" >-->
-                                                <%
-                                                    daoTipoProducto dao = new daoTipoProducto();
-                                                    List<beanTipoProducto> lstTrp = dao.listar();
-                                                    Iterator<beanTipoProducto> iter1 = lstTrp.iterator();
-                                                    beanTipoProducto bTrp = null;
-                                                %>
-                                                <select id="tipo_producto" name="idTipoPdto" class="form-control" required>
-                                                    <option value="1">Seleccione una opcion</option>
-                                                    <% for (beanTipoProducto i : lstTrp) {%>                                                    
-                                                    <option value="<%=i.getIdtipo_producto()%>">
-                                                        <%=i.getTipo()%>
-                                                    </option>
-                                                    <% } %>
-                                                </select>
+                                                    <label for="tipo_producto">Tipo: </label>
+                                                    <!--<input class="form-control" type="text" placeholder="Tipo de Producto"  name="txtTipo" id="producto" required autocomplete="off" >-->
+                                                    <%
+                                                        daoTipoProducto dao = new daoTipoProducto();
+                                                        List<beanTipoProducto> lstTrp = dao.listar();
+                                                        Iterator<beanTipoProducto> iter1 = lstTrp.iterator();
+                                                        beanTipoProducto bTrp = null;
+                                                    %>
+                                                    <select id="tipo_producto" name="idTipoPdto" class="form-control" required>
+                                                        <option value="1">Seleccione una opcion</option>
+                                                        <% for (beanTipoProducto i : lstTrp) {%>                                                    
+                                                        <option value="<%=i.getIdtipo_producto()%>">
+                                                            <%=i.getTipo()%>
+                                                        </option>
+                                                        <% } %>
+                                                    </select>
                                                 </div>
                                                 <div class="form-group col-sm" >
                                                     <label for="precio" >Precio: </label>
                                                     <input class="form-control" type="text" name="txtPrecio" placeholder="Precio" id="precio" required autocomplete="off">
                                                 </div>
                                             </div>
-                                                                                           
+
                                             <div class="form-group">
                                                 <label for="image">Imagen:  </label>
                                                 <input type="hidden" value="" name="txtImagen" id="img-preview">
@@ -385,6 +388,7 @@
                                             <th scope="col">Tipo</th>
                                             <th scope="col">Precio</th>
                                             <th scope="col">Imagen</th>
+                                            <th scope="col">Stock</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
@@ -407,6 +411,7 @@
                                                     <i class="fa fa-eye"></i>
                                                 </a>
                                             </td>
+                                            <td><%= bPdto.getStock()%></td>
                                             <td>
                                                 <div class="btn-group" >
                                                     <a class="btn btn-primary" href="controladorPdto?accion=editar&idP=<%= bPdto.getId_Producto()%>">

@@ -36,8 +36,18 @@
     </head>
     <body>        
         <div class="overlay_container d-none" id="cart">
+            <%
+                String compra = (String) request.getAttribute("compra");
+                if (compra != null) {
+            %>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script>
+                swal("Operación exitosa!", "Estamos preparando tu pedido", "success");
+            </script>
+            <%}%>
             <div class="slide_container">
                 <div class="cart_general">
+
 
                     <%
                         HttpSession sesion;
@@ -56,7 +66,9 @@
                                 precioTotal = precioTotal + b.getCantidad() * b.getPrecio();
                             }
 
+
                     %>
+
                     <div class="cart cart-header">
                         Tienes <%=totalProductos%> seleccionados
                     </div>
@@ -140,8 +152,8 @@
                 <nav class="nav-menu d-none d-lg-block">
                     <ul>
                         <li class="active"><a href="#inicio">Inicio</a></li>                        
-                        <li><a href="#services">Productos</a></li>
-                        <li><a href="#contact">Contacto</a></li>
+                        <li><a href="#inicio">Productos</a></li>
+                        <li><a href="misPedidos.jsp">Ver mis pedidos</a></li>
 
                     </ul>
                 </nav><!-- .nav-menu -->

@@ -25,11 +25,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.logicPedido;
 
-/**
- *
- * @author cesar4rroyo
- */
 public class controladorPedido extends HttpServlet {
 
     beanPedido bPed;
@@ -65,14 +62,14 @@ public class controladorPedido extends HttpServlet {
         } else if (rutaUrl.equals("/listPedido")) {
             RequestDispatcher vista = request.getRequestDispatcher("vistaPedido/listarPedido.jsp");
             vista.forward(request, response);
-        } else if(rutaUrl.equals("/agregarPedidoCompleto")){
+        } else if (rutaUrl.equals("/agregarPedidoCompleto")) {
             agregarPedidoCompleto(request, response);
-        }else if(rutaUrl.equals("/actualizarPedido")){
+        } else if (rutaUrl.equals("/actualizarPedido")) {
             actualizar(request, response);
         }
     }
 
-    public void agregarPedidoTemporal(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void agregarPedidoTemporal(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
 //Aca se va a agregar el pedido temporal este pedido
 //no va tener repartidor aun asignado, y el estado pedido sera por defecto el primero, "en espera"
@@ -105,9 +102,11 @@ public class controladorPedido extends HttpServlet {
         try {
             dPed.addPedidoTemporal(bPed);
             String acceso = "pedido.jsp";
-            response.sendRedirect(acceso);
-//            RequestDispatcher vista = request.getRequestDispatcher(acceso);
-//            vista.forward(request, response);
+            sesion.invalidate();
+//            response.sendRedirect(acceso);
+            request.setAttribute("compra", "success");
+            RequestDispatcher vista = request.getRequestDispatcher(acceso);
+            vista.forward(request,response);
         } catch (IOException e) {
             out.print(e);
         }
@@ -167,16 +166,20 @@ public class controladorPedido extends HttpServlet {
         bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
         bRep = dRep.listRep(Integer.parseInt(request.getParameter("txtIdRep")));
         bEP = dEP.list(Integer.parseInt(request.getParameter("txtIdEP")));
-
+        bPed.setId_Pedido(Integer.parseInt(request.getParameter("txtIdPed")));
         bPed.setImporte_total(bPdt.getPrecio());
         bPed.setCliente(bC);
         bPed.setProducto(bPdt);
         bPed.setEstado_Pedido(bEP);
         bPed.setRepartidor(bRep);
-        
+
 
         try {
             dPed.edit(bPed);
+            if(Integer.parseInt(request.getParameter("txtIdEP"))==5){
+                int nuevo_stock = bPdt.getStock()-1;
+                dPdt.actualizarStock(bPdt.getStock()-1, bPdt.getId_Producto());
+            }
             String acceso = "listPedido";
 //            response.sendRedirect(acceso);
             RequestDispatcher vista = request.getRequestDispatcher(acceso);

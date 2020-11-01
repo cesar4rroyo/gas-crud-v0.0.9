@@ -23,7 +23,7 @@ public class daoProducto implements pdtoCRUD {
     @Override
     public List listar() {
         ArrayList<beanProducto> lstPdto = new ArrayList<>();
-        String sql = "select id_Producto, precio, nombre_producto, descripcion, image_ref, "
+        String sql = "select id_Producto, stock, precio, nombre_producto, descripcion, image_ref, "
                 + "idtipo_producto, tipo  FROM producto "
                 + "INNER JOIN tipo_producto ON producto.id_tipo_producto=tipo_producto.idtipo_producto";
         try {
@@ -42,6 +42,7 @@ public class daoProducto implements pdtoCRUD {
                 bPdto.setDescripcion(rs.getString("descripcion"));
                 bPdto.setImage_ref(rs.getString("image_ref"));
                 bPdto.setPrecio(rs.getInt("precio"));
+                bPdto.setStock(rs.getInt("stock"));
                 bPdto.setTipoProducto(bTPdto);
 
                 lstPdto.add(bPdto);
@@ -53,7 +54,7 @@ public class daoProducto implements pdtoCRUD {
 
     @Override
     public beanProducto list(int idPdto) {
-        String sql = "select id_Producto, nombre_producto, descripcion, image_ref, "
+        String sql = "select id_Producto, precio, stock, nombre_producto, descripcion, image_ref, "
                 + "idtipo_producto, tipo  FROM producto "
                 + "INNER JOIN tipo_producto ON producto.id_tipo_producto=tipo_producto.idtipo_producto where id_Producto=" + idPdto;
         try {
@@ -65,7 +66,7 @@ public class daoProducto implements pdtoCRUD {
                 bTPdto = new beanTipoProducto();
                 bTPdto.setIdtipo_producto(rs.getInt("idtipo_producto"));
                 bTPdto.setTipo(rs.getString("tipo"));
-
+                bPdto.setStock(rs.getInt("stock"));
                 bPdto.setId_Producto(rs.getInt("id_Producto"));
                 bPdto.setNombre_producto(rs.getString("nombre_producto"));
                 bPdto.setDescripcion(rs.getString("descripcion"));
@@ -83,6 +84,18 @@ public class daoProducto implements pdtoCRUD {
     public boolean add(beanProducto bPdto) {
         String sql = "INSERT INTO producto (nombre_producto, descripcion, image_ref,precio,  id_tipo_producto) VALUES ('" + bPdto.getNombre_producto() + "', '" + bPdto.getDescripcion()
                 + "', '" + bPdto.getImage_ref()+ "', '" + bPdto.getPrecio() + "', '"+bPdto.getTipoProducto().getIdtipo_producto()+"')";
+        try {
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            out.print("Error" + e);
+        }
+        return false;
+    }
+    
+    public boolean actualizarStock(int stock, int id){
+        String sql= "UPDATE producto set stock='"+stock+"' WHERE id_Producto="+id;
         try {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);

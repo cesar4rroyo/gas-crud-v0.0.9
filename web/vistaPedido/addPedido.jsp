@@ -85,6 +85,9 @@
                             <a class="nav-link active" href="listPedido"
                                ><i class="fas fa-list"></i><span>PEDIDOS</span>
                             </a>
+                            <a class="nav-link active" href="listCompra"
+                               ><i class="fas fa-shopping-basket"></i><span>COMPRAS</span>
+                            </a>
                         </li>
                         <li class="nav-item" role="presentation"></li>
                     </ul>
@@ -307,8 +310,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="container">
-                            <form action="agregarPedidoCompleto" method="POST" id="formPedido" class="d-none">
+                        <div class="container d-none"  id="formPedido">
+                            <form action="agregarPedidoCompleto" method="POST">
                                 <input type="hidden" name="txtIdCli" id="txtIdCli">
                                 <div class="row">
                                     <div class="form-group col-md">
@@ -341,7 +344,7 @@
                                         List<beanProducto> lstTrp = dao.listar();
 
                                     %>
-                                    <select id="producto" name="txtIdCli" class="form-control" required>
+                                    <select id="producto" name="txtIdPdto" class="form-control" required>
                                         <option value="1">Seleccione una opcion</option>
                                         <% for (beanProducto i : lstTrp) {%>                                                    
                                         <option value="<%=i.getId_Producto()%>">
@@ -389,11 +392,11 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="container">
-                            <div class="d-none" id="mensajeRegistro">
+                        <div class="container d-none"  id="formRegistroCliente">
+                            <div  id="mensajeRegistro">
                                 <p class="text-danger">El cliente no se encuentra registrado, registrelo para poder proceder la compra</p>
                             </div>
-                            <form action="agregarCliente.jsp" method="POST" id="formRegistroCliente" class="d-none">
+                            <form action="agregarCliente.jsp" method="POST">
                                 <div class="row">
                                     <div class="form-group col-md">
                                         <label for="txtNombre">Nombre: </label>
@@ -457,5 +460,61 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>    
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script> 
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+                                            function buscar() {
+                                                param = document.getElementById("txtDniBuscar").value;
+                                                resetForm();
+                                                axios({
+                                                    method: 'POST',
+                                                    url: 'buscarCliente.html',
+                                                    data: "txtDni=" + param,
+                                                }).then((res) => {
+                                                    console.log("Correcto!" + res.data);
+                                                    data = res.data;
+                                                    var dividirCadena = data.split(",");
+                                                    if (dividirCadena[0] !== "null") {
+                                                        document.getElementById("formPedido").classList.remove("d-none");
+                                                        $("#txtNombre").val(dividirCadena[0]);
+                                                        $("#txtApellido").val(dividirCadena[1]);
+                                                        $("#txtDni").val(dividirCadena[2]);
+                                                        $("#txtUbicacion").val(dividirCadena[3]);
+                                                        $("#txtTel").val(dividirCadena[4]);
+                                                        $("#txtIdCli").val(dividirCadena[5]);
+
+                                                    } else {
+                                                        document.getElementById("mensajeRegistro").classList.remove("d-none");
+                                                        document.getElementById("formRegistroCliente").classList.remove("d-none");
+
+                                                    }
+
+                                                }).catch((e) => {
+                                                    console.log("Error:" + e);
+                                                });
+                                            }
+
+//                                            function showForm() {
+//                                                const form = document.getElementById("formBuscarCliente");
+//                                                form.classList.remove("d-none");
+//
+//                                            }
+//                                            function showFormCliente() {
+//                                                const formCliente = document.getElementById("formCliente");
+//                                                formCliente.classList.remove("d-none");
+//                                            }
+
+                                            function resetForm() {
+                                                $("#txtNombre").val("");
+                                                $("#txtApellido").val("");
+                                                $("#txtDni").val("");
+                                                $("#txtUbicacion").val("");
+                                                $("#txtTel").val("");
+                                                $("#txtIdCli").val("");
+                                                document.getElementById("mensajeRegistro").classList.add("d-none");
+                                                document.getElementById("formRegistroCliente").classList.add("d-none");
+                                            }
+                                            const btnConfirmar = document.getElementById("btnConfirmar");
+                                            var formCliente = document.getElementById("formCliente");
+    </script>
 </html>

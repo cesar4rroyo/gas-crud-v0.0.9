@@ -90,6 +90,9 @@
                             <a class="nav-link active" href="listPedido"
                                ><i class="fas fa-list"></i><span>PEDIDOS</span>
                             </a>
+                            <a class="nav-link active" href="listCompra"
+                               ><i class="fas fa-shopping-basket"></i><span>COMPRAS</span>
+                            </a>
                         </li>
                         <li class="nav-item" role="presentation"></li>
                     </ul>
@@ -308,14 +311,13 @@
                                 int idPedido = Integer.parseInt((String) request.getAttribute("id"));
                                 beanPedido bPedido = (beanPedido) dao.list(idPedido);
                             %>
-                            <form action="actualizarPedido">
+                            <form action="actualizarPedido" method="POST">
                                 <div class="form-group">
                                     Producto:
                                     <br>
                                     <%
                                         daoProducto daoPrd = new daoProducto();
                                         List<beanProducto> listPrd = daoPrd.listar();
-
                                     %>
                                     <select id="producto" name="txtIdPdto" class="form-control" required>
                                         <option value="<%=bPedido.getProducto().getId_Producto()%>"><%=bPedido.getProducto().getNombre_producto()%></option>
@@ -331,7 +333,6 @@
                                     <%
                                         daoRepartidor daoR = new daoRepartidor();
                                         List<beanRepartidor> list = daoR.listarRep();
-
                                     %>
                                     <select id="producto" class="form-control" name="txtIdRep" id="repartidor" required>
                                         <option value="<%=bPedido.getRepartidor().getId_Repartidor()%>"><%=bPedido.getRepartidor().getId_Repartidor()%></option>
@@ -348,7 +349,6 @@
                                     <%
                                         daoEstadoPed daoE = new daoEstadoPed();
                                         List<beanEstadoPed> listE = daoE.listar();
-
                                     %>
                                     <select id="producto" name="txtIdEP" class="form-control"  id="estado" required>
                                         <option value="<%=bPedido.getEstado_Pedido().getId_Estado_pedido()%>"><%=bPedido.getEstado_Pedido().getNombre_estado()%></option>
@@ -359,7 +359,7 @@
                                         <% }%>
                                     </select>
                                 </div>
-                                <input type="hidden" name="txtIdPdto" value="<%=bPedido.getId_Pedido()%>">
+                                <input type="hidden" name="txtIdPed" value="<%=bPedido.getId_Pedido()%>">
                                 <input type="hidden" name="txtIdCli" value="<%=bPedido.getCliente().getId_Cliente()%>">
                                 <div class="container mt-3">
                                     <input class="btn btn-success" type="submit"  id="btnAgregar" name="accion" value="Actualizar">

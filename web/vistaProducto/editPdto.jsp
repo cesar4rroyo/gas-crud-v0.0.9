@@ -87,6 +87,9 @@
                             <a class="nav-link active" href="listPedido"
                                ><i class="fas fa-list"></i><span>PEDIDOS</span>
                             </a>
+                            <a class="nav-link active" href="listCompra"
+                               ><i class="fas fa-shopping-basket"></i><span>COMPRAS</span>
+                            </a>
                         </li>
                         <li class="nav-item" role="presentation"></li>
                     </ul>
@@ -313,19 +316,19 @@
                             <%
                                 daoTipoProducto dao = new daoTipoProducto();
                                 List<beanTipoProducto> lstTrp = dao.listar();
-                                Iterator<beanTipoProducto> iter1 = lstTrp.iterator();
-                                beanTipoProducto bTrp = null;
                             %>
                             <select id="tipo_producto" name="idTipoPdto" class="form-control" required>
-                                <option value="1">Seleccione una opcion</option>
+                                <option value="1">Seleccione uno</option>
                                 <% for (beanTipoProducto i : lstTrp) {%>                                                    
                                 <option value="<%=i.getIdtipo_producto()%>">
                                     <%=i.getTipo()%>
                                 </option>
                                 <% }%>
                             </select>
+                            <br>
                             Precio: <br>
                             <input class="form-control" value="<%=bPdto.getPrecio()%>" type="text" name="txtPrecio" placeholder="Precio" id="precio" required autocomplete="off">
+                            <br>
                             Imagen: <br>
                             <input type="hidden" value="<%=bPdto.getImage_ref()%>" name="txtImagen" id="img-preview">
                             <input class="form-control-file" name="file" type="file" id="file-upload" value="Seleccionar imagen">   

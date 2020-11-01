@@ -81,6 +81,9 @@
                             <a class="nav-link active" href="listPedido"
                                ><i class="fas fa-list"></i><span>PEDIDOS</span>
                             </a>
+                            <a class="nav-link active" href="listCompra"
+                               ><i class="fas fa-shopping-basket"></i><span>COMPRAS</span>
+                            </a>
                         </li>
                         <li class="nav-item" role="presentation"></li>
                     </ul>
@@ -367,7 +370,6 @@
                                             <th scope="col">Ubicación</th>
                                             <th scope="col">DNI</th>
                                             <th scope="col">Teléfono</th>
-                                            <th scope="col">Foto de la Casa</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
@@ -387,7 +389,6 @@
                                             <td><%= cli.getUbicacion()%></td>
                                             <td><%= cli.getDni()%></td>
                                             <td><%= cli.getTelefono()%></td>
-                                            <td><%= cli.getFoto_casa()%></td>
                                             <td>
                                                 <div class="btn-group" >
                                                     <a class="btn btn-primary" href="controladorCliente?accion=editar&id=<%= cli.getId_Cliente()%>">

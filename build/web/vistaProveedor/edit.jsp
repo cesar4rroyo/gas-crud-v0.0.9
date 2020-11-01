@@ -13,12 +13,12 @@
     HttpSession sc = request.getSession();
     String username = "";
     String tipo = "";
-    if (sc.getAttribute("username") != null && sc!=null) {
-        username= sc.getAttribute("username").toString();
-        tipo=sc.getAttribute("tipo").toString();
+    if (sc.getAttribute("username") != null && sc != null) {
+        username = sc.getAttribute("username").toString();
+        tipo = sc.getAttribute("tipo").toString();
         sc.setAttribute("username", username);
         sc.setAttribute("tipo", tipo);
-   
+
         if (tipo.equalsIgnoreCase("repartidor")) {
             response.sendRedirect("login.jsp");
         }
@@ -82,6 +82,9 @@
                             </a>
                             <a class="nav-link active" href="listPedido"
                                ><i class="fas fa-list"></i><span>PEDIDOS</span>
+                            </a>
+                            <a class="nav-link active" href="listCompra"
+                               ><i class="fas fa-shopping-basket"></i><span>COMPRAS</span>
                             </a>
                         </li>
                         <li class="nav-item" role="presentation"></li>
@@ -335,7 +338,7 @@
                 ></a>
         </div>
     </body>
-     <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="assets/js/theme.js"></script>

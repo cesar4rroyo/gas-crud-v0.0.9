@@ -6,10 +6,13 @@ public class beanProducto {
     private String nombre_producto;
     private String descripcion;
     private String image_ref;
-    private int cantidad;
     private beanTipoProducto tipoProducto;
     private int precio;
-
+    private int stock;
+    private int cantidad;
+    
+            
+    
     public int getPrecio() {
         return precio;
     }
@@ -61,6 +64,14 @@ public class beanProducto {
         this.image_ref = image_ref;
     }
 
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
     public int getCantidad() {
         return cantidad;
     }
@@ -69,4 +80,5 @@ public class beanProducto {
         this.cantidad = cantidad;
     }
 
+  
 }

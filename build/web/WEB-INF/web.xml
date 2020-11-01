@@ -36,6 +36,14 @@
         <servlet-name>controladorPedido</servlet-name>
         <servlet-class>Controlador.controladorPedido</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorCompra</servlet-name>
+        <servlet-class>Controlador.controladorCompra</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>controladorPedidoCliente</servlet-name>
+        <servlet-class>Controlador.controladorPedidoCliente</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -44,7 +52,6 @@
         <servlet-name>controladorCliente</servlet-name>
         <url-pattern>/controladorCliente</url-pattern>
         <url-pattern>/agregarCliente.jsp</url-pattern>
-
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>controladorPdto</servlet-name>
@@ -84,9 +91,22 @@
         <url-pattern>/procederCompra</url-pattern>
         <url-pattern>/actualizarPedido</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorCompra</servlet-name>
+        <url-pattern>/editCompra</url-pattern>
+        <url-pattern>/editCompra.html</url-pattern>
+        <url-pattern>/addCompra</url-pattern>
+        <url-pattern>/deleteCompra</url-pattern>
+        <url-pattern>/listCompra</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorPedidoCliente</servlet-name>
+        <url-pattern>/listar</url-pattern>
+        <url-pattern>/buscarPedido.html</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            30
+            60
         </session-timeout>
     </session-config>
 </web-app>

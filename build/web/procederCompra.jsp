@@ -158,7 +158,7 @@
                                     <input class="form-control" id="txtDniBuscar" name="txtDniBuscar" placeholder="DNI" autocomplete="off" required>
                                 </div>
                                 <div class="col-sm" >
-                                    <button onclick="buscar()" id="btnBuscarCliente" class="btn btn-outline-info">Buscar</button>
+                                    <button onclick="buscarCliente()" id="btnBuscarCliente" class="btn btn-outline-info">Buscar</button>
                                 </div>
 
                             </div>
@@ -236,13 +236,11 @@
                 </div>
             </div>
         </div>
-
-    </body>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="https://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script>
-                                        function buscar() {
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+                                        function buscarCliente() {
                                             param = document.getElementById("txtDniBuscar").value;
                                             resetForm();
                                             axios({
@@ -283,20 +281,22 @@
                                             const formCliente = document.getElementById("formCliente");
                                             formCliente.classList.remove("d-none");
                                         }
-                                        
+
                                         function resetForm() {
-                                                $("#txtNombre").val("");
-                                                $("#txtApellido").val("");
-                                                $("#txtDni").val("");
-                                                $("#txtUbicacion").val("");
-                                                $("#txtTel").val("");
-                                                $("#txtIdCli").val("");
-                                                document.getElementById("mensajeRegistro").classList.add("d-none");
-                                                document.getElementById("formRegistroCliente").classList.add("d-none");
+                                            $("#txtNombre").val("");
+                                            $("#txtApellido").val("");
+                                            $("#txtDni").val("");
+                                            $("#txtUbicacion").val("");
+                                            $("#txtTel").val("");
+                                            $("#txtIdCli").val("");
+                                            document.getElementById("mensajeRegistro").classList.add("d-none");
+                                            document.getElementById("formRegistroCliente").classList.add("d-none");
                                         }
                                         const btnConfirmar = document.getElementById("btnConfirmar");
 
 
                                         var formCliente = document.getElementById("formCliente");
-    </script>
+        </script>
+    </body>
+
 </html>
