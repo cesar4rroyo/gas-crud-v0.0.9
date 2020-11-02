@@ -86,8 +86,8 @@ public class daoCliente implements cCRUD {
 
     @Override
     public boolean add(beanCliente cli) {
-        String sql = "INSERT INTO cliente(nombre,apellido,ubicacion,dni,telefono,foto_casa)VALUES ('" + cli.getNombre() + "' , '" + cli.getApellido()
-                + "', '" + cli.getUbicacion() + "' , '" + cli.getDni() + "', '" + cli.getTelefono() + "' , '" + cli.getFoto_casa() + "');";
+        String sql = "INSERT INTO cliente(nombre,apellido,ubicacion,dni,telefono)VALUES ('" + cli.getNombre() + "' , '" + cli.getApellido()
+                + "', '" + cli.getUbicacion() + "' , '" + cli.getDni() + "', '" + cli.getTelefono() + "');";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -104,9 +104,7 @@ public class daoCliente implements cCRUD {
                 + "apellido =  '" + cli.getApellido() + "',"
                 + "ubicacion = '" + cli.getUbicacion() + "',"
                 + "dni = '" + cli.getDni() + "',"
-                + "telefono = '" + cli.getTelefono() + "',"
-                + "foto_casa = '" + cli.getFoto_casa() + "'"
-                + "where id_Cliente =" + cli.getId_Cliente();
+                + "telefono = '" + cli.getTelefono() + "' where id_Cliente =" + cli.getId_Cliente();
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);

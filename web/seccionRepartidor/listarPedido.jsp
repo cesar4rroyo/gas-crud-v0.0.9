@@ -1,10 +1,9 @@
-
-<%@page import="beans.beanCliente"%>
 <%@page import="java.util.Iterator"%>
+<%@page import="beans.beanPedido"%>
 <%@page import="java.util.List"%>
-<%@page import="ModeloDAO.daoCliente"%>
+<%@page import="ModeloDAO.daoPedido"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@page session="true" %>
+<!DOCTYPE html>
 <%
 
     HttpSession sc = request.getSession();
@@ -15,8 +14,8 @@
         tipo = sc.getAttribute("tipo").toString();
         sc.setAttribute("username", username);
         sc.setAttribute("tipo", tipo);
-        
-        if (tipo.equalsIgnoreCase("repartidor")) {
+
+        if (tipo.equalsIgnoreCase("admin")) {
             response.sendRedirect("login.jsp");
         }
     } else {
@@ -24,12 +23,10 @@
     }
 
 %>
-<!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
-        <title>Clientes</title>
+        <title>Pedidos</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous" >
         <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
@@ -57,33 +54,12 @@
                     <hr class="sidebar-divider my-0" />
                     <ul class="nav navbar-nav text-light" id="accordionSidebar">
                         <li class="nav-item" role="presentation">
-                            <a class="nav-link active" href="index.jsp"
-                               ><i class="fas fa-tachometer-alt"></i><span>INICIO</span>
+                            <a class="nav-link active" href="listarPedidosRepartidor"
+                               ><i class="fas fa-tachometer-alt"></i><span>PEDIDOS PENDIENTES</span>
                             </a>
-                            <a class="nav-link active" href="controladorCliente?accion=listar"
-                               ><i class="fas fa-user-alt"></i><span>CLIENTES</span>
-                            </a>
-                            <a class="nav-link active" href="controladorPdto?accion=listar"
-                               ><i class="fas fa-money-bill-alt"></i><span>PRODUCTOS</span>
-                            </a>
-                            <a class="nav-link active" href="Controlador?accion=listar"
-                               ><i class="fas fa-truck-moving"></i><span>PROVEEDORES</span>
-                            </a>
-                            <a class="nav-link active" href="controladorRep?accion=listar"
-                               ><i class="fas fa-user-alt"></i><span>REPARTIDORES</span>
-                            </a>
-                            <a class="nav-link active" href="controladorEstadoP?accion=listar"
-                               ><i class="fas fa-list-alt"></i><span>ESTADOS PEDIDO</span>
-                            </a>
-                            <a class="nav-link active" href="controladorTrp?accion=listarTrp"
-                               ><i class="fas fa-car"></i><span>TRANSPORTE</span>
-                            </a>
-                            <a class="nav-link active" href="listPedido"
-                               ><i class="fas fa-list"></i><span>PEDIDOS</span>
-                            </a>
-                            <a class="nav-link active" href="listCompra"
-                               ><i class="fas fa-shopping-basket"></i><span>COMPRAS</span>
-                            </a>
+                            <a class="nav-link active" href="listarPedidosRealizados"
+                               ><i class="fas fa-user-alt"></i><span>PEDIDOS REALIZADOS</span>
+                            </a>                            
                         </li>
                         <li class="nav-item" role="presentation"></li>
                     </ul>
@@ -98,7 +74,6 @@
             </nav>
             <div class="d-flex flex-column" id="content-wrapper">
                 <div id="content">
-                    <!--navbar es el menu de la parte superior-->
                     <nav
                         class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top"
                         >
@@ -292,106 +267,46 @@
                         </div>
                     </nav>
                     <div class="container" >
-                        <div class="text-center pt-5">
-                            <h1>Clientes</h1>
-                        </div>
-                        <form action="buscar.jsp">
-                            <div class="d-flex justify-content-center mt-5 mb-4">            
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <input class="form-control" autocomplete="off" name="buscar" id="search" type="text">                         
-                                    </div>                   
-                                    <div class="col-auto">
-                                        <button type="button" class="btn btn-info">Buscar <i class="fa fa-search"></i>
-                                        </button>                                    
-                                    </div>                                     
-                                </div>
-                            </div>
-                        </form>
-                        <div class="container">
-                            <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#modal_insertar"><i class="fa fa-plus"> </i>  Añadir nuevo </button>
-                        </div>            
-                        <div class="modal fade" id="modal_insertar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="controladorCliente">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Nuevo Cliente</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="form-group col-md">
-                                                    <label for="txtNombre">Nombre: </label>
-                                                    <input class="form-control" placeholder="Nombre" type="text" name="txtNom" id="txtNombre" required autoComplete="off" />
-                                                </div>
-                                                <div class="form-group col-md">
-                                                    <label for="txtDireccion">Apellido </label>
-                                                    <input class="form-control" type="text" name="txtApe" placeholder="Apellido" id="txtDireccion" required autoComplete="off" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="producto">Ubicacion: </label>
-                                                <input class="form-control" type="text" placeholder="Ubicación" name="txtUbi" id="producto" required autoComplete="off" />
-                                            </div> 
-                                            <div class="row">
-                                                <div class="form-group col-md">
-                                                    <label for="producto">DNI: </label>
-                                                    <input class="form-control" type="number" placeholder="Nro de DNI" name="txtDni" id="producto" required autoComplete="off" />
-                                                </div> 
-                                                <div class="form-group col-md">
-                                                    <label for="image">Teléfono:</label>
-                                                    <input class="form-control" type="number" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTelefono" autoComplete="off" />                                                    
-                                                </div>
-                                            </div>                                             
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <input type="submit" name="accion" class="btn btn-primary" value="Agregar" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="text-center pt-5" >
+                            <h1>Pedidos Pendientes</h1>
+                        </div> 
                         <!--desde aqui empieza el verdadero codigo :v-->
                         <div class="container mt-5 text-center" >
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Nombre</th>
-                                            <th scope="col">Apellido</th>
-                                            <th scope="col">Ubicación</th>
-                                            <th scope="col">DNI</th>
-                                            <th scope="col">Teléfono</th>
+                                            <th scope="col">Producto</th>
+                                            <th scope="col">Cliente</th>
+                                            <th scope="col">Dirección</th>
+                                            <th scope="col">Teléfono Cliente</th>
+                                            <th scope="col">Total</th>
+                                            <th scope="col">Estado Pedido</th>
+                                            <th scope="col">Fecha Inicio</th>
                                             <th scope="col">Acciones</th>
                                         </tr>
                                     </thead>
                                     <%
-                                        daoCliente dao = new daoCliente();
-                                        List<beanCliente> list = dao.listar();
-                                        Iterator<beanCliente> iter = list.iterator();
-                                        beanCliente cli = null;
+                                        daoPedido dao = new daoPedido();
+                                        List<beanPedido> list = dao.listarPedidoRepartidor(username);
+                                        Iterator<beanPedido> iter = list.iterator();
+                                        beanPedido bp = null;
                                         while (iter.hasNext()) {
-                                            cli = iter.next();
-
+                                            bp = iter.next();
                                     %>
                                     <tbody>
-                                        <tr>                                                                                       
-                                            <td><%= cli.getNombre()%></td>
-                                            <td><%= cli.getApellido()%></td>
-                                            <td><%= cli.getUbicacion()%></td>
-                                            <td><%= cli.getDni()%></td>
-                                            <td><%= cli.getTelefono()%></td>
+                                        <tr>
+                                            <td><%=bp.getProducto().getNombre_producto()%></td>
+                                            <td><%=bp.getCliente().getNombre()%></td>
+                                            <td><%=bp.getCliente().getUbicacion()%></td>
+                                            <td><%=bp.getCliente().getTelefono()%></td>
+                                            <td><%=bp.getImporte_total()%></td>
+                                            <td><%=bp.getEstado_Pedido().getNombre_estado()%></td>
+                                            <td><%=bp.getFecha_inicio()%></td>
                                             <td>
                                                 <div class="btn-group" >
-                                                    <a class="btn btn-primary" href="controladorCliente?accion=editar&id=<%= cli.getId_Cliente()%>">
+                                                    <a class="btn btn-primary" href="actualizarPedidoRepartidor?&id=<%=bp.getId_Pedido()%>">
                                                         <i class="fa fa-pencil-square-o"></i>Editar
-                                                    </a>
-                                                    <a class="btn btn-danger" href="controladorCliente?accion=eliminar&id=<%= cli.getId_Cliente()%>">
-                                                        <i class="fa fa-trash"></i> Eliminar
                                                     </a>
                                                 </div>
                                             </td>
@@ -429,11 +344,5 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script>
-        $('#modal_insertar').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        });
-
-    </script>
 </html>
 

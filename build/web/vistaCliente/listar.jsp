@@ -15,7 +15,7 @@
         tipo = sc.getAttribute("tipo").toString();
         sc.setAttribute("username", username);
         sc.setAttribute("tipo", tipo);
-
+        
         if (tipo.equalsIgnoreCase("repartidor")) {
             response.sendRedirect("login.jsp");
         }
@@ -345,15 +345,11 @@
                                                     <label for="image">Teléfono:</label>
                                                     <input class="form-control" type="number" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTelefono" autoComplete="off" />                                                    
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="producto">Foto de la casa: </label>
-                                                <input class="form-control" type="text" placeholder="Foto" name="txtFot" id="producto" required autoComplete="off" />
                                             </div>                                             
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <input type="submit" name="accion" class="btn btn-primary" defaultValue="Agregar" />
+                                            <input type="submit" name="accion" class="btn btn-primary" value="Agregar" />
                                         </div>
                                     </form>
                                 </div>

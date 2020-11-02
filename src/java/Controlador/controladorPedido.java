@@ -17,7 +17,9 @@ import beans.beanProducto;
 import beans.beanRepartidor;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -66,6 +68,58 @@ public class controladorPedido extends HttpServlet {
             agregarPedidoCompleto(request, response);
         } else if (rutaUrl.equals("/actualizarPedido")) {
             actualizar(request, response);
+        } else if(rutaUrl.equals("/actualizarPedidoRepartidor")){
+            request.setAttribute("id", request.getParameter("id"));
+            RequestDispatcher vista = request.getRequestDispatcher("seccionRepartidor/editarPedido.jsp");
+            vista.forward(request, response);
+        }else if(rutaUrl.equals("/editPedidoRepartidor")){
+            actualizarRepartidor(request, response);
+        }else if(rutaUrl.equals("/listarPedidosRepartidor")){
+            RequestDispatcher vista = request.getRequestDispatcher("seccionRepartidor/listarPedido.jsp");
+            vista.forward(request, response);
+        }else if(rutaUrl.equals("/listarPedidosRealizados")){
+            RequestDispatcher vista = request.getRequestDispatcher("seccionRepartidor/pedidosRealizados.jsp");
+            vista.forward(request, response);
+        }
+    }
+    
+    public void actualizarRepartidor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        PrintWriter out = response.getWriter();
+        bPed = new beanPedido();
+        dPed = new daoPedido();
+        bC = new beanCliente();
+        dC = new daoCliente();
+        bPdt = new beanProducto();
+        dPdt = new daoProducto();
+        bRep = new beanRepartidor();
+        dRep = new daoRepartidor();
+        bEP = new beanEstadoPed();
+        dEP = new daoEstadoPed();
+
+        bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
+        bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
+        bRep = dRep.listRep(Integer.parseInt(request.getParameter("txtIdRep")));
+        bEP = dEP.list(Integer.parseInt(request.getParameter("txtIdEP")));
+        bPed.setId_Pedido(Integer.parseInt(request.getParameter("txtIdPed")));
+        bPed.setImporte_total(bPdt.getPrecio());
+        bPed.setCliente(bC);
+        bPed.setProducto(bPdt);
+        bPed.setEstado_Pedido(bEP);
+        bPed.setRepartidor(bRep);
+
+
+        try {
+            dPed.edit(bPed);
+            if(Integer.parseInt(request.getParameter("txtIdEP"))==5){
+                int nuevo_stock = bPdt.getStock()-1;
+                dPdt.actualizarStock(bPdt.getStock()-1, bPdt.getId_Producto());
+            }
+            String acceso = "listarPedidosRealizados";
+//            response.sendRedirect(acceso);
+            RequestDispatcher vista = request.getRequestDispatcher(acceso);
+            vista.forward(request, response);
+        } catch (IOException e) {
+            out.print(e);
         }
     }
 

@@ -90,6 +90,10 @@
         <url-pattern>/listPedido</url-pattern>
         <url-pattern>/procederCompra</url-pattern>
         <url-pattern>/actualizarPedido</url-pattern>
+        <url-pattern>/actualizarPedidoRepartidor</url-pattern>
+        <url-pattern>/editPedidoRepartidor</url-pattern>
+        <url-pattern>/listarPedidosRepartidor</url-pattern>
+        <url-pattern>/listarPedidosRealizados</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>controladorCompra</servlet-name>

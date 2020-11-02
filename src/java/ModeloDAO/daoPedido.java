@@ -68,6 +68,111 @@ public class daoPedido implements pedCRUD {
         return lstPedido;
 
     }
+    public List listarPedidoRepartidor(String nombre){
+        ArrayList<beanPedido> lstPedido = new ArrayList<>();
+        String sql = "SELECT id_Pedidos, fecha_inicio, fecha_entrega, importe_total, "
+                + "pedido.id_Estado_pedido, ubicacion, cliente.telefono,"
+                + " nombre_estado, pedido.id_Producto, pedido.id_Repartidor, "
+                + "pedido.id_Cliente, cliente.nombre as nombreC, producto.nombre_producto as nombrePdto, "
+                + "repartidor.nombre as nombreRep from pedido INNER JOIN estado_pedido ON "
+                + "pedido.id_Estado_pedido = estado_pedido.id_Estado_pedido INNER JOIN producto ON  "
+                + "pedido.id_Producto = producto.id_Producto INNER JOIN repartidor ON "
+                + "pedido.id_Repartidor = repartidor.id_Repartidor INNER JOIN cliente ON "
+                + "pedido.id_Cliente = cliente.id_Cliente where (repartidor.nombre='"+nombre+"' and pedido.id_Estado_pedido!=5)";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                beanPedido bPed = new beanPedido();
+                beanEstadoPed bEP = new beanEstadoPed();
+                beanProducto bPdto = new beanProducto();
+                beanRepartidor bRep = new beanRepartidor();
+                beanCliente bCli = new beanCliente();
+
+                bEP.setId_Estado_pedido(rs.getInt("id_Estado_pedido"));
+                bEP.setNombre_estado(rs.getString("nombre_estado"));
+
+                bPdto.setId_Producto(rs.getInt("id_Producto"));
+                bPdto.setNombre_producto(rs.getString("nombrePdto"));
+
+                bRep.setId_Repartidor(rs.getInt("id_Repartidor"));
+                bRep.setNombre(rs.getString("nombreRep"));
+
+                bCli.setId_Cliente(rs.getInt("id_Cliente"));
+                bCli.setNombre(rs.getString("nombreC"));
+                bCli.setUbicacion(rs.getString("ubicacion"));
+                bCli.setTelefono(rs.getString("telefono"));
+
+                bPed.setId_Pedido(rs.getInt("id_Pedidos"));
+                bPed.setFecha_inicio(rs.getTimestamp("fecha_inicio"));
+                bPed.setFecha_entrega(rs.getTimestamp("fecha_entrega"));
+                bPed.setImporte_total(rs.getInt("importe_total"));
+                bPed.setEstado_Pedido(bEP);
+                bPed.setProducto(bPdto);
+                bPed.setRepartidor(bRep);
+                bPed.setCliente(bCli);
+
+                lstPedido.add(bPed);
+            }
+        } catch (Exception e) {
+            out.print("Error" + e);
+        }
+        return lstPedido;
+    }
+    public List listarPedidoRealizados(String nombre){
+        ArrayList<beanPedido> lstPedido = new ArrayList<>();
+        String sql = "SELECT id_Pedidos, fecha_inicio, fecha_entrega, importe_total, "
+                + "pedido.id_Estado_pedido, ubicacion, cliente.telefono,"
+                + " nombre_estado, pedido.id_Producto, pedido.id_Repartidor, "
+                + "pedido.id_Cliente, cliente.nombre as nombreC, producto.nombre_producto as nombrePdto, "
+                + "repartidor.nombre as nombreRep from pedido INNER JOIN estado_pedido ON "
+                + "pedido.id_Estado_pedido = estado_pedido.id_Estado_pedido INNER JOIN producto ON  "
+                + "pedido.id_Producto = producto.id_Producto INNER JOIN repartidor ON "
+                + "pedido.id_Repartidor = repartidor.id_Repartidor INNER JOIN cliente ON "
+                + "pedido.id_Cliente = cliente.id_Cliente where (repartidor.nombre='"+nombre+"' and pedido.id_Estado_pedido=5)";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                beanPedido bPed = new beanPedido();
+                beanEstadoPed bEP = new beanEstadoPed();
+                beanProducto bPdto = new beanProducto();
+                beanRepartidor bRep = new beanRepartidor();
+                beanCliente bCli = new beanCliente();
+
+                bEP.setId_Estado_pedido(rs.getInt("id_Estado_pedido"));
+                bEP.setNombre_estado(rs.getString("nombre_estado"));
+
+                bPdto.setId_Producto(rs.getInt("id_Producto"));
+                bPdto.setNombre_producto(rs.getString("nombrePdto"));
+
+                bRep.setId_Repartidor(rs.getInt("id_Repartidor"));
+                bRep.setNombre(rs.getString("nombreRep"));
+
+                bCli.setId_Cliente(rs.getInt("id_Cliente"));
+                bCli.setNombre(rs.getString("nombreC"));
+                bCli.setUbicacion(rs.getString("ubicacion"));
+                bCli.setTelefono(rs.getString("telefono"));
+
+                bPed.setId_Pedido(rs.getInt("id_Pedidos"));
+                bPed.setFecha_inicio(rs.getTimestamp("fecha_inicio"));
+                bPed.setFecha_entrega(rs.getTimestamp("fecha_entrega"));
+                bPed.setImporte_total(rs.getInt("importe_total"));
+                bPed.setEstado_Pedido(bEP);
+                bPed.setProducto(bPdto);
+                bPed.setRepartidor(bRep);
+                bPed.setCliente(bCli);
+
+                lstPedido.add(bPed);
+            }
+        } catch (Exception e) {
+            out.print("Error" + e);
+        }
+        return lstPedido;
+    }
+    
     public List listarPedidoCliente(int dni) {
         ArrayList<beanPedido> lstPedido = new ArrayList<>();
         String sql = "SELECT id_Pedidos, fecha_inicio, fecha_entrega, importe_total, "

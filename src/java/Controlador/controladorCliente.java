@@ -67,14 +67,14 @@ public class controladorCliente extends HttpServlet {
             String ubicacion = request.getParameter("txtUbi");
             String dni = request.getParameter("txtDni");
             String telefono = request.getParameter("txtTel");
-            String foto = request.getParameter("txtFot");
+            
 
             b.setNombre(nombre);
             b.setApellido(apellido);
             b.setUbicacion(ubicacion);
             b.setDni(dni);
             b.setTelefono(telefono);
-            b.setFoto_casa(foto);
+            
             dao.add(b);
             acceso = listar;
         } else if (action.equalsIgnoreCase("editar")) {
@@ -88,7 +88,7 @@ public class controladorCliente extends HttpServlet {
             String ubicacion = request.getParameter("txtUbi");
             String dni = request.getParameter("txtDni");
             String telefono = request.getParameter("txtTel");
-            String foto = request.getParameter("txtFot");
+            
 
             b.setId_Cliente(id);
             b.setNombre(nombre);
@@ -96,10 +96,12 @@ public class controladorCliente extends HttpServlet {
             b.setUbicacion(ubicacion);
             b.setDni(dni);
             b.setTelefono(telefono);
-            b.setFoto_casa(foto);
+            
 
             dao.edit(b);
             acceso = listar;
+//            response.sendRedirect(listar);
+            
         } else if (action.equalsIgnoreCase("eliminar")) {
             id = Integer.parseInt(request.getParameter("id"));
             b.setId_Cliente(id);

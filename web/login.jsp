@@ -80,16 +80,21 @@
         <%
             HttpSession sesion = request.getSession();
             String vista = "controladorPdto?accion=listar";
+            String vistaRep = "listarPedidosRepartidor";
             if (request.getAttribute("username") != null && request.getAttribute("tipo") != null) {
-                String username=request.getAttribute("username").toString();
-                String tipo=request.getAttribute("tipo").toString();
+                String username = request.getAttribute("username").toString();
+                String tipo = request.getAttribute("tipo").toString();
                 sesion.setAttribute("username", username);
                 sesion.setAttribute("tipo", tipo);
-                response.sendRedirect(vista);
+                if (tipo.equals("admin")) {
+                    response.sendRedirect(vista);
+                } else if (tipo.equals("repartidor")) {
+                    response.sendRedirect(vistaRep);
+                }
             }
-            if(request.getParameter("cerrar")!=null){
-                    sesion.invalidate();
-                    response.sendRedirect("login.jsp");
+            if (request.getParameter("cerrar") != null) {
+                sesion.invalidate();
+                response.sendRedirect("login.jsp");
             }
 
         %>
