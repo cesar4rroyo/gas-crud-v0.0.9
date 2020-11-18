@@ -26,7 +26,8 @@ public class daoPedido implements pedCRUD {
         ArrayList<beanPedido> lstPedido = new ArrayList<>();
         String sql = "SELECT id_Pedidos, fecha_inicio, fecha_entrega, importe_total, pedido.id_Estado_pedido, nombre_estado, pedido.id_Producto, pedido.id_Repartidor, pedido.id_Cliente, "
                 + "cliente.nombre as nombreC, producto.nombre_producto as nombrePdto, repartidor.nombre as nombreRep from pedido INNER JOIN estado_pedido ON pedido.id_Estado_pedido = estado_pedido.id_Estado_pedido "
-                + "INNER JOIN producto ON  pedido.id_Producto = producto.id_Producto INNER JOIN repartidor ON pedido.id_Repartidor = repartidor.id_Repartidor INNER JOIN cliente ON pedido.id_Cliente = cliente.id_Cliente";
+                + "INNER JOIN producto ON  pedido.id_Producto = producto.id_Producto INNER JOIN repartidor ON pedido.id_Repartidor = repartidor.id_Repartidor "
+                + "INNER JOIN cliente ON pedido.id_Cliente = cliente.id_Cliente ORDER BY id_Pedidos DESC";
 
         try {
             con = cn.getConnection();
@@ -68,7 +69,8 @@ public class daoPedido implements pedCRUD {
         return lstPedido;
 
     }
-    public List listarPedidoRepartidor(String nombre){
+
+    public List listarPedidoRepartidor(String nombre) {
         ArrayList<beanPedido> lstPedido = new ArrayList<>();
         String sql = "SELECT id_Pedidos, fecha_inicio, fecha_entrega, importe_total, "
                 + "pedido.id_Estado_pedido, ubicacion, cliente.telefono,"
@@ -78,7 +80,7 @@ public class daoPedido implements pedCRUD {
                 + "pedido.id_Estado_pedido = estado_pedido.id_Estado_pedido INNER JOIN producto ON  "
                 + "pedido.id_Producto = producto.id_Producto INNER JOIN repartidor ON "
                 + "pedido.id_Repartidor = repartidor.id_Repartidor INNER JOIN cliente ON "
-                + "pedido.id_Cliente = cliente.id_Cliente where (repartidor.nombre='"+nombre+"' and pedido.id_Estado_pedido!=5)";
+                + "pedido.id_Cliente = cliente.id_Cliente where (repartidor.nombre='" + nombre + "' and pedido.id_Estado_pedido!=5) ORDER BY fecha_inicio ASC";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -120,7 +122,8 @@ public class daoPedido implements pedCRUD {
         }
         return lstPedido;
     }
-    public List listarPedidoRealizados(String nombre){
+
+    public List listarPedidoRealizados(String nombre) {
         ArrayList<beanPedido> lstPedido = new ArrayList<>();
         String sql = "SELECT id_Pedidos, fecha_inicio, fecha_entrega, importe_total, "
                 + "pedido.id_Estado_pedido, ubicacion, cliente.telefono,"
@@ -130,7 +133,7 @@ public class daoPedido implements pedCRUD {
                 + "pedido.id_Estado_pedido = estado_pedido.id_Estado_pedido INNER JOIN producto ON  "
                 + "pedido.id_Producto = producto.id_Producto INNER JOIN repartidor ON "
                 + "pedido.id_Repartidor = repartidor.id_Repartidor INNER JOIN cliente ON "
-                + "pedido.id_Cliente = cliente.id_Cliente where (repartidor.nombre='"+nombre+"' and pedido.id_Estado_pedido=5)";
+                + "pedido.id_Cliente = cliente.id_Cliente where (repartidor.nombre='" + nombre + "' and pedido.id_Estado_pedido=5) ORDER BY fecha_entrega DESC";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -172,7 +175,7 @@ public class daoPedido implements pedCRUD {
         }
         return lstPedido;
     }
-    
+
     public List listarPedidoCliente(int dni) {
         ArrayList<beanPedido> lstPedido = new ArrayList<>();
         String sql = "SELECT id_Pedidos, fecha_inicio, fecha_entrega, importe_total, "
@@ -182,8 +185,7 @@ public class daoPedido implements pedCRUD {
                 + "pedido.id_Estado_pedido = estado_pedido.id_Estado_pedido INNER JOIN producto ON  "
                 + "pedido.id_Producto = producto.id_Producto INNER JOIN repartidor ON "
                 + "pedido.id_Repartidor = repartidor.id_Repartidor INNER JOIN cliente ON "
-                + "pedido.id_Cliente = cliente.id_Cliente where cliente.dni="+dni;
-
+                + "pedido.id_Cliente = cliente.id_Cliente where cliente.dni=" + dni;
 
         try {
             con = cn.getConnection();
@@ -225,7 +227,6 @@ public class daoPedido implements pedCRUD {
         return lstPedido;
 
     }
-    
 
     @Override
     public beanPedido list(int idPedido) {
@@ -283,9 +284,10 @@ public class daoPedido implements pedCRUD {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate(sql);
+            return true;
         } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
     public boolean addPedidoTemporal(beanPedido bPedido) {
@@ -296,40 +298,44 @@ public class daoPedido implements pedCRUD {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate(sql);
+            return true;
         } catch (Exception e) {
+            return false;
         }
-        return false;
     }
 
     @Override
-    public boolean edit(beanPedido bPedido) {
+    public String edit(beanPedido bPedido) {
         String sql = "UPDATE pedido set importe_total= '" + bPedido.getImporte_total() + "',"
                 + " id_Estado_pedido= '" + bPedido.getEstado_Pedido().getId_Estado_pedido() + "',"
                 + " id_Producto= '" + bPedido.getProducto().getId_Producto() + "',"
+                + "fecha_entrega='" + bPedido.getFecha_entrega() + "',"
                 + " id_Repartidor= '" + bPedido.getRepartidor().getId_Repartidor() + "',"
                 + " id_Cliente= '" + bPedido.getCliente().getId_Cliente() + "' WHERE id_Pedidos=" + bPedido.getId_Pedido();
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate(sql);
+            return "Actualizado correctamente";
         } catch (Exception e) {
-            
+            return "Error: " + e.getMessage();
         }
-        return false;
     }
 
     @Override
-    public boolean eliminar(int idPedido) {
+    public String eliminar(int idPedido) {
+        String out;
         String sql = "DELETE FROM pedido where id_Pedidos=" + idPedido;
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate(sql);
+            out = "Eliminado Correctamente";
+            return out;
         } catch (Exception e) {
+            return e.getMessage();
         }
-        return false;
+
     }
 
 }
-
-

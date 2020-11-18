@@ -319,7 +319,7 @@
                                             <th scope="col">Cliente</th>
                                             <th scope="col">Producto</th>
                                             <th scope="col">Fecha-Inicio</th>
-                                            <th scope="col">Fecha-Entrega</th>
+                                            <th scope="col">Última actualizacion</th>
                                             <th scope="col">Repartidor</th>
                                             <th scope="col">Estado Pedido</th>
                                             <th scope="col">Acciones</th>
@@ -338,8 +338,8 @@
                                             <td><%=bp.getId_Pedido()%></td>
                                             <td><%=bp.getCliente().getNombre()%></td>
                                             <td><%=bp.getProducto().getNombre_producto()%></td>
-                                            <td><%=bp.getFecha_inicio()%></td>
-                                            <td><%=bp.getFecha_entrega()%></td>
+                                            <td class="fecha" ><%=bp.getFecha_inicio()%></td>
+                                            <td class="fecha"><%=bp.getFecha_entrega()%></td>
                                             <td><%=bp.getRepartidor().getNombre()%></td>
                                             <td><%=bp.getEstado_Pedido().getNombre_estado()%></td>
                                             <td>
@@ -386,4 +386,20 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            cargarFechas();
+
+        });
+        const fecha = document.getElementsByClassName("fecha");
+        const cargarFechas = () => {
+            for (i = 0; i < fecha.length; i++) {
+                var date = new Date(fecha[i].innerHTML);
+                moment.locale('es');
+                var newdate = moment(date).format('MMMM Do YYYY, h:mm:ss a');
+                fecha[i].innerHTML = newdate;
+            }
+        };
+    </script>
 </html>

@@ -40,22 +40,30 @@ public class controladorPedidoCliente extends HttpServlet {
         try {
             List<beanPedido> lstPedido = dPed.listarPedidoCliente(dni);
             String html = "";
-            html = "<table class='table'>"
-                    + "<thead>"
-                    + "<tr>"
-                    + "     <th scope='col'>Nombre</th>"
-                    + "     <th scope='col'>Producto</th>"
-                    + "     <th scope='col'>Precio</th>"
-                    + "     <th scope='col'>Estado del Pedido</th>"
-                    + "</tr>"
-                    + "</thead>";
-            for (int i = 0; i < lstPedido.size(); i++) {
-                html = html + "<tr><td>" + lstPedido.get(i).getCliente().getNombre() + "</td><td>"
-                        + lstPedido.get(i).getProducto().getNombre_producto() + "</td><td>"
-                        + lstPedido.get(i).getImporte_total() + "</td><td>"
-                        + lstPedido.get(i).getEstado_Pedido().getNombre_estado() + "</td><tr>";
+
+            if (lstPedido.isEmpty()) {
+                html = "<p>Aún no haz hecho pedidos</p>";
+
+            } else {
+                html = "<table class='table'>"
+                        + "<thead>"
+                        + "<tr>"
+                        + "     <th scope='col'>Nombre</th>"
+                        + "     <th scope='col'>Producto</th>"
+                        + "     <th scope='col'>Precio</th>"
+                        + "     <th scope='col'>Estado del Pedido</th>"
+                        + "</tr>"
+                        + "</thead>";
+                for (int i = 0; i < lstPedido.size(); i++) {
+                    html = html + "<tr><td>" + lstPedido.get(i).getCliente().getNombre() + "</td><td>"
+                            + lstPedido.get(i).getProducto().getNombre_producto() + "</td><td>"
+                            + lstPedido.get(i).getImporte_total() + "</td><td>"
+                            + lstPedido.get(i).getEstado_Pedido().getNombre_estado() + "</td><tr>";
+                }
+                html = html + "</table>";
+
             }
-            html = html + "</table>";
+
             out.print(html);
         } catch (Exception e) {
             out.print("Ha ocurrido un error: " + e);

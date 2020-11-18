@@ -28,11 +28,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.logicPedido;
+import java.util.Calendar;
 
 public class controladorPedido extends HttpServlet {
 
     beanPedido bPed;
-    daoPedido dPed;
 
     beanCliente bC;
     daoCliente dC;
@@ -68,25 +68,25 @@ public class controladorPedido extends HttpServlet {
             agregarPedidoCompleto(request, response);
         } else if (rutaUrl.equals("/actualizarPedido")) {
             actualizar(request, response);
-        } else if(rutaUrl.equals("/actualizarPedidoRepartidor")){
+        } else if (rutaUrl.equals("/actualizarPedidoRepartidor")) {
             request.setAttribute("id", request.getParameter("id"));
             RequestDispatcher vista = request.getRequestDispatcher("seccionRepartidor/editarPedido.jsp");
             vista.forward(request, response);
-        }else if(rutaUrl.equals("/editPedidoRepartidor")){
+        } else if (rutaUrl.equals("/editPedidoRepartidor")) {
             actualizarRepartidor(request, response);
-        }else if(rutaUrl.equals("/listarPedidosRepartidor")){
+        } else if (rutaUrl.equals("/listarPedidosRepartidor")) {
             RequestDispatcher vista = request.getRequestDispatcher("seccionRepartidor/listarPedido.jsp");
             vista.forward(request, response);
-        }else if(rutaUrl.equals("/listarPedidosRealizados")){
+        } else if (rutaUrl.equals("/listarPedidosRealizados")) {
             RequestDispatcher vista = request.getRequestDispatcher("seccionRepartidor/pedidosRealizados.jsp");
             vista.forward(request, response);
         }
     }
-    
+
     public void actualizarRepartidor(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+//        esta es la seccion donde el repartidor actualizara el estado del pedido
         PrintWriter out = response.getWriter();
         bPed = new beanPedido();
-        dPed = new daoPedido();
         bC = new beanCliente();
         dC = new daoCliente();
         bPdt = new beanProducto();
@@ -95,7 +95,9 @@ public class controladorPedido extends HttpServlet {
         dRep = new daoRepartidor();
         bEP = new beanEstadoPed();
         dEP = new daoEstadoPed();
-
+        logicPedido lgPedido = new logicPedido();
+        Calendar calendar = Calendar.getInstance();
+        Timestamp fecha_entrega = new Timestamp(calendar.getTime().getTime());
         bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
         bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
         bRep = dRep.listRep(Integer.parseInt(request.getParameter("txtIdRep")));
@@ -106,16 +108,12 @@ public class controladorPedido extends HttpServlet {
         bPed.setProducto(bPdt);
         bPed.setEstado_Pedido(bEP);
         bPed.setRepartidor(bRep);
-
+        bPed.setFecha_entrega(fecha_entrega);
 
         try {
-            dPed.edit(bPed);
-            if(Integer.parseInt(request.getParameter("txtIdEP"))==5){
-                int nuevo_stock = bPdt.getStock()-1;
-                dPdt.actualizarStock(bPdt.getStock()-1, bPdt.getId_Producto());
-            }
+            String mensajeLogic = lgPedido.actualizar(bPed, bPdt);
+            out.print(mensajeLogic);
             String acceso = "listarPedidosRealizados";
-//            response.sendRedirect(acceso);
             RequestDispatcher vista = request.getRequestDispatcher(acceso);
             vista.forward(request, response);
         } catch (IOException e) {
@@ -140,11 +138,11 @@ public class controladorPedido extends HttpServlet {
 
         PrintWriter out = response.getWriter();
         bPed = new beanPedido();
-        dPed = new daoPedido();
         bC = new beanCliente();
         dC = new daoCliente();
         bPdt = new beanProducto();
         dPdt = new daoProducto();
+        logicPedido lgPedido = new logicPedido();
 
         bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
         bPdt = dPdt.list(idProducto);
@@ -154,13 +152,12 @@ public class controladorPedido extends HttpServlet {
         bPed.setProducto(bPdt);
 
         try {
-            dPed.addPedidoTemporal(bPed);
+            out.print(lgPedido.agregarPedidoTemporal(bPed));
             String acceso = "pedido.jsp";
             sesion.invalidate();
-//            response.sendRedirect(acceso);
             request.setAttribute("compra", "success");
             RequestDispatcher vista = request.getRequestDispatcher(acceso);
-            vista.forward(request,response);
+            vista.forward(request, response);
         } catch (IOException e) {
             out.print(e);
         }
@@ -170,7 +167,6 @@ public class controladorPedido extends HttpServlet {
     public void agregarPedidoCompleto(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
         bPed = new beanPedido();
-        dPed = new daoPedido();
         bC = new beanCliente();
         dC = new daoCliente();
         bPdt = new beanProducto();
@@ -179,6 +175,7 @@ public class controladorPedido extends HttpServlet {
         dRep = new daoRepartidor();
         bEP = new beanEstadoPed();
         dEP = new daoEstadoPed();
+        logicPedido lgPedido = new logicPedido();
 
         bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
         bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
@@ -192,9 +189,8 @@ public class controladorPedido extends HttpServlet {
         bPed.setRepartidor(bRep);
 
         try {
-            dPed.add(bPed);
+            lgPedido.agregarPedidoCompleto(bPed);
             String acceso = "listPedido";
-//            response.sendRedirect(acceso);
             RequestDispatcher vista = request.getRequestDispatcher(acceso);
             vista.forward(request, response);
         } catch (IOException e) {
@@ -205,8 +201,8 @@ public class controladorPedido extends HttpServlet {
 
     public void actualizar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
+        logicPedido lgPedido = new logicPedido();
         bPed = new beanPedido();
-        dPed = new daoPedido();
         bC = new beanCliente();
         dC = new daoCliente();
         bPdt = new beanProducto();
@@ -215,6 +211,8 @@ public class controladorPedido extends HttpServlet {
         dRep = new daoRepartidor();
         bEP = new beanEstadoPed();
         dEP = new daoEstadoPed();
+        Calendar calendar = Calendar.getInstance();
+        Timestamp fecha_entrega = new Timestamp(calendar.getTime().getTime());
 
         bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
         bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
@@ -226,16 +224,12 @@ public class controladorPedido extends HttpServlet {
         bPed.setProducto(bPdt);
         bPed.setEstado_Pedido(bEP);
         bPed.setRepartidor(bRep);
-
+        bPed.setFecha_entrega(fecha_entrega);
 
         try {
-            dPed.edit(bPed);
-            if(Integer.parseInt(request.getParameter("txtIdEP"))==5){
-                int nuevo_stock = bPdt.getStock()-1;
-                dPdt.actualizarStock(bPdt.getStock()-1, bPdt.getId_Producto());
-            }
+            String mensajeLogic = lgPedido.actualizar(bPed, bPdt);
+            out.print(mensajeLogic);
             String acceso = "listPedido";
-//            response.sendRedirect(acceso);
             RequestDispatcher vista = request.getRequestDispatcher(acceso);
             vista.forward(request, response);
         } catch (IOException e) {
@@ -244,17 +238,13 @@ public class controladorPedido extends HttpServlet {
     }
 
     public void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        logicPedido lgPedido = new logicPedido();
         PrintWriter out = response.getWriter();
-        bPed = new beanPedido();
-        dPed = new daoPedido();
         int id_pedido = Integer.parseInt(request.getParameter("txtIdPedido"));
         try {
-
-            dPed.eliminar(id_pedido);
+            out.print(lgPedido.eliminar(id_pedido));
             String acceso = "listPedido";
             response.sendRedirect(acceso);
-//            RequestDispatcher vista = request.getRequestDispatcher(acceso);
-//            vista.forward(request, response);
         } catch (IOException e) {
             out.print(e);
         }

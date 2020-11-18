@@ -160,9 +160,11 @@
                                 <div class="col-sm" >
                                     <button onclick="buscarCliente()" id="btnBuscarCliente" class="btn btn-outline-info">Buscar</button>
                                 </div>
-
                             </div>
-                        </div> 
+                        </div>
+                        <div class="container" >
+                            <p id="mensajeError" class="text-danger d-none">Ingresa tu DNI correctamente</p>
+                        </div>
                         <div class="d-none" id="formCliente">
                             <div class="d-none" id="mensajeRegistro">
                                 <p class="text-danger">No te encuentras registrado, registrate para poder proceder la compra</p>
@@ -174,32 +176,32 @@
 
                                     <div class="form-group col-md">
                                         <label for="txtNombre">Nombre: </label>
-                                        <input id="txtNombre" class="form-control" placeholder="Nombre" type="text" name="txtNombre" id="txtNombre" required autoComplete="off" />
+                                        <input readonly id="txtNombre" class="form-control" placeholder="Nombre" type="text" name="txtNombre" id="txtNombre" required autoComplete="off" />
                                     </div>
                                     <div class="form-group col-md">
                                         <label for="txtApellido">Apellido </label>
-                                        <input class="form-control" type="text" name="txtApellido" placeholder="Apellido" id="txtApellido" required autoComplete="off" />
+                                        <input readonly class="form-control" type="text" name="txtApellido" placeholder="Apellido" id="txtApellido" required autoComplete="off" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="txtUbicacion">Ubicacion: </label>
-                                    <input class="form-control" type="text" placeholder="Ubicación" name="txtUbicacion" id="txtUbicacion" required autoComplete="off" />
+                                    <input readonly class="form-control" type="text" placeholder="Ubicación" name="txtUbicacion" id="txtUbicacion" required autoComplete="off" />
                                 </div> 
                                 <div class="row">
                                     <div class="form-group col-md">
                                         <label for="txtDni">DNI: </label>
-                                        <input class="form-control" type="text" placeholder="Nro de DNI" name="txtDni" id="txtDni" required autoComplete="off" />
+                                        <input readonly class="form-control" type="text" placeholder="Nro de DNI" name="txtDni" id="txtDni" required autoComplete="off" />
                                     </div> 
                                     <div class="form-group col-md">
                                         <label for="txtTel">Teléfono:</label>
-                                        <input class="form-control" type="text" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTel" autoComplete="off" />                                                    
+                                        <input readonly class="form-control" type="text" name="txtTel" placeholder="Nro. de Teléfono" required id="txtTel" autoComplete="off" />                                                    
                                     </div>
                                 </div>
                                 <button id="btnFinalizar" class="btn btn-success btn-block">
                                     Finalizar Pedido
                                 </button>
                             </form>
-                            <form action="agregarCliente.jsp" method="POST" id="formRegistroCliente" class="d-none">
+                            <form  action="agregarCliente.jsp" method="POST" id="formRegistroCliente" class="d-none">
                                 <div class="row">
                                     <div class="form-group col-md">
                                         <label for="txtNombre">Nombre: </label>
@@ -230,6 +232,9 @@
                                 <button type="submit" id="btnRegistrarse" class="btn btn-outline-success btn-block">
                                     Registrarse
                                 </button>
+                                <div class="d-none" id="errorCliente">
+                                    <p class="text-danger">Ingrese los datos correctamente</p>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -240,62 +245,108 @@
         <script src="https://code.jquery.com/jquery-1.10.2.js" type="text/javascript"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script>
-                                        function buscarCliente() {
-                                            param = document.getElementById("txtDniBuscar").value;
-                                            resetForm();
-                                            axios({
-                                                method: 'POST',
-                                                url: 'buscarCliente.html',
-                                                data: "txtDni=" + param,
-                                            }).then((res) => {
-                                                console.log("Correcto!" + res.data);
-                                                data = res.data;
-                                                showFormCliente();
-                                                var dividirCadena = data.split(",");
-                                                if (dividirCadena[0] !== "null") {
-                                                    document.getElementById("formPedido").classList.remove("d-none");
-                                                    $("#txtNombre").val(dividirCadena[0]);
-                                                    $("#txtApellido").val(dividirCadena[1]);
-                                                    $("#txtDni").val(dividirCadena[2]);
-                                                    $("#txtUbicacion").val(dividirCadena[3]);
-                                                    $("#txtTel").val(dividirCadena[4]);
-                                                    $("#txtIdCli").val(dividirCadena[5]);
-
-                                                } else {
-                                                    document.getElementById("mensajeRegistro").classList.remove("d-none");
-                                                    document.getElementById("formRegistroCliente").classList.remove("d-none");
-
-                                                }
-
-                                            }).catch((e) => {
-                                                console.log("Error:" + e);
-                                            });
+//                                document.addEventListener("DOMContentLoader", function(){
+//                                   document.getElementById("formRegistroCliente").addEventListener('submit', validarFormualario); 
+//                                });
+                                const validarFormualario = (e) => {
+                                    if (!errorCliente.classList.contains("d-none")) {
+                                        errorCliente.classList.add("d-none");
+                                    }
+                                    e.preventDefault();
+                                    var txtTlf = document.getElementById("txtTel").value;
+                                    var txtDni = document.getElementById("txtDni").value;
+                                    if (validarTlfn(txtTlf)) {
+                                        if (validarDni(txtDni)) {
+                                            this.submit();
                                         }
+                                    } else {
+                                        errorCliente.classList.remove("d-none")
+                                    }
+                                }
+                                const errorCliente = document.getElementById("errorCliente");
+                                const form = document.getElementById("formularioCliente");
+                                const error = document.getElementById("mensajeError");
 
-                                        function showForm() {
-                                            const form = document.getElementById("formBuscarCliente");
-                                            form.classList.remove("d-none");
+                                const validarTlfn = (tlfn) => {
+                                    var filtroRx = /^[0-9]+$/;
+                                    if (filtroRx.test(tlfn)) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                                const validarDni = (dni) => {
+                                    if (!error.classList.contains("d-none")) {
+                                        error.classList.add("d-none");
+                                    }
+                                    var filtroRx = /^\d{8}(?:[-\s]\d{4})?$/;
+                                    if (filtroRx.test(dni) === true) {
+                                        return true;
+                                    } else {
+                                        return false;
+                                    }
+                                }
+                                function buscarCliente() {
+                                    param = document.getElementById("txtDniBuscar").value;
+                                    resetForm();
+                                    if (validarDni(param)) {
+                                        axios({
+                                            method: 'POST',
+                                            url: 'buscarCliente.html',
+                                            data: "txtDni=" + param,
+                                        }).then((res) => {
+                                            console.log("Correcto!" + res.data);
+                                            data = res.data;
+                                            showFormCliente();
+                                            var dividirCadena = data.split(",");
+                                            if (dividirCadena[0] !== "null") {
+                                                document.getElementById("formPedido").classList.remove("d-none");
+                                                $("#txtNombre").val(dividirCadena[0]);
+                                                $("#txtApellido").val(dividirCadena[1]);
+                                                $("#txtDni").val(dividirCadena[2]);
+                                                $("#txtUbicacion").val(dividirCadena[3]);
+                                                $("#txtTel").val(dividirCadena[4]);
+                                                $("#txtIdCli").val(dividirCadena[5]);
 
-                                        }
-                                        function showFormCliente() {
-                                            const formCliente = document.getElementById("formCliente");
-                                            formCliente.classList.remove("d-none");
-                                        }
+                                            } else {
+                                                document.getElementById("mensajeRegistro").classList.remove("d-none");
+                                                document.getElementById("formRegistroCliente").classList.remove("d-none");
 
-                                        function resetForm() {
-                                            $("#txtNombre").val("");
-                                            $("#txtApellido").val("");
-                                            $("#txtDni").val("");
-                                            $("#txtUbicacion").val("");
-                                            $("#txtTel").val("");
-                                            $("#txtIdCli").val("");
-                                            document.getElementById("mensajeRegistro").classList.add("d-none");
-                                            document.getElementById("formRegistroCliente").classList.add("d-none");
-                                        }
-                                        const btnConfirmar = document.getElementById("btnConfirmar");
+                                            }
+
+                                        }).catch((e) => {
+                                            console.log("Error:" + e);
+                                        });
+                                    } else {
+                                        error.classList.remove("d-none");
+                                    }
+
+                                }
+
+                                function showForm() {
+                                    const form = document.getElementById("formBuscarCliente");
+                                    form.classList.remove("d-none");
+
+                                }
+                                function showFormCliente() {
+                                    const formCliente = document.getElementById("formCliente");
+                                    formCliente.classList.remove("d-none");
+                                }
+
+                                function resetForm() {
+                                    $("#txtNombre").val("");
+                                    $("#txtApellido").val("");
+                                    $("#txtDni").val("");
+                                    $("#txtUbicacion").val("");
+                                    $("#txtTel").val("");
+                                    $("#txtIdCli").val("");
+                                    document.getElementById("mensajeRegistro").classList.add("d-none");
+                                    document.getElementById("formRegistroCliente").classList.add("d-none");
+                                }
+                                const btnConfirmar = document.getElementById("btnConfirmar");
 
 
-                                        var formCliente = document.getElementById("formCliente");
+                                var formCliente = document.getElementById("formCliente");
         </script>
     </body>
 

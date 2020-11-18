@@ -62,10 +62,13 @@
                         <p class="mb-4">Ingresa tu DNI para consultar tus pedidos o ver el estado de tus pedidos</p>
                         <div class="row d-flex justify-content-center" >
                             <div class="form-group col-sm-6">
-                                <input id="txtDNI" name="txtDNI" type="search" class="form-control">                                    
+                                <input id="txtDNI" name="txtDNI" type="number" class="form-control">                                    
                             </div>
                             <div clas="col-sm">
                                 <button onclick="buscarPedidos()" class="btn btn-outline-info">Buscar</button>
+                            </div>
+                            <div class="container" >
+                                <p id="mensajeError" class="text-danger d-none">Ingresa tu DNI correctamente</p>
                             </div>
                         </div>
                     </div>
@@ -164,9 +167,25 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 <script>
-                                        const divLista = document.getElementById("lstPedidos");
-                                        function buscarPedidos() {
-                                            param = document.getElementById("txtDNI").value;
+                                    const divLista = document.getElementById("lstPedidos");
+                                    const error = document.getElementById("mensajeError");
+                                    const validarDni = (dni) => {
+                                        if (!error.classList.contains("d-none")) {
+                                            error.classList.add("d-none");
+                                        }
+                                        var filtroRx = /^\d{8}(?:[-\s]\d{4})?$/;
+                                        if (filtroRx.test(dni) === true) {
+                                            return true;
+                                        } else {
+                                            return false;
+                                        }
+                                    }
+                                    function buscarPedidos() {
+
+
+                                        param = document.getElementById("txtDNI").value;
+
+                                        if (validarDni(param)) {
                                             axios({
                                                 method: 'POST',
                                                 url: 'buscarPedido.html',
@@ -174,11 +193,16 @@
                                             }).then((res) => {
                                                 console.log("Correcto!" + res.data);
                                                 data = res.data;
-                                                divLista.innerHTML=res.data;
+                                                divLista.innerHTML = res.data;
                                             }).catch((e) => {
                                                 console.log("Ha ocurrido un error: ", e);
                                             });
+                                        } else {
+                                            error.classList.remove("d-none");
                                         }
+
+
+                                    }
 
 </script>
 </html>

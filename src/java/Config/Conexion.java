@@ -10,8 +10,8 @@ public class Conexion {
     public Conexion() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gas4", "root", "ampuero");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gas4", "root", "alianza");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gas4", "root", "ampuero");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/gas4", "root", "alianza");
 
         } catch (Exception e) {
             System.err.println("Error" + e);
