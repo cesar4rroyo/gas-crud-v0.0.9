@@ -3,10 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/cesar4rroyo/NetBeansProjects/gas-v1.2/src/java/ModeloDAO/daoProducto.java</file>
+            <file>file:/home/cesar4rroyo/NetBeansProjects/gas-v1.2/src/java/logic/logicProveedor.java</file>
             <file>file:/home/cesar4rroyo/NetBeansProjects/gas-v1.2/src/java/Controlador/controladorPedido.java</file>
             <file>file:/home/cesar4rroyo/NetBeansProjects/gas-v1.2/src/java/logic/logicPedido.java</file>
-            <file>file:/home/cesar4rroyo/NetBeansProjects/gas-v1.2/src/java/ModeloDAO/daoPedido.java</file>
         </group>
     </open-files>
 </project-private>
