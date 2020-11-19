@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
-import ModeloDAO.daoPedido;
 import beans.beanPedido;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,11 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logic.logicPedido;
 
-/**
- *
- * @author cesar4rroyo
- */
 public class controladorPedidoCliente extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -34,11 +25,11 @@ public class controladorPedidoCliente extends HttpServlet {
     public void listar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         PrintWriter out = response.getWriter();
-        daoPedido dPed = new daoPedido();
-        beanPedido bPed = new beanPedido();
+        logicPedido lgPed = new logicPedido();
+
         int dni = Integer.parseInt(request.getParameter("txtDNI"));
         try {
-            List<beanPedido> lstPedido = dPed.listarPedidoCliente(dni);
+            List<beanPedido> lstPedido = lgPed.listarPedidosCliente(dni);
             String html = "";
 
             if (lstPedido.isEmpty()) {
@@ -74,9 +65,11 @@ public class controladorPedidoCliente extends HttpServlet {
     public void buscar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
         try {
-            daoPedido dPed = new daoPedido();
+            logicPedido lgPed = new logicPedido();
+            //no me acuerdo para que sirve esto pero es para buscar de acuerdo al ID no por DNI
+            int dni = Integer.parseInt(request.getParameter("txtDNI"));
             beanPedido bPed = new beanPedido();
-            bPed = dPed.list(Integer.parseInt(request.getParameter("txtDNI")));
+            bPed = lgPed.buscarPedido(dni);
             out.print(bPed.getCliente() + ","
                     + bPed.getProducto().getNombre_producto()
                     + "," + bPed.getFecha_inicio() + ","

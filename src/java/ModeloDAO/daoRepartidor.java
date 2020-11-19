@@ -1,4 +1,3 @@
-
 package ModeloDAO;
 
 import Config.Conexion;
@@ -8,11 +7,12 @@ import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class daoRepartidor implements rCRUD{
-    
+public class daoRepartidor implements rCRUD {
+
     Conexion cnx = new Conexion();
     Connection con;
     PreparedStatement ps;
@@ -21,7 +21,7 @@ public class daoRepartidor implements rCRUD{
 
     @Override
     public List listarRep() {
-       ArrayList<beanRepartidor> lstRep = new ArrayList<>();
+        ArrayList<beanRepartidor> lstRep = new ArrayList<>();
         String sql = "select * from repartidor";
         try {
             con = cnx.getConnection();
@@ -44,7 +44,7 @@ public class daoRepartidor implements rCRUD{
 
     @Override
     public beanRepartidor listRep(int idRep) {
-       String sql = "select * from repartidor where id_Repartidor="+idRep;
+        String sql = "select * from repartidor where id_Repartidor=" + idRep;
         try {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
@@ -56,7 +56,7 @@ public class daoRepartidor implements rCRUD{
                 bRep.setTelefono(rs.getString("telefono"));
                 bRep.setDni(rs.getString("dni"));
                 bRep.setId_Transporte(rs.getInt("id_Transporte"));
-               
+
             }
         } catch (Exception e) {
         }
@@ -71,41 +71,58 @@ public class daoRepartidor implements rCRUD{
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
             out.print("Error" + e);
+            return false;
         }
-        return false;
+
+    }
+
+    public boolean buscar(String dni) {
+        String sql = "select * from repartidor where dni=" + dni;
+        try {
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();           
+            return rs.next();
+        } catch (SQLException e) {
+            return false;
+        }
+
     }
 
     @Override
     public boolean editRep(beanRepartidor bRep) {
-       String sql = "UPDATE repartidor set nombre = '" + bRep.getNombre() + "' ,"
+        String sql = "UPDATE repartidor set nombre = '" + bRep.getNombre() + "' ,"
                 + "apellido = '" + bRep.getApeliido() + "',"
                 + "telefono = '" + bRep.getTelefono() + "',"
                 + "dni = '" + bRep.getDni() + "',"
                 + "id_Transporte = '" + bRep.getId_Transporte() + "'"
                 + "where id_Repartidor =" + bRep.getId_Repartidor();
-      try{
-          con = cnx.getConnection();
-          ps = con.prepareStatement(sql);
-          ps.executeUpdate();
-      }catch (Exception e){
-          out.print("Error"+e);
-      }
-        return false;
+        try {
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            out.print("Error" + e);
+            return false;
+        }
     }
 
     @Override
     public boolean eliminarRep(int idRep) {
-        String sql = "DELETE from repartidor where id_Repartidor="+idRep;
+        String sql = "DELETE from repartidor where id_Repartidor=" + idRep;
         try {
-            con=cnx.getConnection();
-            ps=con.prepareStatement(sql);
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
-          out.print("Error"+e);
+            out.print("Error" + e);
+            return false;
         }
-        return false;
     }
-    
+
 }

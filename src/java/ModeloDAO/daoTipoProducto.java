@@ -72,10 +72,11 @@ public class daoTipoProducto implements tipopdtoCRUD {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
             out.print("ERROR" + e);
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -85,10 +86,12 @@ public class daoTipoProducto implements tipopdtoCRUD {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
             out.print("Error" + e);
+            return false;
+
         }
-        return false;
     }
 
     @Override
@@ -98,10 +101,11 @@ public class daoTipoProducto implements tipopdtoCRUD {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
             out.print("Error" + e);
+            return false;
         }
-        return false;
     }
 
 }

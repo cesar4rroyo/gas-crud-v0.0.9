@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import Interfaces.cCRUD;
+import java.sql.SQLException;
 
 public class daoCliente implements cCRUD {
 
@@ -92,9 +93,11 @@ public class daoCliente implements cCRUD {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
+            return false;
         }
-        return false;
+        
 
     }
 
@@ -109,9 +112,11 @@ public class daoCliente implements cCRUD {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
+            return false;
         }
-        return false;
+        
 
     }
 
@@ -122,9 +127,22 @@ public class daoCliente implements cCRUD {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
-        }
-        return false;
+            return false;
+        }        
     }
 
+     public boolean buscar(String dni) {
+        String sql = "select * from cliente where dni=" + dni;
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();           
+            return rs.next();
+        } catch (SQLException e) {
+            return false;
+        }
+
+    }
 }

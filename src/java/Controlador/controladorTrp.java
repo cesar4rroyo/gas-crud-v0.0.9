@@ -5,7 +5,6 @@
  */
 package Controlador;
 
-import ModeloDAO.daoTransporte;
 import beans.beanTransporte;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logic.logicTransporte;
 
 /**
  *
@@ -34,7 +34,7 @@ public class controladorTrp extends HttpServlet {
     String addT = "vistaTransporte/addTrp.jsp";
     String editT = "vistaTransporte/editTrp.jsp";
     beanTransporte bT = new beanTransporte();
-    daoTransporte dT = new daoTransporte();
+    logicTransporte lgTr = new logicTransporte();
     int id;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -54,15 +54,6 @@ public class controladorTrp extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -75,7 +66,7 @@ public class controladorTrp extends HttpServlet {
         } else if (action.equalsIgnoreCase("Agregar")) {
             String descripcion = request.getParameter("txtDesc");
             bT.setDescripcion(descripcion);
-            dT.addTrp(bT);
+            lgTr.insertar(bT);
             acceso = listarT;
         } else if (action.equalsIgnoreCase("editarTrp")) {
             request.setAttribute("idTrp", request.getParameter("idT"));
@@ -85,12 +76,12 @@ public class controladorTrp extends HttpServlet {
             String descripcion = request.getParameter("txtDesc");
             bT.setId_Transporte(id);
             bT.setDescripcion(descripcion);
-            dT.editTrp(bT);
+            lgTr.actualizar(bT);
             acceso = listarT;
         } else if (action.equalsIgnoreCase("eliminar")) {
             id = Integer.parseInt(request.getParameter("idT"));
             bT.setId_Transporte(id);
-            dT.eliminarTrp(id);
+            lgTr.eliminar(id);
             acceso = listarT;
         }
 
@@ -118,7 +109,7 @@ public class controladorTrp extends HttpServlet {
         } else if (action.equalsIgnoreCase("Agregar")) {
             String descripcion = request.getParameter("txtDesc");
             bT.setDescripcion(descripcion);
-            dT.addTrp(bT);
+            lgTr.insertar(bT);
             acceso = listarT;
         } else if (action.equalsIgnoreCase("editarTrp")) {
             request.setAttribute("idTrp", request.getParameter("idT"));
@@ -128,12 +119,12 @@ public class controladorTrp extends HttpServlet {
             String descripcion = request.getParameter("txtDesc");
             bT.setId_Transporte(id);
             bT.setDescripcion(descripcion);
-            dT.editTrp(bT);
+            lgTr.actualizar(bT);
             acceso = listarT;
         } else if (action.equalsIgnoreCase("eliminar")) {
             id = Integer.parseInt(request.getParameter("idT"));
             bT.setId_Transporte(id);
-            dT.eliminarTrp(id);
+            lgTr.eliminar(id);
             acceso = listarT;
         }
 

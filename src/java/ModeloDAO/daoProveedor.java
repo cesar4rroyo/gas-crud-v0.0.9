@@ -7,6 +7,7 @@ import static java.lang.System.out;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,7 @@ public class daoProveedor implements pCRUD {
 
     @Override
     public beanProveedor list(int idProv) {
-        String sql = "select * from provedor where id_Provedor="+idProv;
+        String sql = "select * from provedor where id_Provedor=" + idProv;
         try {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
@@ -53,7 +54,7 @@ public class daoProveedor implements pCRUD {
                 bProv.setRuc(rs.getString("ruc"));
                 bProv.setTelefono(rs.getString("telefono"));
                 bProv.setDireccion_provedor(rs.getString("direccion_provedor"));
-               
+
             }
         } catch (Exception e) {
         }
@@ -68,42 +69,56 @@ public class daoProveedor implements pCRUD {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
             out.print("Error" + e);
+            return false;
         }
-        return false;
     }
 
     @Override
     public boolean edit(beanProveedor bProv) {
-      String sql = "UPDATE provedor set nombre = '" + bProv.getNombre() + "' ,"
+        String sql = "UPDATE provedor set nombre = '" + bProv.getNombre() + "' ,"
                 + "ruc = '" + bProv.getRuc() + "',"
                 + "telefono = '" + bProv.getTelefono() + "',"
                 + "direccion_provedor = '" + bProv.getDireccion_provedor() + "'"
                 + "where id_Provedor =" + bProv.getId_Provedor();
-      try{
-          con = cnx.getConnection();
-          ps = con.prepareStatement(sql);
-          ps.executeUpdate();
-      }catch (Exception e){
-          out.print("Error"+e);
-      }
-        return false;
+        try {
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            out.print("Error" + e);
+            return false;
+        }
     }
 
     @Override
     public boolean eliminar(int idProv) {
-        String sql = "DELETE from provedor where id_Provedor="+idProv;
+        String sql = "DELETE from provedor where id_Provedor=" + idProv;
         try {
-            con=cnx.getConnection();
-            ps=con.prepareStatement(sql);
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
-          out.print("Error"+e);
+            out.print("Error" + e);
+            return false;
         }
-        return false;
     }
-    
-    
+
+    public boolean buscar(String ruc) {
+        String sql = "select * from provedor where ruc=" + ruc;
+        try {
+            con = cnx.getConnection();
+            ps = con.prepareStatement(sql);
+            rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            return false;
+        }
+
+    }
 
 }

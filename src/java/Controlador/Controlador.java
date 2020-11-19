@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controlador;
 
-import ModeloDAO.daoProveedor;
+
 import beans.beanProveedor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,18 +10,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logic.logicProveedor;
 
-/**
- *
- * @author cesar4rroyo
- */
+
 public class Controlador extends HttpServlet {
 
     String listar = "vistaProveedor/listar.jsp";
     String add = "vistaProveedor/add.jsp";
     String edit = "vistaProveedor/edit.jsp";
     beanProveedor bP = new beanProveedor();
-    daoProveedor dP = new daoProveedor();
+    logicProveedor lgP=new logicProveedor();
     int id;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -63,7 +57,7 @@ public class Controlador extends HttpServlet {
             bP.setRuc(ruc);
             bP.setTelefono(telefono);
             bP.setDireccion_provedor(direccion);
-            dP.add(bP);
+            lgP.insertar(bP);
             acceso = listar;
         } else if (action.equalsIgnoreCase("editar")) {
             request.setAttribute("idProv", request.getParameter("id"));
@@ -79,12 +73,12 @@ public class Controlador extends HttpServlet {
             bP.setRuc(ruc);
             bP.setTelefono(telefono);
             bP.setDireccion_provedor(direccion);
-            dP.edit(bP);
+            lgP.actualizar(bP);
             acceso = listar;
         } else if (action.equalsIgnoreCase("eliminar")) {
             id = Integer.parseInt(request.getParameter("id"));
             bP.setId_Provedor(id);
-            dP.eliminar(id);
+            lgP.eliminar(id);
             acceso = listar;
         }
         RequestDispatcher vista = request.getRequestDispatcher(acceso);

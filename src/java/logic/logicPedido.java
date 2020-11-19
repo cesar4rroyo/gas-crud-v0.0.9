@@ -1,37 +1,27 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package logic;
 
 import ModeloDAO.daoPedido;
 import ModeloDAO.daoProducto;
 import beans.beanPedido;
 import beans.beanProducto;
+import java.util.List;
 
-/**
- *
- * @author cesar4rroyo
- */
 public class logicPedido {
 
-
-    public String agregarPedidoTemporal(beanPedido bPed){
+    public String agregarPedidoTemporal(beanPedido bPed) {
         daoPedido dPed = new daoPedido();
-        if(dPed.addPedidoTemporal(bPed)){
+        if (dPed.addPedidoTemporal(bPed)) {
             return "Agregado Correctamente";
-        }else{
+        } else {
             return "Ha ocurrido un Error";
         }
     }
-    
 
     public String agregarPedidoCompleto(beanPedido bPed) {
         daoPedido dPed = new daoPedido();
         if (dPed.add(bPed)) {
             return "Agregado Correctamente";
-        }else{
+        } else {
             return "Ha ocurrido un error :v";
         }
 
@@ -55,5 +45,15 @@ public class logicPedido {
     public void actualizarStock(int stock, int id) {
         daoProducto dPdt = new daoProducto();
         dPdt.actualizarStock(stock, id);
+    }
+
+    public beanPedido buscarPedido(int dni) {
+        daoPedido dPed = new daoPedido();
+        return dPed.list(dni);
+    }
+
+    public List listarPedidosCliente(int dni) {
+        daoPedido dPed = new daoPedido();
+        return dPed.listarPedidoCliente(dni);
     }
 }

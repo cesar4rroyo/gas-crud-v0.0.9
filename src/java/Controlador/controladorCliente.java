@@ -1,31 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
-import ModeloDAO.daoCliente;
+
 import beans.beanCliente;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logic.logicCliente;
 
-/**
- *
- * @author cesar4rroyo
- */
+
 public class controladorCliente extends HttpServlet {
 
     String listar = "vistaCliente/listar.jsp";
     String add = "vistaCliente/add.jsp";
     String edit = "vistaCliente/edit.jsp";
     beanCliente b = new beanCliente();
-    daoCliente dao = new daoCliente();
+    logicCliente lgC=new logicCliente();
     int id;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -45,7 +37,7 @@ public class controladorCliente extends HttpServlet {
             b.setDni(dni);
             b.setTelefono(telefono);
             b.setFoto_casa(foto);
-            dao.add(b);
+            lgC.insertar(b);
             
             response.sendRedirect("procederCompra.jsp");
         }
@@ -75,7 +67,7 @@ public class controladorCliente extends HttpServlet {
             b.setDni(dni);
             b.setTelefono(telefono);
             
-            dao.add(b);
+            lgC.insertar(b);
             acceso = listar;
         } else if (action.equalsIgnoreCase("editar")) {
             request.setAttribute("idcli", request.getParameter("id"));
@@ -95,17 +87,16 @@ public class controladorCliente extends HttpServlet {
             b.setApellido(apellido);
             b.setUbicacion(ubicacion);
             b.setDni(dni);
-            b.setTelefono(telefono);
-            
+            b.setTelefono(telefono);            
 
-            dao.edit(b);
+            lgC.actualizar(b);
             acceso = listar;
 //            response.sendRedirect(listar);
             
         } else if (action.equalsIgnoreCase("eliminar")) {
             id = Integer.parseInt(request.getParameter("id"));
             b.setId_Cliente(id);
-            dao.eliminar(id);
+            lgC.eliminar(id);
             acceso = listar;
         }
         RequestDispatcher vista = request.getRequestDispatcher(acceso);

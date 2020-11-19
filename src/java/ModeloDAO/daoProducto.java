@@ -83,7 +83,7 @@ public class daoProducto implements pdtoCRUD {
     @Override
     public boolean add(beanProducto bPdto) {
         String sql = "INSERT INTO producto (nombre_producto, descripcion, image_ref,precio,  id_tipo_producto) VALUES ('" + bPdto.getNombre_producto() + "', '" + bPdto.getDescripcion()
-                + "', '" + bPdto.getImage_ref()+ "', '" + bPdto.getPrecio() + "', '"+bPdto.getTipoProducto().getIdtipo_producto()+"')";
+                + "', '" + bPdto.getImage_ref() + "', '" + bPdto.getPrecio() + "', '" + bPdto.getTipoProducto().getIdtipo_producto() + "')";
         try {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
@@ -93,9 +93,9 @@ public class daoProducto implements pdtoCRUD {
         }
         return false;
     }
-    
-    public boolean actualizarStock(int stock, int id){
-        String sql= "UPDATE producto set stock='"+stock+"' WHERE id_Producto="+id;
+
+    public boolean actualizarStock(int stock, int id) {
+        String sql = "UPDATE producto set stock='" + stock + "' WHERE id_Producto=" + id;
         try {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
@@ -112,16 +112,18 @@ public class daoProducto implements pdtoCRUD {
         String sql = "UPDATE producto set nombre_producto = '" + bPdto.getNombre_producto() + "' ,"
                 + "descripcion = '" + bPdto.getDescripcion() + "',"
                 + "precio = '" + bPdto.getPrecio() + "',"
-                + "image_ref = '" + bPdto.getImage_ref() + "', id_tipo_producto = '"+bPdto.getTipoProducto().getIdtipo_producto()+"'"
+                + "image_ref = '" + bPdto.getImage_ref() + "', id_tipo_producto = '" + bPdto.getTipoProducto().getIdtipo_producto() + "'"
                 + "where id_Producto =" + bPdto.getId_Producto();
         try {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
             out.print("Error" + e);
+            return false;
+
         }
-        return false;
     }
 
     @Override
@@ -132,10 +134,11 @@ public class daoProducto implements pdtoCRUD {
             con = cnx.getConnection();
             ps = con.prepareStatement(sql);
             ps.executeUpdate();
+            return true;
         } catch (Exception e) {
             out.print("Error" + e);
+            return false;
         }
-        return false;
     }
 
 }

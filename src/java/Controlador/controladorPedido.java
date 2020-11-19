@@ -7,7 +7,6 @@ package Controlador;
 
 import ModeloDAO.daoCliente;
 import ModeloDAO.daoEstadoPed;
-import ModeloDAO.daoPedido;
 import ModeloDAO.daoProducto;
 import ModeloDAO.daoRepartidor;
 import beans.beanCliente;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

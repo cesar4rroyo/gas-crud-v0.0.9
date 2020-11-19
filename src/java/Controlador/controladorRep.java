@@ -1,11 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Controlador;
 
-import ModeloDAO.daoRepartidor;
 import beans.beanRepartidor;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,27 +8,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import logic.logicRepartidor;
 
-/**
- *
- * @author cesar4rroyo
- */
+
 public class controladorRep extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     String listarRep = "vistaRepartidor/lstRep.jsp";
     String addRep = "vistaRepartidor/addRep.jsp";
     String editRep = "vistaRepartidor/editRep.jsp";
     beanRepartidor bR = new beanRepartidor();
-    daoRepartidor dR = new daoRepartidor();
+    logicRepartidor lgR = new logicRepartidor();
     int id;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -54,15 +37,6 @@ public class controladorRep extends HttpServlet {
         }
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -83,7 +57,7 @@ public class controladorRep extends HttpServlet {
             bR.setTelefono(telefono);
             bR.setDni(dni);
             bR.setId_Transporte(id_Transporte);
-            dR.addRep(bR);
+            lgR.insertar(bR);
             acceso = listarRep;
         } else if (action.equalsIgnoreCase("editarR")) {
             request.setAttribute("idRep", request.getParameter("idR"));
@@ -101,37 +75,26 @@ public class controladorRep extends HttpServlet {
             bR.setTelefono(telefono);
             bR.setDni(dni);
             bR.setId_Transporte(id_Transporte);
-            dR.editRep(bR);
+            lgR.actualizar(bR);
             acceso = listarRep;
         } else if (action.equalsIgnoreCase("eliminarR")) {
             id = Integer.parseInt(request.getParameter("idR"));
             bR.setId_Repartidor(id);
-            dR.eliminarRep(id);
+            lgR.eliminar(id);
             acceso = listarRep;
         }
         RequestDispatcher vistaT = request.getRequestDispatcher(acceso);
         vistaT.forward(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+
     @Override
     public String getServletInfo() {
         return "Short description";
