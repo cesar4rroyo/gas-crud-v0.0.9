@@ -18,6 +18,11 @@ public class logicCliente {
             }
         }
     }
+    
+    public beanCliente buscarCliente(int dni){
+        daoCliente dC = new daoCliente();
+        return dC.buscarDni(dni);
+    }
 
     public String actualizar(beanCliente bC) {
         daoCliente dC = new daoCliente();

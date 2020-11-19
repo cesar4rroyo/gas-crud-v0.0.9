@@ -1,9 +1,6 @@
-
 package Controlador;
 
-import ModeloDAO.daoCompra;
-import ModeloDAO.daoProducto;
-import ModeloDAO.daoProveedor;
+
 import beans.beanCompra;
 import beans.beanProducto;
 import beans.beanProveedor;
@@ -15,25 +12,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import logic.logicCompra;
-
+import logic.logicProducto;
+import logic.logicProveedor;
 
 public class controladorCompra extends HttpServlet {
 
     beanCompra bCompra;
-    daoCompra dCompra;
     beanProducto bPdt;
-    daoProducto dPdt;
     beanProveedor bProv;
-    daoProveedor dProv;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String rutaUrl = request.getServletPath();
         if (rutaUrl.equals("/listCompra")) {
-           RequestDispatcher vista = request.getRequestDispatcher("vistaCompra/list.jsp");
-           vista.forward(request, response);
-        }else if (rutaUrl.equals("/editCompra.html")) {
+            RequestDispatcher vista = request.getRequestDispatcher("vistaCompra/list.jsp");
+            vista.forward(request, response);
+        } else if (rutaUrl.equals("/editCompra.html")) {
             request.setAttribute("id", request.getParameter("id"));
             RequestDispatcher vista = request.getRequestDispatcher("vistaCompra/editCompra.jsp");
             vista.forward(request, response);
@@ -43,34 +38,33 @@ public class controladorCompra extends HttpServlet {
             agregarCompra(request, response);
         } else if (rutaUrl.equals("/deleteCompra")) {
             eliminar(request, response);
-        } 
+        }
     }
 
     public void editarCompra(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
         bCompra = new beanCompra();
-        dCompra = new daoCompra();
 
         bPdt = new beanProducto();
-        dPdt = new daoProducto();
+        logicProducto lgPdto = new logicProducto();
 
         bProv = new beanProveedor();
-        dProv = new daoProveedor();
-        
-        bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtProducto")));
-        bProv = dProv.list(Integer.parseInt(request.getParameter("txtProvedor")));
-        int cantidad_actualizada=Integer.parseInt(request.getParameter("txtCantidad"));
+        logicProveedor lgPro = new logicProveedor();
+
+        bPdt = lgPdto.list(Integer.parseInt(request.getParameter("txtProducto")));
+        bProv = lgPro.list(Integer.parseInt(request.getParameter("txtProvedor")));
+        int cantidad_actualizada = Integer.parseInt(request.getParameter("txtCantidad"));
         int cantidad_defecto = Integer.parseInt(request.getParameter("txtCantidadDefecto"));
         bCompra.setCantidad(cantidad_actualizada);
         bCompra.setTotal(Integer.parseInt(request.getParameter("txtTotal")));
         bCompra.setProducto(bPdt);
         bCompra.setProvedor(bProv);
         bCompra.setId_Compra(Integer.parseInt(request.getParameter("txtIdCompra")));
-                
+
         try {
             logicCompra lgCompra = new logicCompra();
             lgCompra.editarCompra(bCompra, cantidad_defecto);
-            dCompra.edit(bCompra);
+//            dCompra.edit(bCompra);
             String acceso = "listCompra";
             response.sendRedirect(acceso);
         } catch (IOException e) {
@@ -81,17 +75,16 @@ public class controladorCompra extends HttpServlet {
     public void agregarCompra(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
         bCompra = new beanCompra();
-        dCompra = new daoCompra();
 
         bPdt = new beanProducto();
-        dPdt = new daoProducto();
+        logicProducto lgPdto = new logicProducto();
 
         bProv = new beanProveedor();
-        dProv = new daoProveedor();
+        logicProveedor lgPro = new logicProveedor();
 
-        bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtProducto")));
-        bProv = dProv.list(Integer.parseInt(request.getParameter("txtProvedor")));
-        
+        bPdt = lgPdto.list(Integer.parseInt(request.getParameter("txtProducto")));
+        bProv = lgPro.list(Integer.parseInt(request.getParameter("txtProvedor")));
+
         bCompra.setCantidad(Integer.parseInt(request.getParameter("txtCantidad")));
         bCompra.setTotal(Integer.parseInt(request.getParameter("txtTotal")));
         bCompra.setProducto(bPdt);
@@ -100,7 +93,7 @@ public class controladorCompra extends HttpServlet {
         try {
             logicCompra lgCompra = new logicCompra();
             lgCompra.insertar(bCompra);
-            dCompra.add(bCompra);
+//            dCompra.add(bCompra);
             String acceso = "listCompra";
             response.sendRedirect(acceso);
         } catch (IOException e) {
@@ -111,11 +104,11 @@ public class controladorCompra extends HttpServlet {
 
     public void eliminar(HttpServletRequest request, HttpServletResponse response) throws IOException {
         PrintWriter out = response.getWriter();
+        logicCompra lgCompra = new logicCompra();
         bCompra = new beanCompra();
-        dCompra = new daoCompra();
         int id_compra = Integer.parseInt(request.getParameter("id"));
-        try {
-            dCompra.eliminar(id_compra);
+        try {//          
+            lgCompra.eliminar(id_compra);
             String acceso = "listCompra";
             response.sendRedirect(acceso);
         } catch (IOException e) {

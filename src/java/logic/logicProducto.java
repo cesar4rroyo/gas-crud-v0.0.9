@@ -38,4 +38,9 @@ public class logicProducto {
         daoProducto dP = new daoProducto();
         return dP.listar();
     }
+    
+    public beanProducto list(int id){
+        daoProducto dP=new daoProducto();
+        return dP.list(id);
+    }
 }

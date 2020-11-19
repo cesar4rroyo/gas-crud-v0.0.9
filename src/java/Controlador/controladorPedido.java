@@ -27,20 +27,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import logic.logicPedido;
 import java.util.Calendar;
+import logic.logicCliente;
+import logic.logicProducto;
+import logic.logicRepartidor;
 
 public class controladorPedido extends HttpServlet {
 
     beanPedido bPed;
-
     beanCliente bC;
-    daoCliente dC;
-
     beanProducto bPdt;
-    daoProducto dPdt;
-
     beanRepartidor bRep;
-    daoRepartidor dRep;
-
     beanEstadoPed bEP;
     daoEstadoPed dEP;
 
@@ -86,19 +82,19 @@ public class controladorPedido extends HttpServlet {
         PrintWriter out = response.getWriter();
         bPed = new beanPedido();
         bC = new beanCliente();
-        dC = new daoCliente();
+        logicCliente lgCliente = new logicCliente();
+        logicProducto lgPdto = new logicProducto();
+        logicRepartidor lgRep = new logicRepartidor();
         bPdt = new beanProducto();
-        dPdt = new daoProducto();
         bRep = new beanRepartidor();
-        dRep = new daoRepartidor();
         bEP = new beanEstadoPed();
         dEP = new daoEstadoPed();
         logicPedido lgPedido = new logicPedido();
         Calendar calendar = Calendar.getInstance();
         Timestamp fecha_entrega = new Timestamp(calendar.getTime().getTime());
-        bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
-        bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
-        bRep = dRep.listRep(Integer.parseInt(request.getParameter("txtIdRep")));
+        bC = lgCliente.list(Integer.parseInt(request.getParameter("txtIdCli")));
+        bPdt = lgPdto.list(Integer.parseInt(request.getParameter("txtIdPdto")));
+        bRep = lgRep.list(Integer.parseInt(request.getParameter("txtIdRep")));
         bEP = dEP.list(Integer.parseInt(request.getParameter("txtIdEP")));
         bPed.setId_Pedido(Integer.parseInt(request.getParameter("txtIdPed")));
         bPed.setImporte_total(bPdt.getPrecio());
@@ -137,14 +133,13 @@ public class controladorPedido extends HttpServlet {
         PrintWriter out = response.getWriter();
         bPed = new beanPedido();
         bC = new beanCliente();
-        dC = new daoCliente();
         bPdt = new beanProducto();
-        dPdt = new daoProducto();
         logicPedido lgPedido = new logicPedido();
+        logicCliente lgCliente = new logicCliente();
+        logicProducto lgPdto = new logicProducto();
 
-        bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
-        bPdt = dPdt.list(idProducto);
-
+        bC = lgCliente.list(Integer.parseInt(request.getParameter("txtIdCli")));
+        bPdt = lgPdto.list(idProducto);
         bPed.setImporte_total(Integer.parseInt(request.getParameter("txtImpTot")));
         bPed.setCliente(bC);
         bPed.setProducto(bPdt);
@@ -166,18 +161,18 @@ public class controladorPedido extends HttpServlet {
         PrintWriter out = response.getWriter();
         bPed = new beanPedido();
         bC = new beanCliente();
-        dC = new daoCliente();
         bPdt = new beanProducto();
-        dPdt = new daoProducto();
         bRep = new beanRepartidor();
-        dRep = new daoRepartidor();
         bEP = new beanEstadoPed();
         dEP = new daoEstadoPed();
         logicPedido lgPedido = new logicPedido();
+        logicCliente lgCliente = new logicCliente();
+        logicProducto lgPdto = new logicProducto();
+        logicRepartidor lgRep = new logicRepartidor();
 
-        bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
-        bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
-        bRep = dRep.listRep(Integer.parseInt(request.getParameter("txtIdRep")));
+        bC = lgCliente.list(Integer.parseInt(request.getParameter("txtIdCli")));
+        bPdt = lgPdto.list(Integer.parseInt(request.getParameter("txtIdPdto")));
+        bRep = lgRep.list(Integer.parseInt(request.getParameter("txtIdRep")));
         bEP = dEP.list(Integer.parseInt(request.getParameter("txtIdEP")));
 
         bPed.setImporte_total(bPdt.getPrecio());
@@ -200,21 +195,21 @@ public class controladorPedido extends HttpServlet {
     public void actualizar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         PrintWriter out = response.getWriter();
         logicPedido lgPedido = new logicPedido();
+        logicCliente lgCliente = new logicCliente();
+        logicProducto lgPdto = new logicProducto();
+        logicRepartidor lgRep = new logicRepartidor();
         bPed = new beanPedido();
         bC = new beanCliente();
-        dC = new daoCliente();
         bPdt = new beanProducto();
-        dPdt = new daoProducto();
         bRep = new beanRepartidor();
-        dRep = new daoRepartidor();
         bEP = new beanEstadoPed();
         dEP = new daoEstadoPed();
         Calendar calendar = Calendar.getInstance();
         Timestamp fecha_entrega = new Timestamp(calendar.getTime().getTime());
 
-        bC = dC.list(Integer.parseInt(request.getParameter("txtIdCli")));
-        bPdt = dPdt.list(Integer.parseInt(request.getParameter("txtIdPdto")));
-        bRep = dRep.listRep(Integer.parseInt(request.getParameter("txtIdRep")));
+        bC = lgCliente.list(Integer.parseInt(request.getParameter("txtIdCli")));
+        bPdt = lgPdto.list(Integer.parseInt(request.getParameter("txtIdPdto")));
+        bRep = lgRep.list(Integer.parseInt(request.getParameter("txtIdRep")));
         bEP = dEP.list(Integer.parseInt(request.getParameter("txtIdEP")));
         bPed.setId_Pedido(Integer.parseInt(request.getParameter("txtIdPed")));
         bPed.setImporte_total(bPdt.getPrecio());

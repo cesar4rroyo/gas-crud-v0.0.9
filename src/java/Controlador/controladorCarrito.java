@@ -5,8 +5,6 @@
  */
 package Controlador;
 
-import ModeloDAO.daoCliente;
-import ModeloDAO.daoTipoProducto;
 import beans.beanCliente;
 import beans.beanProducto;
 import beans.beanTipoProducto;
@@ -18,6 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import logic.logicCliente;
+import logic.logicTipoProducto;
 
 /**
  *
@@ -31,7 +31,7 @@ public class controladorCarrito extends HttpServlet {
     HttpSession session;
     beanProducto bP;
     beanTipoProducto bTPdto;
-    daoTipoProducto dTPdto;
+    logicTipoProducto lgTPdto;
 
     protected void metGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -56,9 +56,10 @@ public class controladorCarrito extends HttpServlet {
         int dni = Integer.parseInt(request.getParameter("txtDni"));
 
         try {
-            daoCliente dC = new daoCliente();
+            
+            logicCliente lgC=new logicCliente();
             beanCliente bC = new beanCliente();
-            bC = dC.buscarDni(dni);
+            bC = lgC.buscarCliente(dni);
             salida.print(bC.getNombre()
                     + "," + bC.getApellido() + ","
                     + bC.getDni() + "," + bC.getUbicacion()
@@ -83,14 +84,14 @@ public class controladorCarrito extends HttpServlet {
         lstProducto = (ArrayList<beanProducto>) session.getAttribute("carroCompras");
         int cantidad = Integer.parseInt(request.getParameter("cantidad"));
         bTPdto = new beanTipoProducto();
-        dTPdto = new daoTipoProducto();
+        lgTPdto = new logicTipoProducto();
         if (lstProducto == null) {
             lstProducto = new ArrayList<beanProducto>();
             //      Guarda en variable de session un valor 
             session.setAttribute("carroCompras", lstProducto);
         }
         bP = new beanProducto();
-        bTPdto = dTPdto.list(Integer.parseInt(request.getParameter("idTipoPdto")));
+        bTPdto = lgTPdto.listar(Integer.parseInt(request.getParameter("idTipoPdto")));
         bP.setId_Producto(Integer.parseInt(request.getParameter("id")));
         bP.setNombre_producto(request.getParameter("nombre"));
         bP.setDescripcion(request.getParameter("descripcion"));
