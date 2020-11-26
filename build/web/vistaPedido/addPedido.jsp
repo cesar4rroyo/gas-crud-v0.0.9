@@ -275,7 +275,7 @@
                                                     ></i
                                                 >&nbsp;Configuración</a
                                             >
-                                            <a class="dropdown-item" role="presentation" href="#"
+                                            <a class="dropdown-item" role="presentation" href="reportes.html"
                                                ><i
                                                     class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"
                                                     ></i

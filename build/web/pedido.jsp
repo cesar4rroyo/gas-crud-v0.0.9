@@ -187,6 +187,7 @@
                                     <h4><%= bPdto.getNombre_producto()%></h4>
                                     <h5>S/. <%=bPdto.getPrecio()%>.00</h5>
                                     <p><%= bPdto.getDescripcion()%></p>
+                                    <p class="small" >Cantidad Dispoible: <%= bPdto.getStock()%></p>
                                     <input type="hidden" name="id" value="<%=bPdto.getId_Producto()%>" >
                                     <input type="hidden" name="foto" value="<%=bPdto.getImage_ref()%>" >
                                     <input type="hidden" name="descripcion" value="<%=bPdto.getDescripcion()%>" >
@@ -194,10 +195,13 @@
                                     <input type="hidden" name="nombre" value="<%=bPdto.getNombre_producto()%>" >
                                     <input type="hidden" name="idTipoPdto" value="<%=bPdto.getTipoProducto().getIdtipo_producto()%>">
                                     <input type="hidden" name="cantidad" value="1" >
-                                    <button class="btn btn-outline-primary mt-2">Agregar</button>
+                                    <%if (bPdto.getStock() == 0) {%>
+                                        <button disabled class="btn btn-outline-primary mt-2">Agregar</button>
+                                    <%} else {%>
+                                        <button class="btn btn-outline-primary mt-2">Agregar</button>
+                                    <%}%>
                                 </div>
-                            </form>    
-
+                            </form>
                         </div>
                         <%}%>
                     </div>

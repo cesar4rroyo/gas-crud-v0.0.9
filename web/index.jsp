@@ -1,9 +1,3 @@
-<%-- 
-    Document   : index.jsp
-    Created on : 11 oct. 2020, 18:46:38
-    Author     : cesar4rroyo
---%>
-
 <%@page import="java.util.Iterator"%>
 <%@page import="beans.beanProducto"%>
 <%@page import="java.util.List"%>
@@ -101,11 +95,10 @@
                             <div class="content">
                                 <h3>SoftGas</h3>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                                    Asperiores dolores sed et. Tenetur quia eos. Autem tempore quibusdam vel necessitatibus optio ad corporis.
+                                    SoftGas es una empresa peruana; pionera en brindar este moderno servicio público en el Perú, contribuyendo así a la mejora en la calidad de vida de la población y a la preservación de nuestro medio ambiente. 
                                 </p>
                                 <div class="text-center">
-                                    <a href="Controlador?accion=listar" class="more-btn"> Ver Crud <i class="bx bx-chevron-right"></i></a>
+                                    <a href="#services" class="more-btn"> Ver mas <i class="bx bx-chevron-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -151,27 +144,25 @@
                         </div>
 
                         <div class="col-xl-7 col-lg-6 icon-boxes d-flex flex-column align-items-stretch justify-content-center py-5 px-lg-5">
-                            <h3>Enim quis est voluptatibus aliquid consequatur fugiat</h3>
-                            <p>Esse voluptas cumque vel exercitationem. Reiciendis est hic accusamus. Non ipsam et sed minima temporibus laudantium. Soluta voluptate sed facere corporis dolores excepturi. Libero laboriosam sint et id nulla tenetur. Suscipit aut voluptate.</p>
-
+                            <h3>Sobre Nosotros</h3>
+                            <p>
+                                Hemos definido nuestra estrategia de marca en base a una premisa: somos expertos en gas natural. Y ésta se construye sobre tres pilares: la garantía que proporciona nuestra historia; nuestra cultura y forma de hacer las cosas: bien, y el desarrollo positivo basado en un proyecto de futuro relevante.
+                            </p>
                             <div class="icon-box">
                                 <div class="icon"><i class="bx bx-fingerprint"></i></div>
-                                <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-                                <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-                            </div>
-
-                            <div class="icon-box">
-                                <div class="icon"><i class="bx bx-gift"></i></div>
-                                <h4 class="title"><a href="">Nemo Enim</a></h4>
-                                <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
+                                <h4 class="title"><a href="">Mision</a></h4>
+                                <p class="description">
+                                    Ser una empresa de energía que contribuya al desarrollo sustentable, mejorando la calidad de vida a través de la comercialización de soluciones energéticas en Latinoamérica.
+                                </p>
                             </div>
 
                             <div class="icon-box">
                                 <div class="icon"><i class="bx bx-atom"></i></div>
-                                <h4 class="title"><a href="">Dine Pad</a></h4>
-                                <p class="description">Explicabo est voluptatum asperiores consequatur magnam. Et veritatis odit. Sunt aut deserunt minus aut eligendi omnis</p>
+                                <h4 class="title"><a href="">Vision</a></h4>
+                                <p class="description">
+                                    Ser reconocida como la empresa líder del Perú en el abastecimiento de gas y soluciones energéticas en base a hidrocarburos a nivel nacional, transmitiendo cercanía y modernidad a nuestros clientes.
+                                </p>
                             </div>
-
                         </div>
                     </div>
 
@@ -227,7 +218,10 @@
 
                     <div class="section-title">
                         <h2>Productos</h2>
-                        <p>Calidad 100% garantizada en cada uno de nuestros productos</p>
+                        <p>Calidad 100% garantizada en cada uno de nuestros productos
+                            <br>
+
+                        </p>
                     </div>
                     <div class="row">
                         <%
@@ -260,7 +254,11 @@
 
                     <div class="section-title">
                         <h2>Clientes</h2>
-                        <p>Nuestro clientes nos respaldan por la calidad de nuestros productos, y la confianza en la entrega de los mismos</p>
+                        <p>Nuestro clientes nos respaldan por la
+                            calidad de nuestros productos, y la confianza en la entrega de los mismos
+                            <br>
+                            La clave de nuestro éxito es nuestra gente y una operación comprometida en entregar a nuestros clientes y socios estratégicos soluciones energéticas innovadoras y eficientes, que impulsan el crecimiento sostenido de nuestro país.
+                        </p>
                     </div>
                 </div>
 
@@ -314,12 +312,12 @@
 
                         <div class="testimonial-wrap">
                             <div class="testimonial-item">
-                                <img src="https://cesar4rroyo.me/assets/img/zafra.jpeg" class="testimonial-img" alt="">
+                                <img src="https://scontent.flim3-3.fna.fbcdn.net/v/t1.0-9/126515696_195478902055919_2826153230435125484_o.jpg?_nc_cat=103&ccb=2&_nc_sid=09cbfe&_nc_eui2=AeE1ej7XhXQujMOuBhjdyvYA3HVKSK4hPaHcdUpIriE9oZJhKmX-Lr4OVHgW2OUxXyOFA_uzvJRixh2_0Phxz2Hm&_nc_ohc=ET8x6GLz3loAX-Xgy4V&_nc_ht=scontent.flim3-3.fna&oh=735880dc226d7dd5c58657c035ee827e&oe=5FE41794" class="testimonial-img" alt="">
                                 <h3>José Zafra</h3>
                                 <h4>Cliente</h4>
                                 <p>
                                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
+                                    Un servicio de calidad con precio accesible y adaptado a las necesidades del cliente.
                                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                                 </p>
                             </div>
@@ -332,7 +330,7 @@
                                 <h4>Cliente</h4>
                                 <p>
                                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
+                                    Magnifico servicio; llego antes de lo que estaba previsto . Volvere a pedir mi gas cuando lo requiera
                                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                                 </p>
                             </div>
@@ -345,7 +343,7 @@
                                 <h4>Cliente</h4>
                                 <p>
                                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
+                                    Servicio rápido, bueno y 100% confiable, que vas a saber tu p
                                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                                 </p>
                             </div>
@@ -355,10 +353,10 @@
                             <div class="testimonial-item">
                                 <img src="https://cesar4rroyo.me/assets/img/diego.jpg" class="testimonial-img" alt="">
                                 <h3>Diego Vasquez</h3>
-                                <h4>CLiente</h4>
+                                <h4>Cliente</h4>
                                 <p>
                                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                                    Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
+                                    Excelente servicio ya que puedo hacer pedidos a través de la aplicación web de una manera rápida
                                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                                 </p>
                             </div>
@@ -538,4 +536,4 @@
     </body>
 
 </html>
-</html>
+

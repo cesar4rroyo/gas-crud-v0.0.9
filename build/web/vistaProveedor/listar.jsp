@@ -269,7 +269,7 @@
                                                     ></i
                                                 >&nbsp;Configuración</a
                                             >
-                                            <a class="dropdown-item" role="presentation" href="#"
+                                            <a class="dropdown-item" role="presentation" href="reportes.html"
                                                ><i
                                                     class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"
                                                     ></i
@@ -307,6 +307,7 @@
                         </form>
                         <div class="container">
                             <button type="button" class="btn btn-dark"  data-toggle="modal" data-target="#modal_insertar"><i class="fa fa-plus"> </i>  Añadir nuevo </button>
+                            <a class="btn btn-warning float-right" href="vistaReportesProvedor.jsp">Generar Reportes</a>
                         </div>            
                         <div class="modal fade" id="modal_insertar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -382,6 +383,9 @@
                                                     </a>
                                                     <a class="btn btn-danger" href="Controlador?accion=eliminar&id=<%= bProv.getId_Provedor()%>">
                                                         <i class="fa fa-trash"></i> Eliminar
+                                                    </a>
+                                                    <a class="btn btn-success" href="reportes\repProvedor\provParaPdf.jsp?control=<%= bProv.getId_Provedor()%>">
+                                                        <i class="fa fa-eye"></i>Ver
                                                     </a>
                                                 </div>
                                             </td>

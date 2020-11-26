@@ -44,6 +44,10 @@
         <servlet-name>controladorPedidoCliente</servlet-name>
         <servlet-class>Controlador.controladorPedidoCliente</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>controladorReportes</servlet-name>
+        <servlet-class>Controlador.controladorReportes</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Controlador</servlet-name>
         <url-pattern>/Controlador</url-pattern>
@@ -107,6 +111,18 @@
         <servlet-name>controladorPedidoCliente</servlet-name>
         <url-pattern>/listar</url-pattern>
         <url-pattern>/buscarPedido.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>controladorReportes</servlet-name>
+        <url-pattern>/vistaReportesCliente.jsp</url-pattern>
+        <url-pattern>/vistaReportesCompra.jsp</url-pattern>
+        <url-pattern>/vistaReportesEstado.jsp</url-pattern>
+        <url-pattern>/vistaReportesPedido.jsp</url-pattern>
+        <url-pattern>/vistaReportesPro.jsp</url-pattern>
+        <url-pattern>/vistaReportesProvedor.jsp</url-pattern>
+        <url-pattern>/vistaReportesRep.jsp</url-pattern>
+        <url-pattern>/vistaReportesTipo.jsp</url-pattern>
+        <url-pattern>/vistaReportesTrans.jsp</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

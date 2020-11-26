@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3845f997-8265-4e86-9d78-9501ef7fff0d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     transporte.`id_Transporte` AS transporte_id_Transporte,
+     transporte.`descripcion` AS transporte_descripcion
+FROM
+     `transporte` transporte]]>
+	</queryString>
+	<field name="transporte_id_Transporte" class="java.lang.Integer"/>
+	<field name="transporte_descripcion" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="124" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="464" height="74" backcolor="#003399" uuid="ab2875bf-8a4a-4129-a010-2404d95a4a5c"/>
+				<staticText>
+					<reportElement style="Title" x="0" y="0" width="395" height="66" uuid="84817548-daf8-4dee-a706-e8086601371c"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="46" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte Transporte]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="405" y="45" width="59" height="29" forecolor="#FFFFFF" uuid="d09baa23-23a7-4eab-a00f-4d47102a737b"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="18" isBold="false" isItalic="true"/>
+					</textElement>
+					<text><![CDATA[SoftGas]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="84" width="464" height="32" forecolor="#000000" backcolor="#FFCC00" uuid="8106e838-da9a-4eea-aaab-06372d8da258"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="320" y="12" width="144" height="20" forecolor="#000000" uuid="ab562696-31ca-4c06-9f87-20b7fee5b8d9"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" x="0" y="7" width="277" height="18" forecolor="#000000" uuid="709a9094-4af9-4502-93e5-3fa6ca23b70d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="277" y="7" width="277" height="18" forecolor="#000000" uuid="bc630eb0-c66b-4c88-826f-2eef772552c5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="555" height="18" uuid="9dc6b416-f550-4e9a-be7e-15d9901356ad"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="0" y="0" width="277" height="18" uuid="240c3c16-7430-4692-9308-3b675b3dc358"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{transporte_id_Transporte}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" positionType="Float" x="277" y="0" width="277" height="18" uuid="e792f23d-9558-43d2-94fa-235165e45a7f"/>
+					<textElement textAlignment="Center">
+						<font fontName="Serif" size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{transporte_descripcion}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="6314c03d-80d3-418e-8fa3-9a978459ef78"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#000000" uuid="3f000586-2c2b-4673-ac02-e6f59342068e"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF" uuid="452d9564-a9bc-425c-b229-3820ef64a1a2"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF" uuid="b7d383bb-d153-41d3-91cc-5bf583fbf3ef"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF" uuid="05062020-7671-41a2-a3f6-508b638343f3"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Serif" size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

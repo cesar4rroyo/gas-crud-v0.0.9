@@ -270,7 +270,7 @@
                                                     ></i
                                                 >&nbsp;Configuración</a
                                             >
-                                            <a class="dropdown-item" role="presentation" href="#"
+                                            <a class="dropdown-item" role="presentation" href="reportes.html"
                                                ><i
                                                     class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"
                                                     ></i
@@ -308,6 +308,7 @@
                         </form>
                         <div class="container">
                             <a href="add" class="btn btn-dark"><i class="fa fa-plus"> </i>  Añadir nuevo </a>
+                            <a class="btn btn-warning float-right" href="vistaReportesPedido.jsp">Generar Reportes</a>
                         </div>
                         <!--desde aqui empieza el verdadero codigo :v-->
                         <div class="container mt-5 text-center" >
@@ -349,6 +350,9 @@
                                                     </a>
                                                     <a class="btn btn-danger" href="delete.jsp?&txtIdPedido=<%=bp.getId_Pedido()%>">
                                                         <i class="fa fa-trash"></i> Eliminar
+                                                    </a>
+                                                    <a class="btn btn-success" href="reportes\repPedido\pedidoParaPdf.jsp?control=<%=bp.getId_Pedido()%>">
+                                                        <i class="fa fa-eye"></i>Ver
                                                     </a>
                                                 </div>
                                             </td>

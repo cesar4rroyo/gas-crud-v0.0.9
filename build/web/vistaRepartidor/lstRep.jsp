@@ -277,7 +277,7 @@
                                                     ></i
                                                 >&nbsp;Configuración</a
                                             >
-                                            <a class="dropdown-item" role="presentation" href="#"
+                                            <a class="dropdown-item" role="presentation" href="reportes.html"
                                                ><i
                                                     class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"
                                                     ></i
@@ -315,6 +315,7 @@
                         </form>
                         <div class="container">
                             <button type="button" class="btn btn-dark"  data-toggle="modal" data-target="#modal_insertar"><i class="fa fa-plus"> </i>  Añadir nuevo </button>
+                            <a class="btn btn-warning float-right" href="vistaReportesRep.jsp">Generar Reportes</a>
                         </div>            
                         <div class="modal fade" id="modal_insertar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -412,7 +413,10 @@
                                                     </a>
                                                     <a class="btn btn-danger" href="controladorRep?accion=eliminarR&idR=<%= bRep.getId_Repartidor()%>">
                                                         <i class="fa fa-trash"></i> Eliminar
-                                                    </a>                                                    
+                                                    </a>
+                                                    <a class="btn btn-success" href="reportes\repRepartidor\repParaPdf.jsp?control=<%= bRep.getId_Repartidor()%>">
+                                                        <i class="fa fa-eye"></i>Ver
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
