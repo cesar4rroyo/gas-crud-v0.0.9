@@ -28,7 +28,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/cesar4rroyo/gas-crud-v0.0.9">
-    <img src="https://res.cloudinary.com/dt77cgp7y/image/upload/v1601475449/GAS_1OKg_kpntfh.png" alt="Logo" width="80" height="80">
+    <img src="https://res.cloudinary.com/dt77cgp7y/image/upload/v1601475449/GAS_1OKg_kpntfh.png" alt="Logo" width="80">
   </a>
 
   <h3 align="center">SoftGas</h3>
@@ -37,6 +37,8 @@
     A project build with Java
     <br />
     <img src="https://img.shields.io/badge/java-%23ED8B00.svg?&style=for-the-badge&logo=java&logoColor=white"/>
+  	<img src="https://img.shields.io/badge/javascript%20-%23323330.svg?&style=for-the-badge&logo=javascript&logoColor=%23F7DF1E"/>
+    <br />
     <a href="https://github.com/cesar4rroyo/gas-crud-v0.0.9"><strong>Explore the docs »</strong></a>
     <br />
     <br />
