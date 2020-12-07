@@ -57,7 +57,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-SoftGas is a project developed in the "Programming Workshop" course, of the Systems Engineering course at UNPRG, in the virtual cycle 2020-I.
+SoftGas is a project developed in the "Taller de Programacion" course, of the Systems Engineering course at UNPRG, in the virtual cycle 2020-I.
 
 ### Members:
 * [Arroyo Torres César David](https://getbootstrap.com)
