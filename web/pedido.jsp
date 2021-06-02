@@ -90,9 +90,9 @@
                                         <div class="price_and_count">
                                             <div class="price_div">s/.<%=subtotal%>.00</div>
                                             <div class="btn-group">
-                                                <input id="btnMenos" class="btn btn-outline-info" type="submit" value="-">
+                                                <!--<input id="btnMenos" class="btn btn-outline-info" type="submit" value="-">-->
                                                 <input id="txtCantidad" class="btn btn-outline-info" type="submit" value="<%= bPdto1.getCantidad()%>">
-                                                <input id="btnMas" class="btn btn-outline-info" type="button" value="+">
+                                                <!--<input id="btnMas" class="btn btn-outline-info" type="button" value="+">-->
                                                 <a class="btn btn-outline-danger" href="eliminar.html?codigoEliminar=<%=i%>">
                                                     <i
                                                         class="icofont-trash"

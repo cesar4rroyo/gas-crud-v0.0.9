@@ -9,6 +9,7 @@
 <%@page import="ModeloDAO.daoProveedor"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page session="true"%>
+<%@page buffer="8192kb" autoFlush="true" %>
 <%
 
     HttpSession sc = request.getSession();
