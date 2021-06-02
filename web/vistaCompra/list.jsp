@@ -312,7 +312,7 @@
                         </form>
                         <div class="container">
                             <button type="button" class="btn btn-dark"  data-toggle="modal" data-target="#modal_insertar"><i class="fa fa-plus"> </i>  Añadir nuevo </button>
-                            <a class="btn btn-warning float-right" href="vistaReportesCompra.jsp">Generar Reportes</a>
+<!--                            <a class="btn btn-warning float-right" href="vistaReportesCompra.jsp">Generar Reportes</a>-->
                         </div>            
                         <div class="modal fade" id="modal_insertar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -352,7 +352,7 @@
                                                     <option>Seleccione una opcion</option>
                                                     <% for (beanProducto i : lstPdto) {%>                                                    
                                                     <option value="<%=i.getId_Producto()%>">
-                                                        <%=i.getNombre_producto()%>
+                                                        <%=i.getNombre_producto()%> <%= i.getDescripcion()%>
                                                     </option>
                                                     <% } %>
                                                 </select>
@@ -360,7 +360,7 @@
                                             <div class="row" >
                                                 <div class="form-group col-md">
                                                     <label for="txtCantidad">Cantidad: </label>
-                                                    <input class="form-control" type="number" placeholder="Cantidad"  name="txtCantidad" id="txtCantidad" required="" autocomplete="off" >
+                                                    <input class="form-control" type="number" placeholder="Cantidad"  name="txtCantidad" id="txtCantidad" required="" autocomplete="off" min="1" pattern="^[0-9]+" >
                                                 </div> 
                                                 <div class="form-group col-md">
                                                     <label for="txtTotal">Total:  </label>
@@ -410,12 +410,12 @@
                                                     <a  class="btn btn-primary" href="editCompra.html?&id=<%= bCompra.getId_Compra()%>">
                                                         <i class="fa fa-pencil-square-o"></i>Editar
                                                     </a>
-                                                    <a class="btn btn-danger disabled" href="deleteCompra?&id=<%= bCompra.getId_Compra()%>">
+<!--                                                    <a class="btn btn-danger disabled" href="deleteCompra?&id=<%= bCompra.getId_Compra()%>">
                                                         <i class="fa fa-trash"></i> Eliminar
                                                     </a>
                                                     <a class="btn btn-success" href="reportes\repCompras\comprasParaPdf.jsp?control=<%= bCompra.getId_Compra()%>">
                                                         <i class="fa fa-eye"></i>Ver
-                                                    </a>
+                                                    </a>-->
                                                 </div>
                                             </td>
                                         </tr>
